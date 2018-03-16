@@ -8,8 +8,9 @@ import { Link } from 'react-router-dom';
 const styles = {
   pageContainer: {
     backgroundColor: '#00B8D4',
+    height: '100vh'
   },
-  loginContainer: {
+  _404: {
     height: '100%',
     width: '100%',
     display: 'flex',
@@ -44,11 +45,7 @@ const styles = {
     color: '#00B8D4',
     fontSize: 128,
     fontWeight: 'bold',
-  },
-  _404Subtext: {
-    color: '#757575',
-    fontSize: 14,
-  },
+  }
 };
 
 class _404 extends Component {
@@ -60,7 +57,7 @@ class _404 extends Component {
     return (
       <MuiThemeProvider>
         <div style={styles.pageContainer}>
-          <div style={styles.loginContainer}>
+          <div style={styles._404}>
             <h1 style={styles.headingContainer}>
               <span style={styles.headingText}> NUSCollab </span>
               <span style={styles.subheadingText}>Dashboard</span>
@@ -68,7 +65,6 @@ class _404 extends Component {
             <Paper zDepth={1} style={styles.contentContainer}>
               <div style={styles._404Container}>
                 <h1 style={styles._404Text}> 404 </h1>
-                <h1 style={styles._404Subtext}>Oops! Sorry we could not find the page</h1>
               </div>
               <Link to="/">
                 <RaisedButton label="Go back home" secondary={true} />

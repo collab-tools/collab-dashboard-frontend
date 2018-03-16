@@ -11,7 +11,7 @@ const styles = {
     flex: 1,
     height: '100%',
     textAlign: 'center',
-    padding: 10,
+    paddingTop: 10,
   },
   spaceBetween: {
     padding: 16,

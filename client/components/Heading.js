@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 const styles = {
   heading: {
     color: '#424242',
+    fontSize: 42,
     paddingLeft: 32,
     paddingRight: 32,
   },

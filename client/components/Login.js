@@ -9,6 +9,7 @@ import { Redirect } from 'react-router-dom';
 const styles = {
   pageContainer: {
     backgroundColor: '#00B8D4',
+    height: '100vh'
   },
   loginContainer: {
     height: '100%',

@@ -17,7 +17,7 @@ const styles = {
    position: 'absolute',
    left: 0,
    minWidth: 600,
-   overflowX: 'auto',
+   overflowX: 'auto'
   },
   navigationBarContainer: {
     position: 'absolute',
@@ -41,15 +41,17 @@ const styles = {
     maxWidth: 200,
   },
   dashboardContainer: {
+    backgroundColor: '#EEEEEE',
     width: '100%',
-    height: '100%',
     paddingTop: '69px',
+    minHeight: '94vh',
     position: 'relative',
   },
   dashboardLayoutContainer: {
-    marginTop: '10px',
-    marginLeft: '30px',
-    marginRight: '30px',
+    backgroundColor: '#EEEEEE',
+    paddingTop: '10px',
+    paddingLeft: '30px',
+    paddingRight: '30px',
     display: 'flex',
     flexFlow: 'column',
   },
@@ -72,7 +74,7 @@ class Dashboard extends Component {
     return (
       <MuiThemeProvider>
         <div style={styles.pageContainer}>
-          <AppBar title="NUSCollab Dashboard" showMenuIconButton={false} style={styles.titleBar} />
+          <AppBar id="appbar" title="NUSCollab Dashboard" showMenuIconButton={false} style={styles.titleBar} />
           <Sidebar
             shadow
             transitions={false}
