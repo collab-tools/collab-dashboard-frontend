@@ -56,7 +56,7 @@ class _404 extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <div style={styles.pageContainer}>
+        <div id="_404-page-container" style={styles.pageContainer}>
           <div style={styles._404}>
             <h1 style={styles.headingContainer}>
               <span style={styles.headingText}> NUSCollab </span>
@@ -64,10 +64,10 @@ class _404 extends Component {
             </h1>
             <Paper zDepth={1} style={styles.contentContainer}>
               <div style={styles._404Container}>
-                <h1 style={styles._404Text}> 404 </h1>
+                <h1 id="_404-page-not-found-text" style={styles._404Text}>404</h1>
               </div>
               <Link to="/">
-                <RaisedButton label="Go back home" secondary={true} />
+                <RaisedButton id="_404-home-button" label="Go back home" secondary={true} />
               </Link>
             </Paper>
           </div>

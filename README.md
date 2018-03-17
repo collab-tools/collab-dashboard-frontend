@@ -54,10 +54,30 @@ This will generate static files to the `\static\` directory of `collab-dashboard
 
 ### Testing
 
-Navigate to the `collab-dashboard-v2` folder, and type the following commands on the command line:
+#### Component Testing using Mocha and Chai-Enzyme
+
+Navigate to the `collab-dashboard-frontend` folder, and type the following commands on the command line:
 
 ```
-npm test
+$ npm test
 ```
 
 This will run Enzyme/Mocha/Chai tests in the `\tests\` folder.
+
+#### End-to-End Testing using Nightwatch
+
+Keep both `collab-dashboard-backend` and `collab-dashboard-frontend` running by typing `npm start` and `npm run development`in their respective command prompts.
+
+Ensure that that you installed Nightwatch globally beforehand by typing the following command on the command line:
+
+```
+$ npm install nightwatch -g
+```
+
+Open another command prompt, and navigate to the `collab-dashboard-frontend` folder, and type the following commands on the command line:
+
+```
+$ nightwatch
+```
+
+You should see a Chrome page automatically opening and running the tests, and the test runs done in the `tests_e2e` folder result will be shown in the command prompt.
