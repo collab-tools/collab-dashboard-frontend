@@ -63,7 +63,7 @@ export class DashboardLayout extends Component {
   }
 
   getData(startDate, endDate, maxEntries) {
-    // console.log(startDate, endDate, maxEntries);
+    console.log(startDate, endDate, maxEntries);
 
     this.props.getTotalUsers(this.props.login.jwtToken, startDate, endDate);
     this.props.getNewUsers(startDate, endDate);
@@ -116,18 +116,7 @@ export class DashboardLayout extends Component {
       endDate = moment().format('YYYY/MM/DD');
     }
 
-    if (this.state.maxEntries == 10) {
-      maxEntries = 10;
-    }
-    if (this.state.maxEntries == 20) {
-      maxEntries = 20;
-    }
-    if (this.state.maxEntries == 30) {
-      maxEntries = 30;
-    }
-    if (this.state.maxEntries == 99) {
-      maxEntries = 'All';
-    }
+    maxEntries = this.state.maxEntries;
 
     this.getData(startDate, endDate, maxEntries);
   }
@@ -141,18 +130,7 @@ export class DashboardLayout extends Component {
       maxEntries: value
     });
 
-    if (value == 10) {
-      maxEntries = 10;
-    }
-    if (value == 20) {
-      maxEntries = 20;
-    }
-    if (value == 30) {
-      maxEntries = 30;
-    }
-    if (value == 99) {
-      maxEntries = 'All';
-    }
+    maxEntries = value;
 
     if (this.state.timePeriodOption == 1) {
       startDate = moment().subtract(7,'d').format('YYYY/MM/DD');
@@ -210,6 +188,8 @@ export class DashboardLayout extends Component {
 
   render() {
     let contentType = (this.props.navigation.contentType == 'Home' ? "Collab In A Glance" : this.props.navigation.contentType);
+    let dbMaxRows = 999;
+
     return (
       <Content>
         <HeadingContainer>
@@ -224,7 +204,7 @@ export class DashboardLayout extends Component {
               <MenuItem value={10} primaryText="Max 10 Entries (Tables)" />
               <MenuItem value={20} primaryText="Max 20 Entries (Tables)" />
               <MenuItem value={30} primaryText="Max 30 Entries (Tables)" />
-              <MenuItem value={99} primaryText="No Limit (Tables)" />
+              <MenuItem value={dbMaxRows} primaryText="All Entries (Tables)" />
             </SelectField>
             <SelectField
               value={this.state.timePeriodOption}

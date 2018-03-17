@@ -50,7 +50,7 @@ export class HomePage extends Component {
         }
       },
       title: {
-          text: 'Feature Utilization'
+          text: 'Feature Utilization Rate'
       },
       yAxis: {
         title: {

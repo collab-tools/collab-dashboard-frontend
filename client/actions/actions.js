@@ -2,14 +2,24 @@ import axios from "axios";
 
 import {
   CHANGE_CONTENT_TYPE,
+
   AUTHENTICATE_USER,
   UNAUTHENTICATE_USER,
+
+  GET_TOTAL_PROJECTS,
+  GET_NEW_PROJECTS,
+  GET_LATEST_PROJECTS,
+  GET_ACTIVE_PROJECTS,
+  GET_MILESTONES_BY_PROJECT_ID,
+
   GET_TOTAL_USERS,
   GET_NEW_USERS,
+  GET_LATEST_USERS,
   GET_ACTIVE_USERS,
   GET_INACTIVE_USERS,
   GET_RETENTION_RATE,
-  GET_LATEST_USERS,
+  GET_PROJECTS_BY_USER_ID,
+
   GET_TOTAL_MILESTONES,
   GET_COMPLETED_MILESTONES,
   GET_AVERAGE_MILESTONES_PER_PROJECT,
@@ -17,15 +27,13 @@ import {
   GET_MILESTONES_COMPLETION_DATA,
   GET_MILESTONES_DEADLINES_MISSED_RATE,
   GET_MILESTONES_FEATURE_UTILIZATION_RATE,
-  GET_TOTAL_PROJECTS,
-  GET_NEW_PROJECTS,
-  GET_LATEST_PROJECTS,
-  GET_ACTIVE_PROJECTS,
+
   GET_TOTAL_TASKS,
   GET_PENDING_TASKS,
   GET_COMPLETED_TASKS,
   GET_TASKS_COMPLETION_DATA,
   GET_TASKS_FEATURE_UTILIZATION_RATE,
+
   GET_TOTAL_MESSAGES
 } from '../constants/actionTypes';
 
@@ -68,6 +76,105 @@ export function authenticateUser(username, password) {
   };
 };
 
+export function getTotalProjects(startDate, endDate) {
+  let url = rootApi + '/projects/count';
+  return (dispatch) => {
+    return axios.post(url, {
+        startDate: startDate,
+        endDate: endDate
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }).then(response => {
+        // console.log('getTotalProjects ', response.data);
+        dispatch(_getTotalProjects(response.data))
+      })
+      .catch(error => {
+        throw(error);
+      });
+  };
+};
+
+export function getNewProjects(startDate, endDate) {
+  let url = rootApi + '/projects/num-created-between-dates';
+  return (dispatch) => {
+    return axios.post(url, {
+        startDate: startDate,
+        endDate: endDate
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }).then(response => {
+        // console.log('getNewProjects ', response.data);
+        dispatch(_getNewProjects(response.data))
+      })
+      .catch(error => {
+        throw(error);
+      });
+  };
+};
+
+export function getLatestProjects(maxEntries) {
+  let url = rootApi + '/projects/latest';
+  return (dispatch) => {
+    return axios.post(url, {
+        maxProjects: maxEntries
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }).then(response => {
+        // console.log('getLatestProjects ', response.data);
+        dispatch(_getLatestProjects(response.data))
+      })
+      .catch(error => {
+        throw(error);
+      });
+  };
+};
+
+export function getActiveProjects(startDate, endDate) {
+  let url = rootApi + '/projects/active-rate-between-dates';
+  return (dispatch) => {
+    return axios.post(url, {
+        startDate: startDate,
+        endDate: endDate
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }).then(response => {
+        // console.log('getActiveProjects ', response.data);
+        dispatch(_getActiveProjects(response.data))
+      })
+      .catch(error => {
+        throw(error);
+      });
+  };
+};
+
+export function getMilestonesByProjectId(projectId) {
+  let url = rootApi + '/projects/milestones';
+  console.log('getMilestonesByProjectId', projectId);
+  return (dispatch) => {
+    return axios.post(url, {
+        projectId: projectId
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }).then(response => {
+        // console.log('getMilestonesByProjectId ', response.data);
+        dispatch(_getMilestonesByProjectId(response.data))
+      })
+      .catch(error => {
+        throw(error);
+      });
+  };
+};
+
 export function getTotalUsers(jwtToken, startDate, endDate) {
   let url = rootApi + '/users/count';
   // console.log(jwtToken);
@@ -103,6 +210,25 @@ export function getNewUsers(startDate, endDate) {
       }).then(response => {
         // console.log('getNewUsers ', response.data);
         dispatch(_getNewUsers(response.data))
+      })
+      .catch(error => {
+        throw(error);
+      });
+  };
+};
+
+export function getLatestUsers(maxEntries) {
+  let url = rootApi + '/users/latest';
+  return (dispatch) => {
+    return axios.post(url, {
+        maxUsers: maxEntries
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }).then(response => {
+        // console.log('getLatestUsers ', response.data);
+        dispatch(_getLatestUsers(response.data))
       })
       .catch(error => {
         throw(error);
@@ -170,18 +296,19 @@ export function getRetentionRate(startDate, endDate) {
   };
 }
 
-export function getLatestUsers(maxEntries) {
-  let url = rootApi + '/users/latest';
+export function getProjectsByUserId(userId) {
+  let url = rootApi + '/users/projects';
+  console.log('getProjectsByUserId', userId);
   return (dispatch) => {
     return axios.post(url, {
-        maxUsers: maxEntries
+        userId: userId
       }, {
         headers: {
           'Content-Type': 'application/json',
         }
       }).then(response => {
-        // console.log('getLatestUsers ', response.data);
-        dispatch(_getLatestUsers(response.data))
+        // console.log('getProjectsByUserId ', response.data);
+        dispatch(_getProjectsByUserId(response.data))
       })
       .catch(error => {
         throw(error);
@@ -329,85 +456,6 @@ export function getMilestonesFeatureUtilizationRate(startDate, endDate) {
   };
 };
 
-export function getTotalProjects(startDate, endDate) {
-  let url = rootApi + '/projects/count';
-  return (dispatch) => {
-    return axios.post(url, {
-        startDate: startDate,
-        endDate: endDate
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      }).then(response => {
-        // console.log('getTotalProjects ', response.data);
-        dispatch(_getTotalProjects(response.data))
-      })
-      .catch(error => {
-        throw(error);
-      });
-  };
-};
-
-export function getNewProjects(startDate, endDate) {
-  let url = rootApi + '/projects/num-created-between-dates';
-  return (dispatch) => {
-    return axios.post(url, {
-        startDate: startDate,
-        endDate: endDate
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      }).then(response => {
-        // console.log('getNewProjects ', response.data);
-        dispatch(_getNewProjects(response.data))
-      })
-      .catch(error => {
-        throw(error);
-      });
-  };
-};
-
-export function getLatestProjects(maxEntries) {
-  let url = rootApi + '/projects/latest';
-  return (dispatch) => {
-    return axios.post(url, {
-        maxProjects: maxEntries
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      }).then(response => {
-        // console.log('getLatestProjects ', response.data);
-        dispatch(_getLatestProjects(response.data))
-      })
-      .catch(error => {
-        throw(error);
-      });
-  };
-};
-
-export function getActiveProjects(startDate, endDate) {
-  let url = rootApi + '/projects/active-rate-between-dates';
-  return (dispatch) => {
-    return axios.post(url, {
-        startDate: startDate,
-        endDate: endDate
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      }).then(response => {
-        // console.log('getActiveProjects ', response.data);
-        dispatch(_getActiveProjects(response.data))
-      })
-      .catch(error => {
-        throw(error);
-      });
-  };
-};
-
 export function getTotalTasks(startDate, endDate) {
   let url = rootApi + '/tasks/count';
   return (dispatch) => {
@@ -538,6 +586,47 @@ export function _authenticateUser(res) {
   }
 };
 
+export function _getTotalProjects(res) {
+  let totalProjects = res.count;
+  return {
+    type: GET_TOTAL_PROJECTS,
+    totalProjects,
+  }
+};
+
+export function _getNewProjects(res) {
+  let newProjects = res.count;
+  return {
+    type: GET_NEW_PROJECTS,
+    newProjects,
+  }
+};
+
+
+export function _getLatestProjects(res) {
+  let latestProjects = res;
+  return {
+    type: GET_LATEST_PROJECTS,
+    latestProjects,
+  }
+};
+
+export function _getActiveProjects(res) {
+  let activeProjects = res.rate;
+  return {
+    type: GET_ACTIVE_PROJECTS,
+    activeProjects,
+  }
+};
+
+export function _getMilestonesByProjectId(res) {
+  let milestonesByProjectId = res;
+  return {
+    type: GET_MILESTONES_BY_PROJECT_ID,
+    milestonesByProjectId,
+  }
+};
+
 export function _getTotalUsers(res) {
   let totalUsers = res.count;
   return {
@@ -551,6 +640,14 @@ export function _getNewUsers(res) {
   return {
     type: GET_NEW_USERS,
     newUsers,
+  }
+};
+
+export function _getLatestUsers(res) {
+  let latestUsers = res;
+  return {
+    type: GET_LATEST_USERS,
+    latestUsers,
   }
 };
 
@@ -578,11 +675,11 @@ export function _getRetentionRate(res) {
   }
 };
 
-export function _getLatestUsers(res) {
-  let latestUsers = res;
+export function _getProjectsByUserId(res) {
+  let projectsByUserId = res;
   return {
-    type: GET_LATEST_USERS,
-    latestUsers,
+    type: GET_PROJECTS_BY_USER_ID,
+    projectsByUserId,
   }
 };
 
@@ -642,38 +739,6 @@ export function _getMilestonesFeatureUtilizationRate(res) {
   }
 };
 
-export function _getTotalProjects(res) {
-  let totalProjects = res.count;
-  return {
-    type: GET_TOTAL_PROJECTS,
-    totalProjects,
-  }
-};
-
-export function _getNewProjects(res) {
-  let newProjects = res.count;
-  return {
-    type: GET_NEW_PROJECTS,
-    newProjects,
-  }
-};
-
-
-export function _getLatestProjects(res) {
-  let latestProjects = res;
-  return {
-    type: GET_LATEST_PROJECTS,
-    latestProjects,
-  }
-};
-
-export function _getActiveProjects(res) {
-  let activeProjects = res.rate;
-  return {
-    type: GET_ACTIVE_PROJECTS,
-    activeProjects,
-  }
-};
 
 export function _getTotalTasks(res) {
   let totalTasks = res.count;

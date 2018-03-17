@@ -10,6 +10,10 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 
+import {
+  getMilestonesByProjectId
+} from '../actions/actions';
+
 import Content from '../components/Content';
 import Section from '../components/Section';
 import MetricsRow from '../components/MetricsRow'
@@ -19,11 +23,20 @@ import Card from '../components/Card';
 export class ProjectsPage extends Component {
   constructor(props) {
     super(props);
+    this.projectsTableCellClicked = this.projectsTableCellClicked.bind(this);
+  }
+
+  projectsTableCellClicked(row, column, event){
+    let projects = this.props.projects;
+    let latestProjects = projects.latestProjects;
+    let projectId = latestProjects[row].project_id;
+    this.props.getMilestonesByProjectId(projectId)
   }
 
   render() {
     let projects = this.props.projects;
     let latestProjects = projects.latestProjects;
+    let milestonesByProjectId = projects.milestonesByProjectId;
     let activeProjectsRate = (projects.activeProjects * 100).toFixed(1) + "%";
     let metricsData = [{
       metric: projects.newProjects,
@@ -35,6 +48,7 @@ export class ProjectsPage extends Component {
       metric: activeProjectsRate,
       metricLabel: "Active Projects",
     }];
+    console.log('ProjectsPage - milestonesByProjectId', milestonesByProjectId);
     return (
       <Content>
         <Section>
@@ -43,7 +57,7 @@ export class ProjectsPage extends Component {
         <Section>
           <Subheading>Projects</Subheading>
           <Card>
-            <Table>
+            <Table onCellClick={this.projectsTableCellClicked}>
               <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                 <TableRow>
                   <TableHeaderColumn>Name</TableHeaderColumn>
@@ -76,7 +90,11 @@ const mapStateToProps = (state, ownProps) => ({
   projects: state.projects,
 });
 
+const mapDispatchToProps = {
+  getMilestonesByProjectId,
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(ProjectsPage);

@@ -2,7 +2,8 @@ import {
   GET_TOTAL_PROJECTS,
   GET_NEW_PROJECTS,
   GET_LATEST_PROJECTS,
-  GET_ACTIVE_PROJECTS
+  GET_ACTIVE_PROJECTS,
+  GET_MILESTONES_BY_PROJECT_ID
 } from '../constants/actionTypes';
 
 import moment from 'moment';
@@ -12,6 +13,7 @@ const initialState = {
   newProjects: -1,
   latestProjects: null,
   activeProjects: -1,
+  milestonesByProjectId: null
 }
 
 
@@ -30,7 +32,7 @@ export default function projects(state = initialState, action) {
       let projectMembers = [];
       let sumProjectMemberSize = 0;
       let averageProjectSize = 0;
-      console.log('_latestProjects', _latestProjects);
+      // console.log('_latestProjects', _latestProjects);
       for (var i = 0; i < _latestProjects.length; i++) {
         for (var key in _latestProjects[i]) {
           if (_latestProjects[i].hasOwnProperty(key) && _latestProjects[i][key] == null) {
@@ -56,6 +58,10 @@ export default function projects(state = initialState, action) {
     case GET_ACTIVE_PROJECTS:
       return Object.assign({}, state, {
         activeProjects: action.activeProjects,
+      });
+    case GET_MILESTONES_BY_PROJECT_ID:
+      return Object.assign({}, state, {
+        milestonesByProjectId: action.milestonesByProjectId,
       });
     default:
       return state;

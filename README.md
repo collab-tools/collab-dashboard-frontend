@@ -80,4 +80,4 @@ Open another command prompt, and navigate to the `collab-dashboard-frontend` fol
 $ nightwatch
 ```
 
-You should see a Chrome page automatically opening and running the tests, and the test runs done in the `tests_e2e` folder result will be shown in the command prompt.
+You should see a Chrome page automatically opening and running the tests which are in the `\nightwatch\tests` folder. The results will be stored in the `\nightwatch\reports` folder.

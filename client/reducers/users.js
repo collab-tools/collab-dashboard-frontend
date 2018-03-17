@@ -1,10 +1,11 @@
 import {
   GET_TOTAL_USERS,
   GET_NEW_USERS,
+  GET_LATEST_USERS,
   GET_ACTIVE_USERS,
   GET_INACTIVE_USERS,
   GET_RETENTION_RATE,
-  GET_LATEST_USERS,
+  GET_PROJECTS_BY_USER_ID
 } from '../constants/actionTypes';
 
 import moment from 'moment';
@@ -12,12 +13,14 @@ import moment from 'moment';
 const initialState = {
   totalUsers: -1,
   newUsers: -1,
+  latestUsers: null,
   activeUsers: -1,
   inactiveUsers: -1,
   retentionRate: -1,
-  latestUsers: null,
-  inactiveUsers: -1,
-  retentionRate: -1,
+  projectsByUserId: null,
+  projectNamesByUserId: null,
+  completedTasksByUserId: null,
+  incompleteTasksByUserId: null
 }
 
 export default function users(state = initialState, action) {
@@ -30,21 +33,9 @@ export default function users(state = initialState, action) {
       return Object.assign({}, state, {
         newUsers: action.newUsers,
       });
-    case GET_ACTIVE_USERS:
-      return Object.assign({}, state, {
-        activeUsers: action.activeUsers,
-      });
-    case GET_INACTIVE_USERS:
-      return Object.assign({}, state, {
-        inactiveUsers: action.inactiveUsers,
-      });
-    case GET_RETENTION_RATE:
-      return Object.assign({}, state, {
-        retentionRate: action.retentionRate,
-      });
     case GET_LATEST_USERS: {
       let _latestUsers = action.latestUsers;
-      console.log('_latestUsers', _latestUsers);
+
       for (var i = 0; i < _latestUsers.length; i++) {
         for (var key in _latestUsers[i]) {
           if (_latestUsers[i].hasOwnProperty(key) && _latestUsers[i][key] == null) {
@@ -58,8 +49,51 @@ export default function users(state = initialState, action) {
           }
         }
       }
+
       return Object.assign({}, state, {
         latestUsers: action.latestUsers,
+      });
+    }
+    case GET_ACTIVE_USERS:
+      return Object.assign({}, state, {
+        activeUsers: action.activeUsers,
+      });
+    case GET_INACTIVE_USERS:
+      return Object.assign({}, state, {
+        inactiveUsers: action.inactiveUsers,
+      });
+    case GET_RETENTION_RATE:
+      return Object.assign({}, state, {
+        retentionRate: action.retentionRate,
+      });
+    case GET_PROJECTS_BY_USER_ID: {
+      let _projectsByUserId =  action.projectsByUserId;
+      let _projectNamesByUserId = [];
+      let _completedTasksByUserId = [];
+      let _incompleteTasksByUserId = [];
+
+      for (var i = 0; i < _projectsByUserId.length; i++) {
+        for (var key in _projectsByUserId[i]) {
+          if (_projectsByUserId[i].hasOwnProperty(key) && _projectsByUserId[i][key] == null) {
+            _projectsByUserId[i][key] = 'N.A';
+          }
+          if (key == 'project_name') {
+            _projectNamesByUserId.push(_projectsByUserId[i][key]);
+          }
+          if (key == 'num_tasks_completed') {
+            _completedTasksByUserId.push(parseInt(_projectsByUserId[i][key]));
+          }
+          if (key == 'num_tasks_incomplete') {
+            _incompleteTasksByUserId.push(parseInt(_projectsByUserId[i][key]));
+          }
+        }
+      }
+
+      return Object.assign({}, state, {
+        projectsByUserId: action.projectsByUserId,
+        projectNamesByUserId: _projectNamesByUserId,
+        completedTasksByUserId: _completedTasksByUserId,
+        incompleteTasksByUserId: _incompleteTasksByUserId
       });
     }
     default:
