@@ -23,6 +23,10 @@ import Card from '../components/Card';
 export class ProjectsPage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      shouldRenderMilestonesByProjectId: false,
+      rowNumber: 0,
+    };
     this.projectsTableCellClicked = this.projectsTableCellClicked.bind(this);
   }
 
@@ -31,6 +35,64 @@ export class ProjectsPage extends Component {
     let latestProjects = projects.latestProjects;
     let projectId = latestProjects[row].project_id;
     this.props.getMilestonesByProjectId(projectId)
+    this.setState({
+      shouldRenderMilestonesByProjectId: true,
+      rowNumber: row
+    });
+  }
+
+  _renderMilestonesByProjectId() {
+    let projects = this.props.projects;
+    let latestProjects = projects.latestProjects;
+    let projectName = latestProjects[this.state.rowNumber].content;
+    console.log(projectName);
+    let milestoneNamesByProjectId = projects.milestoneNamesByProjectId;
+    let completedTasksInMilestonesByProjectId = projects.completedTasksInMilestonesByProjectId;
+    let incompleteTasksInMilestonesByProjectId = projects.incompleteTasksInMilestonesByProjectId;
+    let milestoneNamesByProjectIdGraphConfig = {
+      chart: {
+        type: 'bar'
+      },
+      title: {
+          text: 'Milestones'
+      },
+      xAxis: {
+          categories: milestoneNamesByProjectId
+      },
+      yAxis: {
+          min: 0,
+          title: {
+              text: 'Completed Tasks'
+          }
+      },
+      legend: {
+          reversed: true
+      },
+      plotOptions: {
+          series: {
+              stacking: 'normal'
+          }
+      },
+      series: [{
+          name: 'Completed Tasks',
+          data: completedTasksInMilestonesByProjectId
+      }, {
+          name: 'Incomplete Tasks',
+          data: incompleteTasksInMilestonesByProjectId
+      }]
+    };
+    if (this.state.shouldRenderMilestonesByProjectId) {
+      return (
+        <div>
+          <Section>
+            <Subheading>Milestone Statistics by {projectName}</Subheading>
+            <Card>
+              <ReactHighcharts config={milestoneNamesByProjectIdGraphConfig}></ReactHighcharts>
+            </Card>
+          </Section>
+        </div>
+      );
+    }
   }
 
   render() {
@@ -48,7 +110,7 @@ export class ProjectsPage extends Component {
       metric: activeProjectsRate,
       metricLabel: "Active Projects",
     }];
-    console.log('ProjectsPage - milestonesByProjectId', milestonesByProjectId);
+    // console.log('ProjectsPage - milestonesByProjectId', milestonesByProjectId);
     return (
       <Content>
         <Section>
@@ -81,6 +143,7 @@ export class ProjectsPage extends Component {
             </Table>
           </Card>
         </Section>
+        {this._renderMilestonesByProjectId()}
       </Content>
     );
   }

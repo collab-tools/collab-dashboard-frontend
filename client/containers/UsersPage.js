@@ -24,8 +24,9 @@ export class UsersPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      shouldRenderProjectsByUserId: false
-    }
+      shouldRenderProjectsByUserId: false,
+      rowNumber: 0,
+    };
     this.usersTableCellClicked = this.usersTableCellClicked.bind(this);
   }
 
@@ -34,14 +35,32 @@ export class UsersPage extends Component {
     let latestUsers = users.latestUsers;
     let userId = latestUsers[row].user_id;
     this.props.getProjectsByUserId(userId)
-    this.setState({ shouldRenderProjectsByUserId: true });
+    this.setState({
+      shouldRenderProjectsByUserId: true,
+      rowNumber: row
+    });
   }
 
   _renderProjectsByUserId() {
     let users = this.props.users;
+    let userName = users.latestUsers[this.state.rowNumber].display_name;
+    console.log(this.state.rowNumber);
     let projectNamesByUserId = users.projectNamesByUserId;
     let completedTasksByUserId = users.completedTasksByUserId;
     let incompleteTasksByUserId = users.incompleteTasksByUserId;
+    let totalProjectsByUserId = users.totalProjectsByUserId;
+    let totalCompletedTasksByUserId = users.totalCompletedTasksByUserId;
+    let totalIncompleteTasksByUserId = users.totalIncompleteTasksByUserId;
+    let metricsData = [{
+      metric: totalProjectsByUserId,
+      metricLabel: "Total Projects",
+    }, {
+      metric: totalCompletedTasksByUserId,
+      metricLabel: "Total Completed Tasks",
+    }, {
+      metric: totalIncompleteTasksByUserId,
+      metricLabel: "Total Incomplete Tasks",
+    }];
     let projectsByUserIdGraphConfig = {
       chart: {
         type: 'bar'
@@ -76,12 +95,17 @@ export class UsersPage extends Component {
     };
     if (this.state.shouldRenderProjectsByUserId) {
       return (
-        <Section>
-          <Subheading>Projects</Subheading>
-          <Card>
-            <ReactHighcharts config={projectsByUserIdGraphConfig}></ReactHighcharts>
-          </Card>
-        </Section>
+        <div>
+          <Section>
+            <Subheading>Project Statistics by {userName}</Subheading>
+            <MetricsRow metricsData={metricsData} />
+          </Section>
+          <Section>
+            <Card>
+              <ReactHighcharts config={projectsByUserIdGraphConfig}></ReactHighcharts>
+            </Card>
+          </Section>
+        </div>
       );
     }
   }

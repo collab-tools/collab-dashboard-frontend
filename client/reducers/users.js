@@ -20,7 +20,10 @@ const initialState = {
   projectsByUserId: null,
   projectNamesByUserId: null,
   completedTasksByUserId: null,
-  incompleteTasksByUserId: null
+  incompleteTasksByUserId: null,
+  totalProjectsByUserId: -1,
+  totalCompletedTasksByUserId: -1,
+  totalIncompleteTasksByUserId: -1
 }
 
 export default function users(state = initialState, action) {
@@ -71,6 +74,9 @@ export default function users(state = initialState, action) {
       let _projectNamesByUserId = [];
       let _completedTasksByUserId = [];
       let _incompleteTasksByUserId = [];
+      let _totalProjectsByUserId = 0;
+      let _totalCompletedTasksByUserId = 0;
+      let _totalIncompleteTasksByUserId = 0;
 
       for (var i = 0; i < _projectsByUserId.length; i++) {
         for (var key in _projectsByUserId[i]) {
@@ -79,12 +85,15 @@ export default function users(state = initialState, action) {
           }
           if (key == 'project_name') {
             _projectNamesByUserId.push(_projectsByUserId[i][key]);
+            _totalProjectsByUserId += 1;
           }
           if (key == 'num_tasks_completed') {
             _completedTasksByUserId.push(parseInt(_projectsByUserId[i][key]));
+            _totalCompletedTasksByUserId += parseInt(_projectsByUserId[i][key]);
           }
           if (key == 'num_tasks_incomplete') {
             _incompleteTasksByUserId.push(parseInt(_projectsByUserId[i][key]));
+            _totalIncompleteTasksByUserId += parseInt(_projectsByUserId[i][key]);
           }
         }
       }
@@ -93,7 +102,10 @@ export default function users(state = initialState, action) {
         projectsByUserId: action.projectsByUserId,
         projectNamesByUserId: _projectNamesByUserId,
         completedTasksByUserId: _completedTasksByUserId,
-        incompleteTasksByUserId: _incompleteTasksByUserId
+        incompleteTasksByUserId: _incompleteTasksByUserId,
+        totalProjectsByUserId: _totalProjectsByUserId,
+        totalCompletedTasksByUserId: _totalCompletedTasksByUserId,
+        totalIncompleteTasksByUserId: _totalIncompleteTasksByUserId
       });
     }
     default:

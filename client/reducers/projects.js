@@ -13,7 +13,10 @@ const initialState = {
   newProjects: -1,
   latestProjects: null,
   activeProjects: -1,
-  milestonesByProjectId: null
+  milestonesByProjectId: null,
+  milestoneNamesByProjectId: null,
+  completedTasksInMilestonesByProjectId: null,
+  incompleteTasksInMilestonesByProjectId: null
 }
 
 
@@ -32,7 +35,6 @@ export default function projects(state = initialState, action) {
       let projectMembers = [];
       let sumProjectMemberSize = 0;
       let averageProjectSize = 0;
-      // console.log('_latestProjects', _latestProjects);
       for (var i = 0; i < _latestProjects.length; i++) {
         for (var key in _latestProjects[i]) {
           if (_latestProjects[i].hasOwnProperty(key) && _latestProjects[i][key] == null) {
@@ -59,10 +61,39 @@ export default function projects(state = initialState, action) {
       return Object.assign({}, state, {
         activeProjects: action.activeProjects,
       });
-    case GET_MILESTONES_BY_PROJECT_ID:
+    case GET_MILESTONES_BY_PROJECT_ID: {
+      let _milestonesByProjectId = action.milestonesByProjectId;
+      let _milestoneNamesByProjectId = [];
+      let _completedTasksInMilestonesByProjectId = [];
+      let _incompleteTasksInMilestonesByProjectId = [];
+
+      // console.log('_milestonesByProjectId', _milestonesByProjectId);
+
+      for (var milestoneIdKey in _milestonesByProjectId) {
+        for (var key in _milestonesByProjectId[milestoneIdKey]) {
+          if (key == 'milestone_name') {
+            _milestoneNamesByProjectId.push(_milestonesByProjectId[milestoneIdKey][key]);
+          }
+          if (key == 'users') {
+            let milestoneNumTasksCompleted = 0;
+            let milestoneNumTasksIncomplete = 0;
+            for (var i = 0; i < _milestonesByProjectId[milestoneIdKey][key].length; i++) {
+              milestoneNumTasksCompleted += parseInt(_milestonesByProjectId[milestoneIdKey][key][i]["num_tasks_completed"]);
+              milestoneNumTasksIncomplete += parseInt(_milestonesByProjectId[milestoneIdKey][key][i]["num_tasks_incomplete"]);
+            }
+            _completedTasksInMilestonesByProjectId.push(milestoneNumTasksCompleted);
+            _incompleteTasksInMilestonesByProjectId.push(milestoneNumTasksIncomplete);
+          }
+        }
+      }
+
       return Object.assign({}, state, {
         milestonesByProjectId: action.milestonesByProjectId,
+        milestoneNamesByProjectId: _milestoneNamesByProjectId,
+        completedTasksInMilestonesByProjectId: _completedTasksInMilestonesByProjectId,
+        incompleteTasksInMilestonesByProjectId: _incompleteTasksInMilestonesByProjectId
       });
+    }
     default:
       return state;
   }

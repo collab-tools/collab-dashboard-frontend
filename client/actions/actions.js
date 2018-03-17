@@ -157,7 +157,7 @@ export function getActiveProjects(startDate, endDate) {
 
 export function getMilestonesByProjectId(projectId) {
   let url = rootApi + '/projects/milestones';
-  console.log('getMilestonesByProjectId', projectId);
+  // console.log('getMilestonesByProjectId', projectId);
   return (dispatch) => {
     return axios.post(url, {
         projectId: projectId
