@@ -127,34 +127,43 @@ export class UsersPage extends Component {
         <Section>
           <MetricsRow metricsData={metricsData} />
         </Section>
-        <Section>
-          <Subheading>Users</Subheading>
-          <Card>
-            <Table onCellClick={this.usersTableCellClicked}>
-              <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-                <TableRow>
-                  <TableHeaderColumn>Name</TableHeaderColumn>
-                  <TableHeaderColumn>Email</TableHeaderColumn>
-                  <TableHeaderColumn>Github</TableHeaderColumn>
-                  <TableHeaderColumn>Projects</TableHeaderColumn>
-                  <TableHeaderColumn>Joined Date</TableHeaderColumn>
-                </TableRow>
-              </TableHeader>
-              <TableBody displayRowCheckbox={false}>
-                {latestUsers.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableRowColumn>{row.display_name}</TableRowColumn>
-                    <TableRowColumn>{row.email}</TableRowColumn>
-                    <TableRowColumn>{row.github_login}</TableRowColumn>
-                    <TableRowColumn>{row.user_projects}</TableRowColumn>
-                    <TableRowColumn>{row.created_at}</TableRowColumn>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Card>
-        </Section>
-        {this._renderProjectsByUserId()}
+        {
+          latestUsers.length < 1 ?
+          <Section>
+            <Subheading>No Users Found!</Subheading>
+          </Section>
+          :
+          <div>
+            <Section>
+              <Subheading>Users</Subheading>
+              <Card>
+                <Table onCellClick={this.usersTableCellClicked}>
+                  <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                    <TableRow>
+                      <TableHeaderColumn>Name</TableHeaderColumn>
+                      <TableHeaderColumn>Email</TableHeaderColumn>
+                      <TableHeaderColumn>Github</TableHeaderColumn>
+                      <TableHeaderColumn>Projects</TableHeaderColumn>
+                      <TableHeaderColumn>Joined Date</TableHeaderColumn>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody displayRowCheckbox={false}>
+                    {latestUsers.map((row, index) => (
+                      <TableRow key={index}>
+                        <TableRowColumn>{row.display_name}</TableRowColumn>
+                        <TableRowColumn>{row.email}</TableRowColumn>
+                        <TableRowColumn>{row.github_login}</TableRowColumn>
+                        <TableRowColumn>{row.user_projects}</TableRowColumn>
+                        <TableRowColumn>{row.created_at}</TableRowColumn>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Card>
+            </Section>
+            {this._renderProjectsByUserId()}
+          </div>
+        }
       </Content>
     );
   }

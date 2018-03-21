@@ -17,7 +17,7 @@ $ npm install
 $ npm start
 ```
 
-Open another command line and navigate to the root directory of `collab-dashboard-v2` folder. Type the following commands on the command line:
+Open another command line and navigate to the root directory of `collab-dashboard-frontend` folder. Type the following commands on the command line:
 
 ```
 $ npm install

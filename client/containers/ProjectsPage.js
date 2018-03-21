@@ -45,7 +45,6 @@ export class ProjectsPage extends Component {
     let projects = this.props.projects;
     let latestProjects = projects.latestProjects;
     let projectName = latestProjects[this.state.rowNumber].content;
-    console.log(projectName);
     let milestoneNamesByProjectId = projects.milestoneNamesByProjectId;
     let completedTasksInMilestonesByProjectId = projects.completedTasksInMilestonesByProjectId;
     let incompleteTasksInMilestonesByProjectId = projects.incompleteTasksInMilestonesByProjectId;
@@ -116,34 +115,43 @@ export class ProjectsPage extends Component {
         <Section>
           <MetricsRow metricsData={metricsData} />
         </Section>
-        <Section>
-          <Subheading>Projects</Subheading>
-          <Card>
-            <Table onCellClick={this.projectsTableCellClicked}>
-              <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-                <TableRow>
-                  <TableHeaderColumn>Name</TableHeaderColumn>
-                  <TableHeaderColumn>Repository</TableHeaderColumn>
-                  <TableHeaderColumn>Members</TableHeaderColumn>
-                  <TableHeaderColumn>Size</TableHeaderColumn>
-                  <TableHeaderColumn>Created Date</TableHeaderColumn>
-                </TableRow>
-              </TableHeader>
-              <TableBody displayRowCheckbox={false}>
-                {latestProjects.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableRowColumn>{row.content}</TableRowColumn>
-                    <TableRowColumn>{row.github_repo_name}</TableRowColumn>
-                    <TableRowColumn>{row.members}</TableRowColumn>
-                    <TableRowColumn>{row.project_size}</TableRowColumn>
-                    <TableRowColumn>{row.created_at}</TableRowColumn>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Card>
-        </Section>
-        {this._renderMilestonesByProjectId()}
+        {
+          latestProjects.length < 1 ?
+          <Section>
+            <Subheading>No Projects Found!</Subheading>
+          </Section>
+          :
+          <div>
+            <Section>
+              <Subheading>Projects</Subheading>
+              <Card>
+                <Table onCellClick={this.projectsTableCellClicked}>
+                  <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                    <TableRow>
+                      <TableHeaderColumn>Name</TableHeaderColumn>
+                      <TableHeaderColumn>Repository</TableHeaderColumn>
+                      <TableHeaderColumn>Members</TableHeaderColumn>
+                      <TableHeaderColumn>Size</TableHeaderColumn>
+                      <TableHeaderColumn>Created Date</TableHeaderColumn>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody displayRowCheckbox={false}>
+                    {latestProjects.map((row, index) => (
+                      <TableRow key={index}>
+                        <TableRowColumn>{row.content}</TableRowColumn>
+                        <TableRowColumn>{row.github_repo_name}</TableRowColumn>
+                        <TableRowColumn>{row.members}</TableRowColumn>
+                        <TableRowColumn>{row.project_size}</TableRowColumn>
+                        <TableRowColumn>{row.created_at}</TableRowColumn>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Card>
+            </Section>
+            {this._renderMilestonesByProjectId()}
+          </div>
+        }
       </Content>
     );
   }
