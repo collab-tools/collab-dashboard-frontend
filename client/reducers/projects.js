@@ -74,18 +74,17 @@ export default function projects(state = initialState, action) {
           if (key == 'milestone_name') {
             _milestoneNamesByProjectId.push(_milestonesByProjectId[milestoneIdKey][key]);
           }
-          if (key == 'users') {
-            let milestoneNumTasksCompleted = 0;
-            let milestoneNumTasksIncomplete = 0;
-            for (var i = 0; i < _milestonesByProjectId[milestoneIdKey][key].length; i++) {
-              milestoneNumTasksCompleted += parseInt(_milestonesByProjectId[milestoneIdKey][key][i]["num_tasks_completed"]);
-              milestoneNumTasksIncomplete += parseInt(_milestonesByProjectId[milestoneIdKey][key][i]["num_tasks_incomplete"]);
-            }
-            _completedTasksInMilestonesByProjectId.push(milestoneNumTasksCompleted);
-            _incompleteTasksInMilestonesByProjectId.push(milestoneNumTasksIncomplete);
+          if (key == 'num_tasks_completed') {
+            _completedTasksInMilestonesByProjectId.push(parseInt(_milestonesByProjectId[milestoneIdKey][key]));
+          }
+          if (key == 'num_tasks_incomplete') {
+            _incompleteTasksInMilestonesByProjectId.push(parseInt(_milestonesByProjectId[milestoneIdKey][key]));
           }
         }
       }
+
+      // console.log('_completedTasksInMilestonesByProjectId', _completedTasksInMilestonesByProjectId);
+      // console.log('_incompleteTasksInMilestonesByProjectId', _incompleteTasksInMilestonesByProjectId);
 
       return Object.assign({}, state, {
         milestonesByProjectId: action.milestonesByProjectId,

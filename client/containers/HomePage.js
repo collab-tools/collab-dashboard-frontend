@@ -17,7 +17,6 @@ export class HomePage extends Component {
     let users = this.props.users;
     let milestones = this.props.milestones;
     let tasks = this.props.tasks;
-    let messages = this.props.messages;
     let retentionRate = (users.retentionRate * 100).toFixed(1) + "%";
     let milestonesFeatureUtilizationRate = (milestones.featureUtilizationRate).toFixed(1) * 100;
     let tasksFeatureUtilizationRate = (tasks.featureUtilizationRate).toFixed(1) * 100;
@@ -27,9 +26,6 @@ export class HomePage extends Component {
     }, {
       metric: milestones.totalMilestones,
       metricLabel: "Total Milestones",
-    }, {
-      metric: messages.totalMessages,
-      metricLabel: "Total Messages",
     }, {
       metric: retentionRate,
       metricLabel: "Retention Rate",
@@ -88,7 +84,6 @@ const mapStateToProps = (state, ownProps) => ({
   users: state.users,
   milestones: state.milestones,
   tasks: state.tasks,
-  messages: state.messages,
 });
 
 export default connect(

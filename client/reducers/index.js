@@ -5,7 +5,6 @@ import projects from './projects';
 import users from './users';
 import milestones from './milestones';
 import tasks from './tasks';
-import messages from './messages';
 
 const rootReducer = combineReducers({
   navigation,
@@ -13,8 +12,7 @@ const rootReducer = combineReducers({
   projects,
   users,
   milestones,
-  tasks,
-  messages
+  tasks
 })
 
 export default rootReducer;

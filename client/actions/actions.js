@@ -32,9 +32,7 @@ import {
   GET_PENDING_TASKS,
   GET_COMPLETED_TASKS,
   GET_TASKS_COMPLETION_DATA,
-  GET_TASKS_FEATURE_UTILIZATION_RATE,
-
-  GET_TOTAL_MESSAGES
+  GET_TASKS_FEATURE_UTILIZATION_RATE
 } from '../constants/actionTypes';
 
 const rootApi = 'http://localhost:3001'
@@ -209,6 +207,7 @@ export function getNewUsers(startDate, endDate) {
         }
       }).then(response => {
         // console.log('getNewUsers ', response.data);
+        // console.log('startDate ' + startDate + ' endDate ' + endDate);
         dispatch(_getNewUsers(response.data))
       })
       .catch(error => {
@@ -288,6 +287,7 @@ export function getRetentionRate(startDate, endDate) {
         }
       }).then(response => {
         // console.log('getRetentionRate ', response.data);
+        // console.log('startDate ' + startDate + ' endDate ' + endDate);
         dispatch(_getRetentionRate(response.data))
       })
       .catch(error => {
@@ -556,26 +556,6 @@ export function getTasksFeatureUtilizationRate(startDate, endDate) {
   };
 };
 
-export function getTotalMessages(startDate, endDate) {
-  let url = rootApi + '/messages/count';
-  return (dispatch) => {
-    return axios.post(url, {
-        startDate: startDate,
-        endDate: endDate
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      }).then(response => {
-        // console.log('getTotalMessages ', response.data);
-        dispatch(_getTotalMessages(response.data))
-      })
-      .catch(error => {
-        throw(error);
-      });
-  };
-};
-
 /*  SUCCESS FUNCTIONS  */
 
 export function _authenticateUser(res) {
@@ -777,13 +757,5 @@ export function _getTasksFeatureUtilizationRate(res) {
   return {
     type: GET_TASKS_FEATURE_UTILIZATION_RATE,
     featureUtilizationRate,
-  }
-};
-
-export function _getTotalMessages(res) {
-  let totalMessages = res.count;
-  return {
-    type: GET_TOTAL_MESSAGES,
-    totalMessages,
   }
 };

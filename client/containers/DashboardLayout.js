@@ -39,7 +39,6 @@ import {
   getCompletedTasks,
   getTasksCompletionData,
   getTasksFeatureUtilizationRate,
-  getTotalMessages
 } from '../actions/actions';
 
 export class DashboardLayout extends Component {
@@ -63,7 +62,7 @@ export class DashboardLayout extends Component {
   }
 
   getData(startDate, endDate, maxEntries) {
-    console.log(startDate, endDate, maxEntries);
+    // console.log(startDate, endDate, maxEntries);
 
     this.props.getTotalUsers(this.props.login.jwtToken, startDate, endDate);
     this.props.getNewUsers(startDate, endDate);
@@ -90,8 +89,6 @@ export class DashboardLayout extends Component {
     this.props.getCompletedTasks(startDate, endDate);
     this.props.getTasksCompletionData(startDate, endDate);
     this.props.getTasksFeatureUtilizationRate(startDate, endDate);
-
-    this.props.getTotalMessages(startDate, endDate);
   }
 
   changeTimePeriodOption(event, index, value){
@@ -249,8 +246,7 @@ const mapDispatchToProps = {
   getPendingTasks,
   getCompletedTasks,
   getTasksCompletionData,
-  getTasksFeatureUtilizationRate,
-  getTotalMessages
+  getTasksFeatureUtilizationRate
 };
 
 
