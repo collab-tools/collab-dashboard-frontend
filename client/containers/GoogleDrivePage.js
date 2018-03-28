@@ -56,7 +56,7 @@ export class GoogleDrivePage extends Component {
       }]
     };
     return (
-      <Content>
+      <Content id="drivePage">
         <Section>
           <MetricsRow metricsData={metricsData_1} />
         </Section>

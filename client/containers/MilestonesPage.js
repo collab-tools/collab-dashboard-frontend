@@ -52,7 +52,7 @@ export class MilestonesPage extends Component {
         standardDeviationCompletionTime = standardDeviationCompletionTimeInDays + ' days';
       }
     }
-    
+
     let metricsData_1 = [{
       metric: milestones.totalMilestones,
       metricLabel: "Total Milestones",
@@ -84,7 +84,7 @@ export class MilestonesPage extends Component {
       metricLabel: "Standard Deviation - Completion Time",
     }];
     return (
-      <Content>
+      <Content id="milestonesPage">
         <Section>
           <MetricsRow metricsData={metricsData_1} />
         </Section>

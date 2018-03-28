@@ -80,7 +80,7 @@ export class GithubPage extends Component {
       date: '18 Jan 2018'
     }]
     return (
-      <Content>
+      <Content id="githubPage">
         <Section>
           <MetricsRow metricsData={metricsData_1} />
         </Section>

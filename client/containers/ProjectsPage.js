@@ -111,7 +111,7 @@ export class ProjectsPage extends Component {
     }];
     // console.log('ProjectsPage - milestonesByProjectId', milestonesByProjectId);
     return (
-      <Content>
+      <Content id="projectsPage">
         <Section>
           <MetricsRow metricsData={metricsData} />
         </Section>

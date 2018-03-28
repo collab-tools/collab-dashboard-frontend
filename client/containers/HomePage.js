@@ -62,7 +62,7 @@ export class HomePage extends Component {
       }]
     };
     return (
-      <Content>
+      <Content id="homePage">
         <Section>
           <MetricsRow metricsData={metricsData_1} />
         </Section>

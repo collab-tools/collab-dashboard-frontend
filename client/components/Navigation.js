@@ -61,38 +61,54 @@ class Navigation extends Component {
         <Paper zDepth={1} style={styles.leftPanelContainer}>
           <List>
             <Subheader style={styles.subheader}>GENERAL</Subheader>
-            <Link to="/dashboard/" style={styles.linkDecoration} onClick={() => this.props.changeContentType('Home')}>
-              <ListItem primaryText="Home" leftIcon={<DashboardIcon />} />
-            </Link>
-            <Link to="/dashboard/projects" style={styles.linkDecoration} onClick={() => this.props.changeContentType('Projects')}>
-              <ListItem primaryText="Projects" leftIcon={<ProjectsIcon />} />
-            </Link>
-            <Link to="/dashboard/users" style={styles.linkDecoration} onClick={() => this.props.changeContentType('Users')}>
-              <ListItem primaryText="Users" leftIcon={<UsersIcon />} />
-            </Link>
+            <div id="navigationHome">
+              <Link to="/dashboard/" style={styles.linkDecoration} onClick={() => this.props.changeContentType('Home')}>
+                <ListItem primaryText="Home" leftIcon={<DashboardIcon />} />
+              </Link>
+            </div>
+            <div id="navigationProjects">
+              <Link to="/dashboard/projects" style={styles.linkDecoration} onClick={() => this.props.changeContentType('Projects')}>
+                <ListItem primaryText="Projects" leftIcon={<ProjectsIcon />} />
+              </Link>
+            </div>
+            <div id="navigationUsers">
+              <Link to="/dashboard/users" style={styles.linkDecoration} onClick={() => this.props.changeContentType('Users')}>
+                <ListItem primaryText="Users" leftIcon={<UsersIcon />} />
+              </Link>
+            </div>
           </List>
           <Divider />
           <List>
             <Subheader style={styles.subheader}>GLOBAL FEATURES</Subheader>
-            <Link to="/dashboard/github" style={styles.linkDecoration} onClick={() => this.props.changeContentType('Github')}>
-              <ListItem primaryText="Github" leftIcon={GithubIcon} />
-            </Link>
-            <Link to="/dashboard/drive" style={styles.linkDecoration} onClick={() => this.props.changeContentType('Google Drive')}>
-              <ListItem primaryText="Google Drive" leftIcon={GoogleDriveIcon} />
-            </Link>
-            <Link to="/dashboard/milestones" style={styles.linkDecoration} onClick={() => this.props.changeContentType('Milestones')}>
-              <ListItem primaryText="Milestones" leftIcon={<MilestonesIcon />} />
-            </Link>
-            <Link to="/dashboard/tasks" style={styles.linkDecoration} onClick={() => this.props.changeContentType('Tasks')}>
-              <ListItem primaryText="Tasks" leftIcon={<TasksIcon />} />
-            </Link>
+            <div id="navigationGithub">
+              <Link to="/dashboard/github" style={styles.linkDecoration} onClick={() => this.props.changeContentType('Github')}>
+                <ListItem primaryText="Github" leftIcon={GithubIcon} />
+              </Link>
+            </div>
+            <div id="navigationDrive">
+              <Link to="/dashboard/drive" style={styles.linkDecoration} onClick={() => this.props.changeContentType('Google Drive')}>
+                <ListItem primaryText="Google Drive" leftIcon={GoogleDriveIcon} />
+              </Link>
+            </div>
+            <div id="navigationMilestones">
+              <Link to="/dashboard/milestones" style={styles.linkDecoration} onClick={() => this.props.changeContentType('Milestones')}>
+                <ListItem primaryText="Milestones" leftIcon={<MilestonesIcon />} />
+              </Link>
+            </div>
+            <div id="navigationTasks">
+              <Link to="/dashboard/tasks" style={styles.linkDecoration} onClick={() => this.props.changeContentType('Tasks')}>
+                <ListItem primaryText="Tasks" leftIcon={<TasksIcon />} />
+              </Link>
+            </div>
           </List>
           <Divider />
           <List>
             <Subheader style={styles.subheader}>ADMIN</Subheader>
-            <Link to="/" style={styles.linkDecoration} onClick={() => this.props.unauthenticateUser()}>
-              <ListItem primaryText="Logout" leftIcon={<LogoutIcon />} />
-            </Link>
+            <div id="navigationLogout">
+              <Link to="/" style={styles.linkDecoration} onClick={() => this.props.unauthenticateUser()}>
+                <ListItem primaryText="Logout" leftIcon={<LogoutIcon />} />
+              </Link>
+            </div>
           </List>
         </Paper>
       </MuiThemeProvider>

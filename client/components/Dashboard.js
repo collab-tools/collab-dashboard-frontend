@@ -101,6 +101,7 @@ class Dashboard extends Component {
                     onClick={this.toggleNavigationBar}
                   >
                     <i
+                      id="toggleNavigationIcon"
                       style={styles.toggleNavigationBarIcon}
                       className="material-icons"
                     >

@@ -14,7 +14,7 @@ class Content extends Component {
 
   render() {
     return (
-      <div style={styles.contentContainer}>
+      <div id={this.props.id} style={styles.contentContainer}>
         {this.props.children}
       </div>
     );

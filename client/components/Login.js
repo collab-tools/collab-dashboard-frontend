@@ -96,6 +96,7 @@ class Login extends Component {
               <div style={styles.textfieldContainer}>
                 <div>
                   <TextField
+                    id="usernameInput"
                     hintText="Enter username"
                     floatingLabelText="Username"
                     onChange = {(e)=>this.handleUsernameChange(e.target.value)}
@@ -103,6 +104,7 @@ class Login extends Component {
                   />
                   <br/>
                   <TextField
+                    id="passwordInput"
                     hintText="Enter password"
                     floatingLabelText="Password"
                     onChange = {(e)=>this.handlePasswordChange(e.target.value)}
@@ -114,10 +116,10 @@ class Login extends Component {
               </div>
               {
                 (this.state.username == '' && this.state.password == '') ?
-                  <RaisedButton label="Sign in" disabled={true} />
+                  <RaisedButton id="loginButton" label="Sign in" disabled={true} />
                 : <div>
                   <Link to="/dashboard">
-                    <RaisedButton onClick={(e) => this.onSubmit(e)} label="Sign in" secondary={true} />
+                    <RaisedButton id="loginButton" onClick={(e) => this.onSubmit(e)} label="Sign in" secondary={true} />
                   </Link>
                 </div>
               }

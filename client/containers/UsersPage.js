@@ -123,7 +123,7 @@ export class UsersPage extends Component {
     }];
     console.log('UsersPage - projectsByUserId', projectsByUserId);
     return (
-      <Content>
+      <Content id="usersPage">
         <Section>
           <MetricsRow metricsData={metricsData} />
         </Section>

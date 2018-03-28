@@ -49,7 +49,7 @@ export class TasksPage extends Component {
         standardDeviationCompletionTime = standardDeviationCompletionTimeInDays + ' days';
       }
     }
-    
+
     let metricsData_1 = [{
       metric: tasks.totalTasks,
       metricLabel: "Total Tasks",
@@ -74,7 +74,7 @@ export class TasksPage extends Component {
       metricLabel: "Feature Utilization Rate",
     }];
     return (
-      <Content>
+      <Content id="tasksPage">
         <Section>
           <MetricsRow metricsData={metricsData_1} />
         </Section>
