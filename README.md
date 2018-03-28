@@ -21,7 +21,7 @@ Open another command line and navigate to the root directory of `collab-dashboar
 
 ```
 $ npm install
-$ npm run development
+$ npm run dev
 ```
 
 Your Collab Dashboard set up should now be complete and you can view the project at `localhost:3000`.
@@ -37,7 +37,7 @@ $ npm start
 Open another command line and navigate to the root directory of `collab-dashboard-frontend` folder. Type the following commands on the command line:
 
 ```
-$ npm run development
+$ npm run dev
 ```
 
 Your setup should be running and you can view the project at `localhost:3000`.
@@ -47,7 +47,7 @@ Your setup should be running and you can view the project at `localhost:3000`.
 Navigate to the root directory of `collab-dashboard-frontend` folder. Type the following commands on the command line:
 
 ```
-$ npm run production
+$ npm run build
 ```
 
 This will generate static files to the `\static\` directory of `collab-dashboard-frontend`.

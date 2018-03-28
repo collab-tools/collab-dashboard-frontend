@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test mocha --require preprocessor.js tests/.setup.js tests/**/*.spec.js",
-    "development": "cross-env NODE_ENV=development webpack-dev-server --inline --progress --colors --port 3000",
-    "production": "cross-env NODE_ENV=production webpack --config ./webpack.config.js --progress --colors",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --progress --colors --port 3000",
+    "build": "cross-env NODE_ENV=production webpack --config ./webpack.config.js --progress --colors",
     "start": "node server.js"
   },
   "private": true,
