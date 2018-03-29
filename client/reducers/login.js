@@ -14,6 +14,7 @@ export default function login(state = initialState, action) {
     case AUTHENTICATE_USER: {
       let loginToken = action.loginToken;
       let jwtToken = 'JWT ' + loginToken.sessionToken;
+      localStorage.setItem('jwtToken', jwtToken);
       return Object.assign({}, state, {
         username: loginToken.username,
         sessionToken: loginToken.sessionToken,
@@ -21,6 +22,7 @@ export default function login(state = initialState, action) {
       });
     }
     case UNAUTHENTICATE_USER: {
+      localStorage.setItem('jwtToken', '');
       return Object.assign({}, state, {
         username: null,
         sessionToken: null,

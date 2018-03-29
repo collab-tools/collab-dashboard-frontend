@@ -11,7 +11,8 @@ export class DashboardPage extends Component {
 
   render() {
     let login = this.props.login;
-    if (login.sessionToken == null) {
+    let jwtToken = localStorage.getItem('jwtToken');
+    if (jwtToken == null || jwtToken == '') {
       return <Redirect to="/" />;
     }
     return (

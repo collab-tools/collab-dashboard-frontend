@@ -63,8 +63,8 @@ export class DashboardLayout extends Component {
 
   getData(startDate, endDate, maxEntries) {
     // console.log(startDate, endDate, maxEntries);
-
-    this.props.getTotalUsers(this.props.login.jwtToken, startDate, endDate);
+    let jwtToken = localStorage.getItem('jwtToken');
+    this.props.getTotalUsers(jwtToken, startDate, endDate);
     this.props.getNewUsers(startDate, endDate);
     this.props.getActiveUsers(startDate, endDate);
     this.props.getInactiveUsers(startDate, endDate);
@@ -220,8 +220,7 @@ export class DashboardLayout extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  navigation: state.navigation,
-  login: state.login,
+  navigation: state.navigation
 });
 
 const mapDispatchToProps = {
