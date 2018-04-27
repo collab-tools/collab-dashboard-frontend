@@ -44,7 +44,7 @@ export class UsersPage extends Component {
   _renderProjectsByUserId() {
     let users = this.props.users;
     let userName = users.latestUsers[this.state.rowNumber].display_name;
-    console.log(this.state.rowNumber);
+    // console.log(this.state.rowNumber);
     let projectNamesByUserId = users.projectNamesByUserId;
     let completedTasksByUserId = users.completedTasksByUserId;
     let incompleteTasksByUserId = users.incompleteTasksByUserId;
@@ -121,7 +121,7 @@ export class UsersPage extends Component {
       metric: users.activeUsers,
       metricLabel: "Active Users",
     }];
-    console.log('UsersPage - projectsByUserId', projectsByUserId);
+    // console.log('UsersPage - projectsByUserId', projectsByUserId);
     return (
       <Content id="usersPage">
         <Section>

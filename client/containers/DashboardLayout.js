@@ -184,7 +184,7 @@ export class DashboardLayout extends Component {
   }
 
   render() {
-    let contentType = (this.props.navigation.contentType == 'Home' ? "Collab In A Glance" : this.props.navigation.contentType);
+    let contentType = (this.props.navigation.contentType == 'Home' ? "Collab At A Glance" : this.props.navigation.contentType);
     let dbMaxRows = 999;
 
     return (

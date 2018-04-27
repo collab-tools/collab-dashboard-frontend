@@ -94,7 +94,7 @@ export class GithubPage extends Component {
           </Card>
         </Section>
         <Section>
-          <Subheading>Repositories</Subheading>
+          <Subheading>Releases</Subheading>
           <Card>
             <Table>
               <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
