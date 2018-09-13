@@ -76,6 +76,11 @@ class Navigation extends Component {
                 <ListItem primaryText="Users" leftIcon={<UsersIcon />} />
               </Link>
             </div>
+            { this.props.isAdmin ? <div id="navigationStaffs">
+              <Link to="/dashboard/staffs" style={styles.linkDecoration} onClick={() => this.props.changeContentType('Staffs')}>
+                <ListItem primaryText="Staffs" leftIcon={<UsersIcon />} />
+              </Link>
+            </div> : null}
           </List>
           <Divider />
           <List>

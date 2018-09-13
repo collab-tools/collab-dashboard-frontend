@@ -11,6 +11,7 @@ import Heading from '../components/Heading';
 import HomePage from './HomePage';
 import ProjectsPage from './ProjectsPage';
 import UsersPage from './UsersPage';
+
 import GithubPage from './GithubPage';
 import GoogleDrivePage from './GoogleDrivePage';
 import MilestonesPage from './MilestonesPage';
@@ -63,7 +64,7 @@ export class DashboardLayout extends Component {
 
   getData(startDate, endDate, maxEntries) {
     // console.log(startDate, endDate, maxEntries);
-    let jwtToken = localStorage.getItem('jwtToken');
+    let jwtToken = this.props.auth.jwtToken;
     this.props.getTotalUsers(jwtToken, startDate, endDate);
     this.props.getNewUsers(startDate, endDate);
     this.props.getActiveUsers(startDate, endDate);
@@ -220,7 +221,8 @@ export class DashboardLayout extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  navigation: state.navigation
+  navigation: state.navigation,
+  auth: state.auth
 });
 
 const mapDispatchToProps = {

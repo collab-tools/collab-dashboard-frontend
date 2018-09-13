@@ -12,13 +12,13 @@ export class LoginPage extends Component {
 
   render() {
     return (
-      <Login login={this.props.login} authenticateUser={this.props.authenticateUser}/>
+      <Login auth={this.props.auth} authenticateUser={this.props.authenticateUser}/>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  login: state.login,
+  auth: state.auth,
 });
 
 const mapDispatchToProps = {

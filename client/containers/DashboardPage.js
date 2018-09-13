@@ -9,20 +9,23 @@ export class DashboardPage extends Component {
     super(props);
   }
 
-  render() {
-    let login = this.props.login;
-    let jwtToken = localStorage.getItem('jwtToken');
+  componentWillMount() {
+    let auth = this.props.auth;
+    let jwtToken = auth.jwtToken;
     if (jwtToken == null || jwtToken == '') {
-      return <Redirect to="/" />;
+      this.props.history.push('/');
     }
+  }
+
+  render() {
     return (
-      <Dashboard login={this.props.login} />
+      <Dashboard isAdmin={this.props.auth.isAdmin} />
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  login: state.login,
+  auth: state.auth,
 });
 
 export default connect(

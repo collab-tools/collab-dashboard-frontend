@@ -1,10 +1,14 @@
 import axios from "axios";
+// TODO: axios can add some common settings
 
 import {
   CHANGE_CONTENT_TYPE,
 
   AUTHENTICATE_USER,
   UNAUTHENTICATE_USER,
+
+  GET_ALL_STAFFS,
+  GET_STAFF_DETAILS,
 
   GET_TOTAL_PROJECTS,
   GET_NEW_PROJECTS,
@@ -35,7 +39,20 @@ import {
   GET_TASKS_FEATURE_UTILIZATION_RATE
 } from '../constants/actionTypes';
 
-const rootApi = 'http://localhost:3001'
+import {
+  ROOT_API,
+  AUTHENTICATE_USER_URL,
+
+  GET_ALL_STAFF_URL,
+  GET_STAFF_DETAILS_URL,
+  CREATE_STAFF_URL,
+  UPDATE_STAFF_URL,
+
+} from '../constants/url';
+
+import {
+  DEV_KEY
+} from '../constants/secret';
 
 /*  SYNC FUNCTIONS  */
 
@@ -55,11 +72,11 @@ export function unauthenticateUser() {
 /*  ASYNC FUNCTIONS  */
 
 export function authenticateUser(username, password) {
-  let url = rootApi + '/login';
+  let url = ROOT_API + AUTHENTICATE_USER_URL;
   return (dispatch) => {
     return axios.post(url, {
-        username: username,
-        password: password
+        username,
+        password
       }, {
         headers: {
           'Content-Type': 'application/json',
@@ -74,8 +91,89 @@ export function authenticateUser(username, password) {
   };
 };
 
+export function createStaff(name, username, password, isAdmin, callback) {
+  let url = ROOT_API + CREATE_STAFF_URL;
+  return (dispatch) => {
+    return axios.post(url, {
+        devKey: DEV_KEY,
+        name,
+        username,
+        password,
+        isAdmin
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }).then(response => {
+        console.log("createStaff is returned", response.data);
+        callback(response.data.staff.id);
+      })
+      .catch(error => {
+        throw(error);
+      });
+  };
+}
+
+export function updateStaff(name, username, password, isAdmin, callback) {
+  let url = ROOT_API + UPDATE_STAFF_URL;
+  return (dispatch) => {
+    return axios.put(url, {
+        devKey: DEV_KEY,
+        name,
+        username,
+        password,
+        isAdmin
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }).then(response => {
+        console.log("updateStaff is returned", response.data);
+        callback(response.data.staff.id);
+      })
+      .catch(error => {
+        throw(error);
+      });
+  };
+}
+
+export function getAllStaffs() {
+  let url = ROOT_API + GET_ALL_STAFF_URL;
+  return (dispatch) => {
+    return axios.get(url).then(response => {
+        // console.log('authenticateUser ', response.data);
+        console.log("getAllStaffs is returned", response.data);
+        dispatch(_getAllStaffs(response.data))
+      })
+      .catch(error => {
+        throw(error);
+      });
+  };
+}
+
+export function getStaffDetails(id) {
+  let url = ROOT_API + GET_STAFF_DETAILS_URL;
+  return (dispatch) => {
+    return axios.post(url, {
+        devKey: DEV_KEY,
+        id,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }).then(response => {
+        // console.log('authenticateUser ', response.data);
+        console.log("getStaffDetails is returned", response.data);
+        dispatch(_getStaffDetails(response.data))
+      })
+      .catch(error => {
+        throw(error);
+      });
+  };
+}
+
 export function getTotalProjects(startDate, endDate) {
-  let url = rootApi + '/projects/count';
+  let url = ROOT_API + '/projects/count';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -95,7 +193,7 @@ export function getTotalProjects(startDate, endDate) {
 };
 
 export function getNewProjects(startDate, endDate) {
-  let url = rootApi + '/projects/num-created-between-dates';
+  let url = ROOT_API + '/projects/num-created-between-dates';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -115,7 +213,7 @@ export function getNewProjects(startDate, endDate) {
 };
 
 export function getLatestProjects(maxEntries) {
-  let url = rootApi + '/projects/latest';
+  let url = ROOT_API + '/projects/latest';
   return (dispatch) => {
     return axios.post(url, {
         maxProjects: maxEntries
@@ -134,7 +232,7 @@ export function getLatestProjects(maxEntries) {
 };
 
 export function getActiveProjects(startDate, endDate) {
-  let url = rootApi + '/projects/active-rate-between-dates';
+  let url = ROOT_API + '/projects/active-rate-between-dates';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -154,7 +252,7 @@ export function getActiveProjects(startDate, endDate) {
 };
 
 export function getMilestonesByProjectId(projectId) {
-  let url = rootApi + '/projects/milestones';
+  let url = ROOT_API + '/projects/milestones';
   // console.log('getMilestonesByProjectId', projectId);
   return (dispatch) => {
     return axios.post(url, {
@@ -174,7 +272,7 @@ export function getMilestonesByProjectId(projectId) {
 };
 
 export function getTotalUsers(jwtToken, startDate, endDate) {
-  let url = rootApi + '/users/count';
+  let url = ROOT_API + '/users/count';
   // console.log(jwtToken);
   return (dispatch) => {
     return axios.post(url, {
@@ -196,7 +294,7 @@ export function getTotalUsers(jwtToken, startDate, endDate) {
 };
 
 export function getNewUsers(startDate, endDate) {
-  let url = rootApi + '/users/num-created-between-dates';
+  let url = ROOT_API + '/users/num-created-between-dates';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -217,7 +315,7 @@ export function getNewUsers(startDate, endDate) {
 };
 
 export function getLatestUsers(maxEntries) {
-  let url = rootApi + '/users/latest';
+  let url = ROOT_API + '/users/latest';
   return (dispatch) => {
     return axios.post(url, {
         maxUsers: maxEntries
@@ -236,7 +334,7 @@ export function getLatestUsers(maxEntries) {
 };
 
 export function getActiveUsers(startDate, endDate) {
-  let url = rootApi + '/users/num-updated-between-dates';
+  let url = ROOT_API + '/users/num-updated-between-dates';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -256,7 +354,7 @@ export function getActiveUsers(startDate, endDate) {
 };
 
 export function getInactiveUsers(startDate, endDate) {
-  let url = rootApi + '/users/num-not-updated-between-dates';
+  let url = ROOT_API + '/users/num-not-updated-between-dates';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -276,7 +374,7 @@ export function getInactiveUsers(startDate, endDate) {
 }
 
 export function getRetentionRate(startDate, endDate) {
-  let url = rootApi + '/users/retention-rate';
+  let url = ROOT_API + '/users/retention-rate';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -297,7 +395,7 @@ export function getRetentionRate(startDate, endDate) {
 }
 
 export function getProjectsByUserId(userId) {
-  let url = rootApi + '/users/projects';
+  let url = ROOT_API + '/users/projects';
   console.log('getProjectsByUserId', userId);
   return (dispatch) => {
     return axios.post(url, {
@@ -317,7 +415,7 @@ export function getProjectsByUserId(userId) {
 };
 
 export function getTotalMilestones(startDate, endDate) {
-  let url = rootApi + '/milestones/count';
+  let url = ROOT_API + '/milestones/count';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -337,7 +435,7 @@ export function getTotalMilestones(startDate, endDate) {
 };
 
 export function getCompletedMilestones(startDate, endDate) {
-  let url = rootApi + '/milestones/completed-count';
+  let url = ROOT_API + '/milestones/completed-count';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -357,7 +455,7 @@ export function getCompletedMilestones(startDate, endDate) {
 };
 
 export function getAverageMilestonesPerProject(startDate, endDate) {
-  let url = rootApi + '/milestones/average-milestones-per-project';
+  let url = ROOT_API + '/milestones/average-milestones-per-project';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -377,7 +475,7 @@ export function getAverageMilestonesPerProject(startDate, endDate) {
 };
 
 export function getAverageTasksPerMilestone(startDate, endDate) {
-  let url = rootApi + '/milestones/average-tasks-per-milestone';
+  let url = ROOT_API + '/milestones/average-tasks-per-milestone';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -397,7 +495,7 @@ export function getAverageTasksPerMilestone(startDate, endDate) {
 };
 
 export function getMilestonesCompletionData(startDate, endDate) {
-  let url = rootApi + '/milestones/time-taken-data';
+  let url = ROOT_API + '/milestones/time-taken-data';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -417,7 +515,7 @@ export function getMilestonesCompletionData(startDate, endDate) {
 };
 
 export function getMilestonesDeadlinesMissedRate(startDate, endDate) {
-  let url = rootApi + '/milestones/ratio-deadlines-missed';
+  let url = ROOT_API + '/milestones/ratio-deadlines-missed';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -437,7 +535,7 @@ export function getMilestonesDeadlinesMissedRate(startDate, endDate) {
 };
 
 export function getMilestonesFeatureUtilizationRate(startDate, endDate) {
-  let url = rootApi + '/milestones/feature-utilization';
+  let url = ROOT_API + '/milestones/feature-utilization';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -457,7 +555,7 @@ export function getMilestonesFeatureUtilizationRate(startDate, endDate) {
 };
 
 export function getTotalTasks(startDate, endDate) {
-  let url = rootApi + '/tasks/count';
+  let url = ROOT_API + '/tasks/count';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -477,7 +575,7 @@ export function getTotalTasks(startDate, endDate) {
 };
 
 export function getPendingTasks(startDate, endDate) {
-  let url = rootApi + '/tasks/count-pending';
+  let url = ROOT_API + '/tasks/count-pending';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -497,7 +595,7 @@ export function getPendingTasks(startDate, endDate) {
 };
 
 export function getCompletedTasks(startDate, endDate) {
-  let url = rootApi + '/tasks/count-completed';
+  let url = ROOT_API + '/tasks/count-completed';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -517,7 +615,7 @@ export function getCompletedTasks(startDate, endDate) {
 };
 
 export function getTasksCompletionData(startDate, endDate) {
-  let url = rootApi + '/tasks/complete-time-data';
+  let url = ROOT_API + '/tasks/complete-time-data';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -537,7 +635,7 @@ export function getTasksCompletionData(startDate, endDate) {
 };
 
 export function getTasksFeatureUtilizationRate(startDate, endDate) {
-  let url = rootApi + '/tasks/feature-utilization';
+  let url = ROOT_API + '/tasks/feature-utilization';
   return (dispatch) => {
     return axios.post(url, {
         startDate: startDate,
@@ -565,6 +663,23 @@ export function _authenticateUser(res) {
     loginToken,
   }
 };
+
+export function _getAllStaffs(res) {
+  let staffs = res.success;
+  return {
+    type: GET_ALL_STAFFS,
+    staffs,
+  }
+}
+
+export function _getStaffDetails(res) {
+  console.log(res);
+  let staffDetails = res;
+  return {
+    type: GET_STAFF_DETAILS,
+    staffDetails,
+  }
+}
 
 export function _getTotalProjects(res) {
   let totalProjects = res.count;

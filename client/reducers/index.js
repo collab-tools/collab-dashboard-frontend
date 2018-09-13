@@ -1,18 +1,20 @@
 import { combineReducers } from 'redux';
 import navigation from './navigation';
-import login from './login';
+import auth from './auth';
 import projects from './projects';
 import users from './users';
 import milestones from './milestones';
 import tasks from './tasks';
+import staffs from './staffs';
 
 const rootReducer = combineReducers({
   navigation,
-  login,
+  auth,
   projects,
   users,
   milestones,
-  tasks
+  tasks,
+  staffs,
 })
 
 export default rootReducer;

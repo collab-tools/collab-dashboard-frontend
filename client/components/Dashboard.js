@@ -5,57 +5,14 @@ import assign from 'object-assign';
 import AppBar from 'material-ui/AppBar';
 import Paper from 'material-ui/Paper';
 
+import { HashRouter as Router, Route, Link, Switch } from 'react-router-dom';
+
 import NavigationMenu from '../containers/NavigationMenu';
 import DashboardLayout from '../containers/DashboardLayout';
 
-const styles = {
-  pageContainer: {
-    backgroundColor: '#EEEEEE',
-    height: '100%',
-  },
-  titleBar: {
-   position: 'absolute',
-   left: 0,
-   minWidth: 600,
-   overflowX: 'auto'
-  },
-  navigationBarContainer: {
-    position: 'absolute',
-    top: 70,
-    left: 0,
-    backgroundColor: 'white',
-    zIndex: 999,
-    borderRadius: 0,
-    borderLeftWidth: 0,
-  },
-  toggleNavigationBarIcon: {
-    color: 'black',
-    fontSize: 20,
-    lineHeight: 'inherit',
-    cursor: 'pointer',
-  },
-  navigationBar: {
-    backgroundColor: '#00B8D4',
-    color: 'white',
-    width: 200,
-    maxWidth: 200,
-  },
-  dashboardContainer: {
-    backgroundColor: '#EEEEEE',
-    width: '100%',
-    paddingTop: '69px',
-    minHeight: '94vh',
-    position: 'relative',
-  },
-  dashboardLayoutContainer: {
-    backgroundColor: '#EEEEEE',
-    paddingTop: '10px',
-    paddingLeft: '30px',
-    paddingRight: '30px',
-    display: 'flex',
-    flexFlow: 'column',
-  },
-};
+import StaffsPage from '../containers/Staff/StaffsPage';
+import StaffDetailsPage from '../containers/Staff/StaffDetailsPage';
+import StaffsFormPage from '../containers/Staff/StaffsFormPage';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -109,7 +66,17 @@ class Dashboard extends Component {
                     </i>
                   </Paper>
                   <div style={styles.dashboardLayoutContainer}>
-                    <DashboardLayout />
+                      { this.props.isAdmin ? 
+                        <Switch>
+                          <Route exact path="/dashboard/staffs" component={ StaffsPage } />
+                          <Route path="/dashboard/staffs/createoredit" component={ StaffsFormPage } />
+                          <Route path="/dashboard/staffs/:id" component={ StaffDetailsPage } />
+                          <Route path="/dashboard/*" component={ DashboardLayout } />
+                        </Switch> : 
+                        <Switch>
+                          <Route path="/dashboard/*" component={ DashboardLayout } />
+                        </Switch>
+                      }
                   </div>
               </div>
           </Sidebar>
@@ -120,3 +87,53 @@ class Dashboard extends Component {
 }
 
 export default Dashboard;
+
+
+const styles = {
+  pageContainer: {
+    backgroundColor: '#EEEEEE',
+    height: '100%',
+  },
+  titleBar: {
+   position: 'absolute',
+   left: 0,
+   minWidth: 600,
+   overflowX: 'auto'
+  },
+  navigationBarContainer: {
+    position: 'absolute',
+    top: 70,
+    left: 0,
+    backgroundColor: 'white',
+    zIndex: 999,
+    borderRadius: 0,
+    borderLeftWidth: 0,
+  },
+  toggleNavigationBarIcon: {
+    color: 'black',
+    fontSize: 20,
+    lineHeight: 'inherit',
+    cursor: 'pointer',
+  },
+  navigationBar: {
+    backgroundColor: '#00B8D4',
+    color: 'white',
+    width: 200,
+    maxWidth: 200,
+  },
+  dashboardContainer: {
+    backgroundColor: '#EEEEEE',
+    width: '100%',
+    paddingTop: '69px',
+    minHeight: '94vh',
+    position: 'relative',
+  },
+  dashboardLayoutContainer: {
+    backgroundColor: '#EEEEEE',
+    paddingTop: '10px',
+    paddingLeft: '30px',
+    paddingRight: '30px',
+    display: 'flex',
+    flexFlow: 'column',
+  },
+};

@@ -9,26 +9,28 @@ import {
 } from '../actions/actions';
 
 export class NavigationMenu extends Component {
-  constructor(props) {
-    super(props);
-    this.changeContentType = this.changeContentType.bind(this);
-    this.unauthenticateUser = this.unauthenticateUser.bind(this);
-  }
 
-  changeContentType(contentType) {
+  changeContentType = (contentType) => {
     this.props.changeContentType(contentType);
   }
 
-  unauthenticateUser() {
+  unauthenticateUser = () => {
     this.props.unauthenticateUser();
   }
 
   render() {
+    console.log(this.props.isAdmin);
     return (
-      <Navigation changeContentType={this.changeContentType} unauthenticateUser={this.unauthenticateUser}/>
+      <Navigation isAdmin={this.props.isAdmin} 
+                  changeContentType={this.changeContentType} 
+                  unauthenticateUser={this.unauthenticateUser}/>
     )
   };
 }
+
+const mapStateToProps = (state, ownProps) => ({
+  isAdmin: state.auth.isAdmin
+});
 
 const mapDispatchToProps = {
   changeContentType,
@@ -36,6 +38,6 @@ const mapDispatchToProps = {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(NavigationMenu);

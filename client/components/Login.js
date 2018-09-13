@@ -79,11 +79,12 @@ class Login extends Component {
   onSubmit(e) {
     e.preventDefault();
     let { username, password } = this.state;
+    console.log(username, password);
     this.props.authenticateUser(username, password);
   }
 
   render() {
-    let login = this.props.login;
+    let auth = this.props.auth;
     return (
       <MuiThemeProvider>
         <div style={styles.pageContainer}>
@@ -124,7 +125,7 @@ class Login extends Component {
                 </div>
               }
               {
-                login.sessionToken !== null ?
+                auth && auth.token !== null ?
                   <Redirect to="/dashboard" />
                 : null
               }

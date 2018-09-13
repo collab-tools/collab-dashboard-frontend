@@ -5,7 +5,8 @@ import {
 
 const initialState = {
   username: null,
-  sessionToken: null,
+  isAdmin: null,
+  token: null,
   jwtToken: null,
 }
 
@@ -13,21 +14,20 @@ export default function login(state = initialState, action) {
   switch (action.type) {
     case AUTHENTICATE_USER: {
       let loginToken = action.loginToken;
-      let jwtToken = 'JWT ' + loginToken.sessionToken;
-      localStorage.setItem('jwtToken', jwtToken);
-      return Object.assign({}, state, {
+      console.log("AUTHENTICATE_USER is called");
+      console.log(loginToken);
+      let jwtToken = 'JWT ' + loginToken.token;
+
+      return {...state,
         username: loginToken.username,
-        sessionToken: loginToken.sessionToken,
+        isAdmin: loginToken.isAdmin,
+        token: loginToken.token,
         jwtToken: jwtToken,
-      });
+      }
     }
     case UNAUTHENTICATE_USER: {
-      localStorage.setItem('jwtToken', '');
-      return Object.assign({}, state, {
-        username: null,
-        sessionToken: null,
-        jwtToken: null,
-      });
+      console.log("UNAUTHENTICATE_USER is called");
+      return initialState;
     }
     default:
       return state;
