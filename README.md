@@ -24,6 +24,8 @@ $ npm install
 $ npm run dev
 ```
 
+* Add `/client/constants/secret.js` file with `export const DEV_KEY = "12341234";` to be consistant with the backend key;
+
 **Note 1: Use `npm run dev:vm` instead of `npm run dev` if you are developing while using a virtual machine environment like Vagrant.**
 
 **Note 2: You need to have the `collab-tools/collab-dashboard-backend` running in a command prompt, and `collab-tools/collab-dashboard-frontend` running in another command prompt.**
