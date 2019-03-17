@@ -1,21 +1,22 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import moment from 'moment';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+import React, { Component, PropTypes } from "react";
+import { connect } from "react-redux";
+import moment from "moment";
+import SelectField from "material-ui/SelectField";
+import MenuItem from "material-ui/MenuItem";
+import { Route, Switch } from "react-router-dom";
 
-import Content from '../components/Content';
-import HeadingContainer from '../components/HeadingContainer';
-import Heading from '../components/Heading';
+import Content from "../components/Content";
+import HeadingContainer from "../components/HeadingContainer";
+import Heading from "../components/Heading";
 
-import HomePage from './HomePage';
-import ProjectsPage from './ProjectsPage';
-import UsersPage from './UsersPage';
+import HomePage from "./HomePage";
+import ProjectsPage from "./ProjectsPage";
+import UsersPage from "./UsersPage";
 
-import GithubPage from './GithubPage';
-import GoogleDrivePage from './GoogleDrivePage';
-import MilestonesPage from './MilestonesPage';
-import TasksPage from './TasksPage';
+import GithubPage from "./GithubPage";
+import GoogleDrivePage from "./GoogleDrivePage";
+import MilestonesPage from "./MilestonesPage";
+import TasksPage from "./TasksPage";
 
 import {
   getTotalUsers,
@@ -39,8 +40,8 @@ import {
   getPendingTasks,
   getCompletedTasks,
   getTasksCompletionData,
-  getTasksFeatureUtilizationRate,
-} from '../actions/actions';
+  getTasksFeatureUtilizationRate
+} from "../actions/actions";
 
 export class DashboardLayout extends Component {
   constructor(props, context) {
@@ -48,7 +49,7 @@ export class DashboardLayout extends Component {
     this.state = {
       timePeriodOption: 1,
       maxEntries: 10
-    }
+    };
     this.loadContent = this.loadContent.bind(this);
     this.changeTimePeriodOption = this.changeTimePeriodOption.bind(this);
     this.changeMaxEntriesOption = this.changeMaxEntriesOption.bind(this);
@@ -56,8 +57,10 @@ export class DashboardLayout extends Component {
   }
 
   componentDidMount() {
-    let startDate = moment().subtract(7,'d').format('YYYY/MM/DD');
-    let endDate = moment().format('YYYY/MM/DD');
+    let startDate = moment()
+      .subtract(7, "d")
+      .format("YYYY/MM/DD");
+    let endDate = moment().format("YYYY/MM/DD");
     let maxEntries = 10;
     this.getData(startDate, endDate, maxEntries);
   }
@@ -92,9 +95,11 @@ export class DashboardLayout extends Component {
     this.props.getTasksFeatureUtilizationRate(startDate, endDate);
   }
 
-  changeTimePeriodOption(event, index, value){
-    let startDate = moment().subtract(7,'d').format('YYYY/MM/DD');
-    let endDate = moment().format('YYYY/MM/DD');
+  changeTimePeriodOption(event, index, value) {
+    let startDate = moment()
+      .subtract(7, "d")
+      .format("YYYY/MM/DD");
+    let endDate = moment().format("YYYY/MM/DD");
     let maxEntries = 10;
 
     this.setState({
@@ -102,16 +107,22 @@ export class DashboardLayout extends Component {
     });
 
     if (value == 1) {
-      startDate = moment().subtract(7,'d').format('YYYY/MM/DD');
-      endDate = moment().format('YYYY/MM/DD');
+      startDate = moment()
+        .subtract(7, "d")
+        .format("YYYY/MM/DD");
+      endDate = moment().format("YYYY/MM/DD");
     }
     if (value == 2) {
-      startDate = moment().subtract(14,'d').format('YYYY/MM/DD');
-      endDate = moment().format('YYYY/MM/DD');
+      startDate = moment()
+        .subtract(14, "d")
+        .format("YYYY/MM/DD");
+      endDate = moment().format("YYYY/MM/DD");
     }
     if (value == 3) {
-      startDate = moment().subtract(30,'d').format('YYYY/MM/DD');
-      endDate = moment().format('YYYY/MM/DD');
+      startDate = moment()
+        .subtract(30, "d")
+        .format("YYYY/MM/DD");
+      endDate = moment().format("YYYY/MM/DD");
     }
 
     maxEntries = this.state.maxEntries;
@@ -119,9 +130,11 @@ export class DashboardLayout extends Component {
     this.getData(startDate, endDate, maxEntries);
   }
 
-  changeMaxEntriesOption(event, index, value){
-    let startDate = moment().subtract(7,'d').format('YYYY/MM/DD');
-    let endDate = moment().format('YYYY/MM/DD');
+  changeMaxEntriesOption(event, index, value) {
+    let startDate = moment()
+      .subtract(7, "d")
+      .format("YYYY/MM/DD");
+    let endDate = moment().format("YYYY/MM/DD");
     let maxEntries = 10;
 
     this.setState({
@@ -131,69 +144,52 @@ export class DashboardLayout extends Component {
     maxEntries = value;
 
     if (this.state.timePeriodOption == 1) {
-      startDate = moment().subtract(7,'d').format('YYYY/MM/DD');
-      endDate = moment().format('YYYY/MM/DD');
+      startDate = moment()
+        .subtract(7, "d")
+        .format("YYYY/MM/DD");
+      endDate = moment().format("YYYY/MM/DD");
     }
     if (this.state.timePeriodOption == 2) {
-      startDate = moment().subtract(14,'d').format('YYYY/MM/DD');
-      endDate = moment().format('YYYY/MM/DD');
+      startDate = moment()
+        .subtract(14, "d")
+        .format("YYYY/MM/DD");
+      endDate = moment().format("YYYY/MM/DD");
     }
     if (this.state.timePeriodOption == 3) {
-      startDate = moment().subtract(30,'d').format('YYYY/MM/DD');
-      endDate = moment().format('YYYY/MM/DD');
+      startDate = moment()
+        .subtract(30, "d")
+        .format("YYYY/MM/DD");
+      endDate = moment().format("YYYY/MM/DD");
     }
 
     this.getData(startDate, endDate, maxEntries);
   }
 
   loadContent() {
-    let contentType = this.props.navigation.contentType;
-    switch (contentType) {
-      case "Home":
-        return (
-          <HomePage />
-        );
-      case "Projects":
-        return (
-          <ProjectsPage />
-        );
-      case "Github":
-        return (
-          <GithubPage />
-        );
-      case "Google Drive":
-        return (
-          <GoogleDrivePage />
-        );
-      case "Users":
-        return (
-          <UsersPage />
-        );
-      case "Milestones":
-        return (
-          <MilestonesPage />
-        );
-      case "Tasks":
-        return (
-          <TasksPage />
-        );
-      default:
-        return (
-          <HomePage />
-        );
-    }
+    return (
+      <Switch>
+        <Route path="/dashboard/" exact component={HomePage} />
+        <Route path="/dashboard/projects" component={ProjectsPage} />
+        <Route path="/dashboard/users" component={UsersPage} />
+        <Route path="/dashboard/github" component={GithubPage} />
+        <Route path="/dashboard/drive" component={GoogleDrivePage} />
+        <Route path="/dashboard/milestones" component={MilestonesPage} />
+        <Route path="/dashboard/tasks" component={TasksPage} />
+      </Switch>
+    );
   }
 
   render() {
-    let contentType = (this.props.navigation.contentType == 'Home' ? "Collab At A Glance" : this.props.navigation.contentType);
+    let contentType =
+      this.props.navigation.contentType == "Home"
+        ? "Collab At A Glance"
+        : this.props.navigation.contentType;
     let dbMaxRows = 999;
 
     return (
       <Content>
         <HeadingContainer>
-          <Heading>
-            {contentType}
-          </Heading>
+          <Heading>{contentType}</Heading>
           <Heading>
             <SelectField
               value={this.state.maxEntries}
@@ -249,7 +245,6 @@ const mapDispatchToProps = {
   getTasksCompletionData,
   getTasksFeatureUtilizationRate
 };
-
 
 export default connect(
   mapStateToProps,
