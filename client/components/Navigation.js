@@ -69,39 +69,23 @@ class Navigation extends Component {
           <List>
             <Subheader style={styles.subheader}>GENERAL</Subheader>
             <div id="navigationHome">
-              <Link
-                to="/dashboard/"
-                style={styles.linkDecoration}
-                onClick={() => this.props.changeContentType("Home")}
-              >
+              <Link to="/dashboard/" style={styles.linkDecoration}>
                 <ListItem primaryText="Home" leftIcon={<DashboardIcon />} />
               </Link>
             </div>
             <div id="navigationProjects">
-              <Link
-                to="/dashboard/projects"
-                style={styles.linkDecoration}
-                onClick={() => this.props.changeContentType("Projects")}
-              >
+              <Link to="/dashboard/projects" style={styles.linkDecoration}>
                 <ListItem primaryText="Projects" leftIcon={<ProjectsIcon />} />
               </Link>
             </div>
             <div id="navigationUsers">
-              <Link
-                to="/dashboard/users"
-                style={styles.linkDecoration}
-                onClick={() => this.props.changeContentType("Users")}
-              >
+              <Link to="/dashboard/users" style={styles.linkDecoration}>
                 <ListItem primaryText="Users" leftIcon={<UsersIcon />} />
               </Link>
             </div>
             {this.props.isAdmin ? (
               <div id="navigationStaffs">
-                <Link
-                  to="/dashboard/staffs"
-                  style={styles.linkDecoration}
-                  onClick={() => this.props.changeContentType("Staffs")}
-                >
+                <Link to="/dashboard/staffs" style={styles.linkDecoration}>
                   <ListItem primaryText="Staffs" leftIcon={<UsersIcon />} />
                 </Link>
               </div>
@@ -111,44 +95,22 @@ class Navigation extends Component {
           <List>
             <Subheader style={styles.subheader}>GLOBAL FEATURES</Subheader>
             <div id="navigationGithub">
-              <Link
-                to="/dashboard/github"
-                style={styles.linkDecoration}
-                onClick={() => this.props.changeContentType("Github")}
-              >
+              <Link to="/dashboard/github" style={styles.linkDecoration}>
                 <ListItem primaryText="Github" leftIcon={GithubIcon} />
               </Link>
             </div>
             <div id="navigationDrive">
-              <Link
-                to="/dashboard/drive"
-                style={styles.linkDecoration}
-                onClick={() => this.props.changeContentType("Google Drive")}
-              >
-                <ListItem
-                  primaryText="Google Drive"
-                  leftIcon={GoogleDriveIcon}
-                />
+              <Link to="/dashboard/drive" style={styles.linkDecoration}>
+                <ListItem primaryText="Google Drive" leftIcon={GoogleDriveIcon} />
               </Link>
             </div>
             <div id="navigationMilestones">
-              <Link
-                to="/dashboard/milestones"
-                style={styles.linkDecoration}
-                onClick={() => this.props.changeContentType("Milestones")}
-              >
-                <ListItem
-                  primaryText="Milestones"
-                  leftIcon={<MilestonesIcon />}
-                />
+              <Link to="/dashboard/milestones" style={styles.linkDecoration}>
+                <ListItem primaryText="Milestones" leftIcon={<MilestonesIcon />} />
               </Link>
             </div>
             <div id="navigationTasks">
-              <Link
-                to="/dashboard/tasks"
-                style={styles.linkDecoration}
-                onClick={() => this.props.changeContentType("Tasks")}
-              >
+              <Link to="/dashboard/tasks" style={styles.linkDecoration}>
                 <ListItem primaryText="Tasks" leftIcon={<TasksIcon />} />
               </Link>
             </div>

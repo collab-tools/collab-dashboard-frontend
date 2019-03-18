@@ -94,7 +94,7 @@ class Login extends Component {
               <span style={styles.subheadingText}>Dashboard</span>
             </h1>
             <Paper zDepth={1} style={styles.contentContainer}>
-              <Redirect to="/dashboard" />
+              <Redirect to="/dashboard/" />
               <div style={styles.textfieldContainer}>
                 <div>
                   <TextField

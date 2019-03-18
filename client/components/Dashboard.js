@@ -5,14 +5,22 @@ import assign from "object-assign";
 import AppBar from "material-ui/AppBar";
 import Paper from "material-ui/Paper";
 
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 import NavigationMenu from "../containers/NavigationMenu";
-import DashboardLayout from "../containers/DashboardLayout";
 
 import StaffsPage from "../containers/Staff/StaffsPage";
 import StaffDetailsPage from "../containers/Staff/StaffDetailsPage";
 import StaffsFormPage from "../containers/Staff/StaffsFormPage";
+
+import HomePage from "../containers/HomePage";
+import ProjectsPage from "../containers/ProjectsPage";
+import UsersPage from "../containers/UsersPage";
+
+import GithubPage from "../containers/GithubPage";
+import GoogleDrivePage from "../containers/GoogleDrivePage";
+import MilestonesPage from "../containers/MilestonesPage";
+import TasksPage from "../containers/TasksPage";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -73,34 +81,34 @@ class Dashboard extends Component {
                   style={styles.toggleNavigationBarIcon}
                   className="material-icons"
                 >
-                  {this.state.navigationBarOpen
-                    ? "keyboard_arrow_left"
-                    : "keyboard_arrow_right"}
+                  {this.state.navigationBarOpen ? "keyboard_arrow_left" : "keyboard_arrow_right"}
                 </i>
               </Paper>
               <div style={styles.dashboardLayoutContainer}>
-                {this.props.isAdmin ? (
-                  <Switch>
-                    <Route
-                      exact
-                      path="/dashboard/staffs"
-                      component={StaffsPage}
-                    />
-                    <Route
-                      path="/dashboard/staffs/createoredit"
-                      component={StaffsFormPage}
-                    />
-                    <Route
-                      path="/dashboard/staffs/:id"
-                      component={StaffDetailsPage}
-                    />
-                    <Route path="/dashboard/*" component={DashboardLayout} />
-                  </Switch>
-                ) : (
-                  <Switch>
-                    <Route path="/dashboard/*" component={DashboardLayout} />
-                  </Switch>
-                )}
+                <Switch>
+                  <Route
+                    exact
+                    path="/dashboard/staffs"
+                    component={() => (this.props.isAdmin ? <HomePage /> : <StaffsPage />)}
+                  />
+                  <Route
+                    path="/dashboard/staffs/createoredit"
+                    component={() => (this.props.isAdmin ? <HomePage /> : <StaffsFormPage />)}
+                  />
+                  <Route
+                    path="/dashboard/staffs/:id"
+                    component={() => (this.props.isAdmin ? <HomePage /> : <StaffDetailsPage />)}
+                  />
+
+                  <Route path="/dashboard/" exact component={HomePage} />
+                  <Route path="/dashboard/projects" component={ProjectsPage} />
+                  <Route path="/dashboard/users" component={UsersPage} />
+                  <Route path="/dashboard/github" component={GithubPage} />
+                  <Route path="/dashboard/drive" component={GoogleDrivePage} />
+                  <Route path="/dashboard/milestones" component={MilestonesPage} />
+                  <Route path="/dashboard/tasks" component={TasksPage} />
+                  <Redirect to="/dashboard/" />
+                </Switch>
               </div>
             </div>
           </Sidebar>

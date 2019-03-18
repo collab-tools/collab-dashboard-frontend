@@ -2,7 +2,6 @@ import axios from "axios";
 // TODO: axios can add some common settings
 
 import {
-  CHANGE_CONTENT_TYPE,
   AUTHENTICATE_USER,
   UNAUTHENTICATE_USER,
   GET_ALL_STAFFS,
@@ -30,7 +29,9 @@ import {
   GET_PENDING_TASKS,
   GET_COMPLETED_TASKS,
   GET_TASKS_COMPLETION_DATA,
-  GET_TASKS_FEATURE_UTILIZATION_RATE
+  GET_TASKS_FEATURE_UTILIZATION_RATE,
+  SET_MAX_ENTRIES,
+  SET_RECENCY_DAYS
 } from "../constants/actionTypes";
 
 import {
@@ -46,19 +47,25 @@ import { DEV_KEY } from "../constants/secret";
 
 /*  SYNC FUNCTIONS  */
 
-export function changeContentType(contentType) {
-  return {
-    type: CHANGE_CONTENT_TYPE,
-    contentType
-  };
-}
-
 export function unauthenticateUser() {
   return {
     type: UNAUTHENTICATE_USER
   };
 }
 
+export function setMaxEntries(maxEntries) {
+  return {
+    type: SET_MAX_ENTRIES,
+    maxEntries
+  };
+}
+
+export function setRecencyDays(recencyDays) {
+  return {
+    type: SET_RECENCY_DAYS,
+    recencyDays
+  };
+}
 /*  ASYNC FUNCTIONS  */
 
 export function authenticateUser(username, password) {
@@ -318,7 +325,7 @@ export function getMilestonesByProjectId(projectId) {
   };
 }
 
-export function getTotalUsers(jwtToken, startDate, endDate) {
+export function getTotalUsers(startDate, endDate) {
   let url = ROOT_API + "/users/count";
   // console.log(jwtToken);
   return dispatch => {
@@ -331,7 +338,6 @@ export function getTotalUsers(jwtToken, startDate, endDate) {
         },
         {
           headers: {
-            Authorization: jwtToken,
             "Content-Type": "application/json"
           }
         }
@@ -816,7 +822,7 @@ export function getTasksFeatureUtilizationRate(startDate, endDate) {
 
 /*  SUCCESS FUNCTIONS  */
 
-export function _authenticateUser(res) {
+function _authenticateUser(res) {
   let loginToken = res;
   return {
     type: AUTHENTICATE_USER,
@@ -824,7 +830,7 @@ export function _authenticateUser(res) {
   };
 }
 
-export function _getAllStaffs(res) {
+function _getAllStaffs(res) {
   let staffs = res.success;
   return {
     type: GET_ALL_STAFFS,
@@ -832,7 +838,7 @@ export function _getAllStaffs(res) {
   };
 }
 
-export function _getStaffDetails(res) {
+function _getStaffDetails(res) {
   console.log(res);
   let staffDetails = res;
   return {
@@ -841,7 +847,7 @@ export function _getStaffDetails(res) {
   };
 }
 
-export function _getTotalProjects(res) {
+function _getTotalProjects(res) {
   let totalProjects = res.count;
   return {
     type: GET_TOTAL_PROJECTS,
@@ -849,7 +855,7 @@ export function _getTotalProjects(res) {
   };
 }
 
-export function _getNewProjects(res) {
+function _getNewProjects(res) {
   let newProjects = res.count;
   return {
     type: GET_NEW_PROJECTS,
@@ -857,7 +863,7 @@ export function _getNewProjects(res) {
   };
 }
 
-export function _getLatestProjects(res) {
+function _getLatestProjects(res) {
   let latestProjects = res;
   return {
     type: GET_LATEST_PROJECTS,
@@ -865,7 +871,7 @@ export function _getLatestProjects(res) {
   };
 }
 
-export function _getActiveProjects(res) {
+function _getActiveProjects(res) {
   let activeProjects = res.rate;
   return {
     type: GET_ACTIVE_PROJECTS,
@@ -873,7 +879,7 @@ export function _getActiveProjects(res) {
   };
 }
 
-export function _getMilestonesByProjectId(res) {
+function _getMilestonesByProjectId(res) {
   let milestonesByProjectId = res;
   return {
     type: GET_MILESTONES_BY_PROJECT_ID,
@@ -881,7 +887,7 @@ export function _getMilestonesByProjectId(res) {
   };
 }
 
-export function _getTotalUsers(res) {
+function _getTotalUsers(res) {
   let totalUsers = res.count;
   return {
     type: GET_TOTAL_USERS,
@@ -889,7 +895,7 @@ export function _getTotalUsers(res) {
   };
 }
 
-export function _getNewUsers(res) {
+function _getNewUsers(res) {
   let newUsers = res.count;
   return {
     type: GET_NEW_USERS,
@@ -897,7 +903,7 @@ export function _getNewUsers(res) {
   };
 }
 
-export function _getLatestUsers(res) {
+function _getLatestUsers(res) {
   let latestUsers = res;
   return {
     type: GET_LATEST_USERS,
@@ -905,7 +911,7 @@ export function _getLatestUsers(res) {
   };
 }
 
-export function _getActiveUsers(res) {
+function _getActiveUsers(res) {
   let activeUsers = res.count;
   return {
     type: GET_ACTIVE_USERS,
@@ -913,7 +919,7 @@ export function _getActiveUsers(res) {
   };
 }
 
-export function _getInactiveUsers(res) {
+function _getInactiveUsers(res) {
   let inactiveUsers = res.count;
   return {
     type: GET_INACTIVE_USERS,
@@ -921,7 +927,7 @@ export function _getInactiveUsers(res) {
   };
 }
 
-export function _getRetentionRate(res) {
+function _getRetentionRate(res) {
   let retentionRate = res.rate;
   return {
     type: GET_RETENTION_RATE,
@@ -929,7 +935,7 @@ export function _getRetentionRate(res) {
   };
 }
 
-export function _getProjectsByUserId(res) {
+function _getProjectsByUserId(res) {
   let projectsByUserId = res;
   return {
     type: GET_PROJECTS_BY_USER_ID,
@@ -937,7 +943,7 @@ export function _getProjectsByUserId(res) {
   };
 }
 
-export function _getTotalMilestones(res) {
+function _getTotalMilestones(res) {
   let totalMilestones = res.count;
   return {
     type: GET_TOTAL_MILESTONES,
@@ -945,7 +951,7 @@ export function _getTotalMilestones(res) {
   };
 }
 
-export function _getCompletedMilestones(res) {
+function _getCompletedMilestones(res) {
   let completedMilestones = res.count;
   return {
     type: GET_COMPLETED_MILESTONES,
@@ -953,7 +959,7 @@ export function _getCompletedMilestones(res) {
   };
 }
 
-export function _getAverageMilestonesPerProject(res) {
+function _getAverageMilestonesPerProject(res) {
   let averageMilestonesPerProject = res.result;
   return {
     type: GET_AVERAGE_MILESTONES_PER_PROJECT,
@@ -961,7 +967,7 @@ export function _getAverageMilestonesPerProject(res) {
   };
 }
 
-export function _getAverageTasksPerMilestone(res) {
+function _getAverageTasksPerMilestone(res) {
   let averageTasksPerMilestone = res.result;
   return {
     type: GET_AVERAGE_TASKS_PER_MILESTONE,
@@ -969,7 +975,7 @@ export function _getAverageTasksPerMilestone(res) {
   };
 }
 
-export function _getMilestonesCompletionData(res) {
+function _getMilestonesCompletionData(res) {
   let milestonesCompletionData = res.data;
   return {
     type: GET_MILESTONES_COMPLETION_DATA,
@@ -977,7 +983,7 @@ export function _getMilestonesCompletionData(res) {
   };
 }
 
-export function _getMilestonesDeadlinesMissedRate(res) {
+function _getMilestonesDeadlinesMissedRate(res) {
   let deadlinesMissedRate = res.result;
   return {
     type: GET_MILESTONES_DEADLINES_MISSED_RATE,
@@ -985,7 +991,7 @@ export function _getMilestonesDeadlinesMissedRate(res) {
   };
 }
 
-export function _getMilestonesFeatureUtilizationRate(res) {
+function _getMilestonesFeatureUtilizationRate(res) {
   let featureUtilizationRate = res.result;
   return {
     type: GET_MILESTONES_FEATURE_UTILIZATION_RATE,
@@ -993,7 +999,7 @@ export function _getMilestonesFeatureUtilizationRate(res) {
   };
 }
 
-export function _getTotalTasks(res) {
+function _getTotalTasks(res) {
   let totalTasks = res.count;
   return {
     type: GET_TOTAL_TASKS,
@@ -1001,7 +1007,7 @@ export function _getTotalTasks(res) {
   };
 }
 
-export function _getPendingTasks(res) {
+function _getPendingTasks(res) {
   let pendingTasks = res.count;
   return {
     type: GET_PENDING_TASKS,
@@ -1009,7 +1015,7 @@ export function _getPendingTasks(res) {
   };
 }
 
-export function _getCompletedTasks(res) {
+function _getCompletedTasks(res) {
   let completedTasks = res.count;
   return {
     type: GET_COMPLETED_TASKS,
@@ -1017,7 +1023,7 @@ export function _getCompletedTasks(res) {
   };
 }
 
-export function _getTasksCompletionData(res) {
+function _getTasksCompletionData(res) {
   let tasksCompletionData = res.data;
   return {
     type: GET_TASKS_COMPLETION_DATA,
@@ -1025,7 +1031,7 @@ export function _getTasksCompletionData(res) {
   };
 }
 
-export function _getTasksFeatureUtilizationRate(res) {
+function _getTasksFeatureUtilizationRate(res) {
   let featureUtilizationRate = res.result;
   return {
     type: GET_TASKS_FEATURE_UTILIZATION_RATE,

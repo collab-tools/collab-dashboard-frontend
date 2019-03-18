@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from "react";
 import { connect } from "react-redux";
 import ReactHighcharts from "react-highcharts";
+import moment from "moment";
+
 import {
   Table,
   TableBody,
@@ -10,7 +12,13 @@ import {
   TableRowColumn
 } from "material-ui/Table";
 
-import { getMilestonesByProjectId } from "../actions/actions";
+import {
+  getTotalProjects,
+  getNewProjects,
+  getActiveProjects,
+  getLatestProjects,
+  getMilestonesByProjectId
+} from "../actions/actions";
 
 import Content from "../components/Content";
 import Section from "../components/Section";
@@ -18,17 +26,36 @@ import MetricsRow from "../components/MetricsRow";
 import Subheading from "../components/Subheading";
 import Card from "../components/Card";
 
-export class ProjectsPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      shouldRenderMilestonesByProjectId: false,
-      rowNumber: 0
-    };
-    this.projectsTableCellClicked = this.projectsTableCellClicked.bind(this);
-  }
+import DashboardLayout from "./DashboardLayout";
 
-  projectsTableCellClicked(row, column, event) {
+class ProjectsPage extends Component {
+  state = {
+    shouldRenderMilestonesByProjectId: false,
+    rowNumber: 0
+  };
+  componentWillMount() {
+    this._fetchData();
+  }
+  componentDidUpdate(prevProps) {
+    const { recencyDays, maxEntries } = this.props.queryOptions;
+    const { recencyDays: prevRecencyDays, maxEntries: prevMaxEntries } = prevProps.queryOptions;
+    if (recencyDays !== prevRecencyDays || maxEntries !== prevMaxEntries) {
+      this._fetchData();
+    }
+  }
+  _fetchData() {
+    const { recencyDays, maxEntries } = this.props.queryOptions;
+    let startDate = moment()
+      .subtract(recencyDays, "d")
+      .format("YYYY/MM/DD");
+    let endDate = moment().format("YYYY/MM/DD");
+
+    this.props.getTotalProjects(startDate, endDate);
+    this.props.getNewProjects(startDate, endDate);
+    this.props.getLatestProjects(maxEntries);
+    this.props.getActiveProjects(startDate, endDate);
+  }
+  projectsTableCellClicked = (row, column, event) => {
     let projects = this.props.projects;
     let latestProjects = projects.latestProjects;
     let projectId = latestProjects[row].project_id;
@@ -37,17 +64,15 @@ export class ProjectsPage extends Component {
       shouldRenderMilestonesByProjectId: true,
       rowNumber: row
     });
-  }
+  };
 
   _renderMilestonesByProjectId() {
     let projects = this.props.projects;
     let latestProjects = projects.latestProjects;
     let projectName = latestProjects[this.state.rowNumber].content;
     let milestoneNamesByProjectId = projects.milestoneNamesByProjectId;
-    let completedTasksInMilestonesByProjectId =
-      projects.completedTasksInMilestonesByProjectId;
-    let incompleteTasksInMilestonesByProjectId =
-      projects.incompleteTasksInMilestonesByProjectId;
+    let completedTasksInMilestonesByProjectId = projects.completedTasksInMilestonesByProjectId;
+    let incompleteTasksInMilestonesByProjectId = projects.incompleteTasksInMilestonesByProjectId;
     let milestoneNamesByProjectIdGraphConfig = {
       chart: {
         type: "bar"
@@ -83,18 +108,17 @@ export class ProjectsPage extends Component {
         }
       ]
     };
-    if (this.state.shouldRenderMilestonesByProjectId) {
-      return (
-        <div>
-          <Section>
-            <Subheading>Milestone Statistics by {projectName}</Subheading>
-            <Card>
-              <ReactHighcharts config={milestoneNamesByProjectIdGraphConfig} />
-            </Card>
-          </Section>
-        </div>
-      );
-    }
+
+    return (
+      <div>
+        <Section>
+          <Subheading>Milestone Statistics by {projectName}</Subheading>
+          <Card>
+            <ReactHighcharts config={milestoneNamesByProjectIdGraphConfig} />
+          </Card>
+        </Section>
+      </div>
+    );
   }
 
   render() {
@@ -116,61 +140,64 @@ export class ProjectsPage extends Component {
         metricLabel: "Active Projects"
       }
     ];
-    // console.log('ProjectsPage - milestonesByProjectId', milestonesByProjectId);
     return (
-      <Content id="projectsPage">
-        <Section>
-          <MetricsRow metricsData={metricsData} />
-        </Section>
-        {latestProjects.length < 1 ? (
+      <DashboardLayout heading="Projects">
+        <Content id="projectsPage">
           <Section>
-            <Subheading>No Projects Found!</Subheading>
+            <MetricsRow metricsData={metricsData} />
           </Section>
-        ) : (
-          <div>
+          {latestProjects.length < 1 ? (
             <Section>
-              <Subheading>Projects</Subheading>
-              <Card>
-                <Table onCellClick={this.projectsTableCellClicked}>
-                  <TableHeader
-                    displaySelectAll={false}
-                    adjustForCheckbox={false}
-                  >
-                    <TableRow>
-                      <TableHeaderColumn>Name</TableHeaderColumn>
-                      <TableHeaderColumn>Repository</TableHeaderColumn>
-                      <TableHeaderColumn>Members</TableHeaderColumn>
-                      <TableHeaderColumn>Size</TableHeaderColumn>
-                      <TableHeaderColumn>Created Date</TableHeaderColumn>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody displayRowCheckbox={false}>
-                    {latestProjects.map((row, index) => (
-                      <TableRow key={index}>
-                        <TableRowColumn>{row.content}</TableRowColumn>
-                        <TableRowColumn>{row.github_repo_name}</TableRowColumn>
-                        <TableRowColumn>{row.members}</TableRowColumn>
-                        <TableRowColumn>{row.project_size}</TableRowColumn>
-                        <TableRowColumn>{row.created_at}</TableRowColumn>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </Card>
+              <Subheading>No Projects Found!</Subheading>
             </Section>
-            {this._renderMilestonesByProjectId()}
-          </div>
-        )}
-      </Content>
+          ) : (
+            <div>
+              <Section>
+                <Subheading>Projects</Subheading>
+                <Card>
+                  <Table onCellClick={this.projectsTableCellClicked}>
+                    <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                      <TableRow>
+                        <TableHeaderColumn>Name</TableHeaderColumn>
+                        <TableHeaderColumn>Repository</TableHeaderColumn>
+                        <TableHeaderColumn>Members</TableHeaderColumn>
+                        <TableHeaderColumn>Size</TableHeaderColumn>
+                        <TableHeaderColumn>Created Date</TableHeaderColumn>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody displayRowCheckbox={false}>
+                      {latestProjects.map((row, index) => (
+                        <TableRow key={index}>
+                          <TableRowColumn>{row.content}</TableRowColumn>
+                          <TableRowColumn>{row.github_repo_name}</TableRowColumn>
+                          <TableRowColumn>{row.members}</TableRowColumn>
+                          <TableRowColumn>{row.project_size}</TableRowColumn>
+                          <TableRowColumn>{row.created_at}</TableRowColumn>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </Card>
+              </Section>
+              {this.state.shouldRenderMilestonesByProjectId && this._renderMilestonesByProjectId()}
+            </div>
+          )}
+        </Content>
+      </DashboardLayout>
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  projects: state.projects
-});
+const mapStateToProps = state => {
+  let { projects, queryOptions } = state;
+  return { projects, queryOptions };
+};
 
 const mapDispatchToProps = {
+  getTotalProjects,
+  getNewProjects,
+  getActiveProjects,
+  getLatestProjects,
   getMilestonesByProjectId
 };
 
