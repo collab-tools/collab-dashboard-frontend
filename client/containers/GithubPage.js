@@ -3,14 +3,11 @@ import { connect } from "react-redux";
 import ReactHighcharts from "react-highcharts";
 import moment from "moment";
 
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn
-} from "material-ui/Table";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
 
 import Content from "../components/Content";
 import Section from "../components/Section";
@@ -129,23 +126,23 @@ class GithubPage extends Component {
             <Subheading>Releases</Subheading>
             <Card>
               <Table>
-                <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                <TableHead displaySelectAll={false} adjustForCheckbox={false}>
                   <TableRow>
-                    <TableHeaderColumn>Project</TableHeaderColumn>
-                    <TableHeaderColumn>Repository</TableHeaderColumn>
-                    <TableHeaderColumn>Release Tag</TableHeaderColumn>
-                    <TableHeaderColumn>Assets</TableHeaderColumn>
-                    <TableHeaderColumn>Date</TableHeaderColumn>
+                    <TableCell>Project</TableCell>
+                    <TableCell>Repository</TableCell>
+                    <TableCell>Release Tag</TableCell>
+                    <TableCell>Assets</TableCell>
+                    <TableCell>Date</TableCell>
                   </TableRow>
-                </TableHeader>
+                </TableHead>
                 <TableBody displayRowCheckbox={false}>
                   {latestRepositories.map((row, index) => (
                     <TableRow key={index}>
-                      <TableRowColumn>{row.project_name}</TableRowColumn>
-                      <TableRowColumn>{row.repository_name}</TableRowColumn>
-                      <TableRowColumn>{row.release_tag}</TableRowColumn>
-                      <TableRowColumn>{row.assets}</TableRowColumn>
-                      <TableRowColumn>{row.date}</TableRowColumn>
+                      <TableCell>{row.project_name}</TableCell>
+                      <TableCell>{row.repository_name}</TableCell>
+                      <TableCell>{row.release_tag}</TableCell>
+                      <TableCell>{row.assets}</TableCell>
+                      <TableCell>{row.date}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

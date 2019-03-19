@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import Paper from "material-ui/Paper";
-import TextField from "material-ui/TextField";
-import RaisedButton from "material-ui/RaisedButton";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import Paper from "@material-ui/core/Paper";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 
@@ -99,7 +99,7 @@ class Login extends Component {
                 <div>
                   <TextField
                     id="usernameInput"
-                    hintText="Enter username"
+                    placeholder="Enter username"
                     floatingLabelText="Username"
                     onChange={e => this.handleUsernameChange(e.target.value)}
                     errorText={this.state.errorText}
@@ -107,7 +107,7 @@ class Login extends Component {
                   <br />
                   <TextField
                     id="passwordInput"
-                    hintText="Enter password"
+                    placeholder="Enter password"
                     floatingLabelText="Password"
                     onChange={e => this.handlePasswordChange(e.target.value)}
                     type="password"
@@ -117,15 +117,12 @@ class Login extends Component {
                 </div>
               </div>
               {this.state.username == "" && this.state.password == "" ? (
-                <RaisedButton
-                  id="loginButton"
-                  label="Sign in"
-                  disabled={true}
-                />
+                <Button variant="contained" id="loginButton" label="Sign in" disabled={true} />
               ) : (
                 <div>
                   <Link to="/dashboard">
-                    <RaisedButton
+                    <Button
+                      variant="contained"
                       id="loginButton"
                       onClick={e => this.onSubmit(e)}
                       label="Sign in"

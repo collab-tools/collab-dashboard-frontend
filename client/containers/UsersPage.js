@@ -2,14 +2,11 @@ import React, { Component, PropTypes } from "react";
 import { connect } from "react-redux";
 import ReactHighcharts from "react-highcharts";
 import moment from "moment";
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn
-} from "material-ui/Table";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
 
 import { fetchData } from "../actions/actions";
 import {
@@ -177,23 +174,23 @@ class UsersPage extends Component {
                 <Subheading>Users</Subheading>
                 <Card>
                   <Table onCellClick={this.usersTableCellClicked}>
-                    <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                    <TableHead>
                       <TableRow>
-                        <TableHeaderColumn>Name</TableHeaderColumn>
-                        <TableHeaderColumn>Email</TableHeaderColumn>
-                        <TableHeaderColumn>Github</TableHeaderColumn>
-                        <TableHeaderColumn>Projects</TableHeaderColumn>
-                        <TableHeaderColumn>Joined Date</TableHeaderColumn>
+                        <TableCell>Name</TableCell>
+                        <TableCell>Email</TableCell>
+                        <TableCell>Github</TableCell>
+                        <TableCell>Projects</TableCell>
+                        <TableCell>Joined Date</TableCell>
                       </TableRow>
-                    </TableHeader>
-                    <TableBody displayRowCheckbox={false}>
+                    </TableHead>
+                    <TableBody>
                       {latestUsers.map((row, index) => (
-                        <TableRow key={index}>
-                          <TableRowColumn>{row.display_name}</TableRowColumn>
-                          <TableRowColumn>{row.email}</TableRowColumn>
-                          <TableRowColumn>{row.github_login}</TableRowColumn>
-                          <TableRowColumn>{row.user_projects}</TableRowColumn>
-                          <TableRowColumn>{row.created_at}</TableRowColumn>
+                        <TableRow key={index} onClick={() => this.usersTableCellClicked(index)}>
+                          <TableCell>{row.display_name}</TableCell>
+                          <TableCell>{row.email}</TableCell>
+                          <TableCell>{row.github_login}</TableCell>
+                          <TableCell>{row.user_projects}</TableCell>
+                          <TableCell>{row.created_at}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

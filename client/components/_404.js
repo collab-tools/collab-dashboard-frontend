@@ -1,50 +1,49 @@
-import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
 
 const styles = {
   pageContainer: {
-    backgroundColor: '#00B8D4',
-    height: '100vh'
+    backgroundColor: "#00B8D4",
+    height: "100vh"
   },
   _404: {
-    height: '100%',
-    width: '100%',
-    display: 'flex',
-    textAlign: 'center',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
+    height: "100%",
+    width: "100%",
+    display: "flex",
+    textAlign: "center",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
   },
   headingContainer: {
-    fontSize: 36,
+    fontSize: 36
   },
   headingText: {
-    color: '#FAFAFA',
-    fontWeight: 'bold'
+    color: "#FAFAFA",
+    fontWeight: "bold"
   },
   subheadingText: {
-    color: '#F5F5F5',
+    color: "#F5F5F5"
   },
   contentContainer: {
     width: 400,
     paddingBottom: 30,
-    display: 'flex',
-    textAlign: 'center',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
+    display: "flex",
+    textAlign: "center",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
   },
   _404Container: {
-    display: 'block',
+    display: "block"
   },
   _404Text: {
-    color: '#00B8D4',
+    color: "#00B8D4",
     fontSize: 128,
-    fontWeight: 'bold',
+    fontWeight: "bold"
   }
 };
 
@@ -64,10 +63,17 @@ class _404 extends Component {
             </h1>
             <Paper zDepth={1} style={styles.contentContainer}>
               <div style={styles._404Container}>
-                <h1 id="_404-page-not-found-text" style={styles._404Text}>404</h1>
+                <h1 id="_404-page-not-found-text" style={styles._404Text}>
+                  404
+                </h1>
               </div>
               <Link to="/">
-                <RaisedButton id="_404-home-button" label="Go back home" secondary={true} />
+                <Button
+                  variant="contained"
+                  id="_404-home-button"
+                  label="Go back home"
+                  secondary={true}
+                />
               </Link>
             </Paper>
           </div>

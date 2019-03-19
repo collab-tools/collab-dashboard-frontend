@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import SelectField from "material-ui/SelectField";
-import MenuItem from "material-ui/MenuItem";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 import Heading from "../components/Heading";
 
@@ -15,10 +15,10 @@ const styles = {
 };
 
 class HeadingContainer extends Component {
-  onMaxEntriesChange = (e, i, value) => {
+  onMaxEntriesChange = ({ target: { value } }) => {
     this.props.setMaxEntries(value);
   };
-  onRecencyChange = (e, i, value) => {
+  onRecencyChange = ({ target: { value } }) => {
     this.props.setRecencyDays(value);
   };
   render() {
@@ -28,17 +28,21 @@ class HeadingContainer extends Component {
         <Heading>{this.props.heading}</Heading>
         {!this.props.noOptions && (
           <Heading>
-            <SelectField value={this.props.maxEntries} onChange={this.onMaxEntriesChange}>
-              <MenuItem value={10} primaryText="Max 10 Entries (Tables)" />
-              <MenuItem value={20} primaryText="Max 20 Entries (Tables)" />
-              <MenuItem value={30} primaryText="Max 30 Entries (Tables)" />
-              <MenuItem value={dbMaxRows} primaryText="All Entries (Tables)" />
-            </SelectField>
-            <SelectField value={this.props.recencyDays} onChange={this.onRecencyChange}>
-              <MenuItem value={7} primaryText="Last 7 Days" />
-              <MenuItem value={14} primaryText="Last 14 Days" />
-              <MenuItem value={30} primaryText="Last 30 Days" />
-            </SelectField>
+            <Select
+              value={this.props.maxEntries}
+              onChange={this.onMaxEntriesChange}
+              style={{ marginRight: "20px" }}
+            >
+              <MenuItem value={10}>Max 10 Entries (Tables)</MenuItem>
+              <MenuItem value={20}>Max 20 Entries (Tables)</MenuItem>
+              <MenuItem value={30}>Max 30 Entries (Tables)</MenuItem>
+              <MenuItem value={dbMaxRows}>All Entries (Tables)</MenuItem>
+            </Select>
+            <Select value={this.props.recencyDays} onChange={this.onRecencyChange}>
+              <MenuItem value={7}>Last 7 Days</MenuItem>
+              <MenuItem value={14}>Last 14 Days</MenuItem>
+              <MenuItem value={30}>Last 30 Days</MenuItem>
+            </Select>
           </Heading>
         )}
       </div>

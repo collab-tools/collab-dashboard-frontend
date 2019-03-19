@@ -1,18 +1,19 @@
 import React, { Component } from "react";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import Paper from "material-ui/Paper";
-import Subheader from "material-ui/Subheader";
-import { List, ListItem } from "material-ui/List";
-import Divider from "material-ui/Divider";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import Paper from "@material-ui/core/Paper";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
 
-import DashboardIcon from "material-ui/svg-icons/action/account-balance";
-import ProjectsIcon from "material-ui/svg-icons/social/group";
-import UsersIcon from "material-ui/svg-icons/social/person";
-import MilestonesIcon from "material-ui/svg-icons/places/golf-course";
-import TasksIcon from "material-ui/svg-icons/action/list";
-import CloudIcon from "material-ui/svg-icons/file/cloud";
-import SettingsIcon from "material-ui/svg-icons/action/build";
-import LogoutIcon from "material-ui/svg-icons/action/power-settings-new";
+import DashboardIcon from "@material-ui/icons/AccountBalance";
+import ProjectsIcon from "@material-ui/icons/Group";
+import UsersIcon from "@material-ui/icons/Person";
+import MilestonesIcon from "@material-ui/icons/GolfCourse";
+import TasksIcon from "@material-ui/icons/List";
+import LogoutIcon from "@material-ui/icons/PowerSettingsNew";
 
 import { Link } from "react-router-dom";
 
@@ -65,68 +66,89 @@ class Navigation extends Component {
     );
     return (
       <MuiThemeProvider>
-        <Paper zDepth={1} style={styles.leftPanelContainer}>
-          <List>
-            <Subheader style={styles.subheader}>GENERAL</Subheader>
-            <div id="navigationHome">
-              <Link to="/dashboard/" style={styles.linkDecoration}>
-                <ListItem primaryText="Home" leftIcon={<DashboardIcon />} />
-              </Link>
-            </div>
-            <div id="navigationProjects">
-              <Link to="/dashboard/projects" style={styles.linkDecoration}>
-                <ListItem primaryText="Projects" leftIcon={<ProjectsIcon />} />
-              </Link>
-            </div>
-            <div id="navigationUsers">
-              <Link to="/dashboard/users" style={styles.linkDecoration}>
-                <ListItem primaryText="Users" leftIcon={<UsersIcon />} />
-              </Link>
-            </div>
+        <Paper style={styles.leftPanelContainer}>
+          <List subheader={<ListSubheader style={styles.subheader}>GENERAL</ListSubheader>}>
+            <Link to="/dashboard/" style={styles.linkDecoration}>
+              <ListItem button>
+                <ListItemIcon>
+                  <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText primary="Home" />
+              </ListItem>
+            </Link>
+
+            <Link to="/dashboard/projects" style={styles.linkDecoration}>
+              <ListItem button>
+                <ListItemIcon>
+                  <ProjectsIcon />
+                </ListItemIcon>
+                <ListItemText primary="Projects" />
+              </ListItem>
+            </Link>
+            <Link to="/dashboard/users" style={styles.linkDecoration}>
+              <ListItem button>
+                <ListItemIcon>
+                  <UsersIcon />
+                </ListItemIcon>
+                <ListItemText primary="Users" />
+              </ListItem>
+            </Link>
             {this.props.isAdmin ? (
-              <div id="navigationStaffs">
-                <Link to="/dashboard/staffs" style={styles.linkDecoration}>
-                  <ListItem primaryText="Staffs" leftIcon={<UsersIcon />} />
-                </Link>
-              </div>
+              <Link to="/dashboard/staffs" style={styles.linkDecoration}>
+                <ListItem button>
+                  <ListItemIcon>
+                    <UsersIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Staffs" />
+                </ListItem>
+              </Link>
             ) : null}
           </List>
           <Divider />
-          <List>
-            <Subheader style={styles.subheader}>GLOBAL FEATURES</Subheader>
-            <div id="navigationGithub">
-              <Link to="/dashboard/github" style={styles.linkDecoration}>
-                <ListItem primaryText="Github" leftIcon={GithubIcon} />
-              </Link>
-            </div>
-            <div id="navigationDrive">
-              <Link to="/dashboard/drive" style={styles.linkDecoration}>
-                <ListItem primaryText="Google Drive" leftIcon={GoogleDriveIcon} />
-              </Link>
-            </div>
-            <div id="navigationMilestones">
-              <Link to="/dashboard/milestones" style={styles.linkDecoration}>
-                <ListItem primaryText="Milestones" leftIcon={<MilestonesIcon />} />
-              </Link>
-            </div>
-            <div id="navigationTasks">
-              <Link to="/dashboard/tasks" style={styles.linkDecoration}>
-                <ListItem primaryText="Tasks" leftIcon={<TasksIcon />} />
-              </Link>
-            </div>
+          <List subheader={<ListSubheader style={styles.subheader}>GLOBAL FEATURES</ListSubheader>}>
+            <Link to="/dashboard/github" style={styles.linkDecoration}>
+              <ListItem button>
+                <ListItemIcon>{GithubIcon}</ListItemIcon>
+                <ListItemText primary="Github" />
+              </ListItem>
+            </Link>
+            <Link to="/dashboard/drive" style={styles.linkDecoration}>
+              <ListItem button>
+                <ListItemIcon>{GoogleDriveIcon}</ListItemIcon>
+                <ListItemText primary="Google Drive" />
+              </ListItem>
+            </Link>
+            <Link to="/dashboard/milestones" style={styles.linkDecoration}>
+              <ListItem button>
+                <ListItemIcon>
+                  <MilestonesIcon />
+                </ListItemIcon>
+                <ListItemText primary="Milestones" />
+              </ListItem>
+            </Link>
+            <Link to="/dashboard/tasks" style={styles.linkDecoration}>
+              <ListItem button>
+                <ListItemIcon>
+                  <TasksIcon />
+                </ListItemIcon>
+                <ListItemText primary="Tasks" />
+              </ListItem>
+            </Link>
           </List>
           <Divider />
-          <List>
-            <Subheader style={styles.subheader}>ADMIN</Subheader>
-            <div id="navigationLogout">
-              <Link
-                to="/"
-                style={styles.linkDecoration}
-                onClick={() => this.props.unauthenticateUser()}
-              >
-                <ListItem primaryText="Logout" leftIcon={<LogoutIcon />} />
-              </Link>
-            </div>
+          <List subheader={<ListSubheader style={styles.subheader}>ADMIN</ListSubheader>}>
+            <Link
+              to="/"
+              style={styles.linkDecoration}
+              onClick={() => this.props.unauthenticateUser()}
+            >
+              <ListItem button>
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText primary="Logout" />
+              </ListItem>
+            </Link>
           </List>
         </Paper>
       </MuiThemeProvider>

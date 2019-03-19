@@ -3,8 +3,7 @@ import React, { Component } from "react";
 const styles = {
   contentContainer: {
     height: "100%",
-    width: "100%",
-    textAlign: "center"
+    width: "100%"
   }
 };
 

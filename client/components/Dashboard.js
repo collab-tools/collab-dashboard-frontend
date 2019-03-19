@@ -1,9 +1,12 @@
 import React, { Component, PropTypes } from "react";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import Sidebar from "react-sidebar";
 import assign from "object-assign";
-import AppBar from "material-ui/AppBar";
-import Paper from "material-ui/Paper";
+
+import AppBar from "@material-ui/core/AppBar";
+import Paper from "@material-ui/core/Paper";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 
 import { Route, Switch, Redirect } from "react-router-dom";
 
@@ -39,12 +42,13 @@ class Dashboard extends Component {
     return (
       <MuiThemeProvider>
         <div style={styles.pageContainer}>
-          <AppBar
-            id="appbar"
-            title="NUSCollab Dashboard"
-            showMenuIconButton={false}
-            style={styles.titleBar}
-          />
+          <AppBar id="appbar" position="absolute" style={styles.titleBar}>
+            <Toolbar>
+              <Typography variant="h6" color="inherit">
+                NUSCollab Dashboard
+              </Typography>
+            </Toolbar>
+          </AppBar>
           <Sidebar
             shadow
             transitions={false}
@@ -66,7 +70,6 @@ class Dashboard extends Component {
           >
             <div style={styles.dashboardContainer}>
               <Paper
-                zDepth={1}
                 style={assign(
                   {},
                   styles.navigationBarContainer,
@@ -129,7 +132,8 @@ const styles = {
     position: "absolute",
     left: 0,
     minWidth: 600,
-    overflowX: "auto"
+    overflowX: "auto",
+    backgroundColor: "#00B8D4"
   },
   navigationBarContainer: {
     position: "absolute",
@@ -149,8 +153,8 @@ const styles = {
   navigationBar: {
     backgroundColor: "#00B8D4",
     color: "white",
-    width: 200,
-    maxWidth: 200
+    width: 220,
+    maxWidth: 220
   },
   dashboardContainer: {
     backgroundColor: "#EEEEEE",

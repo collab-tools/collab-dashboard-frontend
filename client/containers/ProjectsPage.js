@@ -3,14 +3,11 @@ import { connect } from "react-redux";
 import ReactHighcharts from "react-highcharts";
 import moment from "moment";
 
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn
-} from "material-ui/Table";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
 
 import { fetchData } from "../actions/actions";
 import {
@@ -60,7 +57,7 @@ class ProjectsPage extends Component {
 
     this.props.fetchData(fetches);
   }
-  projectsTableCellClicked = (row, column, event) => {
+  projectsTableCellClicked = row => {
     let projects = this.props.projects;
     let latestProjects = projects.latestProjects;
     let projectId = latestProjects[row].project_id;
@@ -160,24 +157,28 @@ class ProjectsPage extends Component {
               <Section>
                 <Subheading>Projects</Subheading>
                 <Card>
-                  <Table onCellClick={this.projectsTableCellClicked}>
-                    <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                  <Table>
+                    <TableHead>
                       <TableRow>
-                        <TableHeaderColumn>Name</TableHeaderColumn>
-                        <TableHeaderColumn>Repository</TableHeaderColumn>
-                        <TableHeaderColumn>Members</TableHeaderColumn>
-                        <TableHeaderColumn>Size</TableHeaderColumn>
-                        <TableHeaderColumn>Created Date</TableHeaderColumn>
+                        <TableCell>Name</TableCell>
+                        <TableCell>Repository</TableCell>
+                        <TableCell>Members</TableCell>
+                        <TableCell>Size</TableCell>
+                        <TableCell>Created Date</TableCell>
                       </TableRow>
-                    </TableHeader>
-                    <TableBody displayRowCheckbox={false}>
+                    </TableHead>
+                    <TableBody>
                       {latestProjects.map((row, index) => (
-                        <TableRow key={index}>
-                          <TableRowColumn>{row.content}</TableRowColumn>
-                          <TableRowColumn>{row.github_repo_name}</TableRowColumn>
-                          <TableRowColumn>{row.members}</TableRowColumn>
-                          <TableRowColumn>{row.project_size}</TableRowColumn>
-                          <TableRowColumn>{row.created_at}</TableRowColumn>
+                        <TableRow
+                          key={index}
+                          onClick={() => this.projectsTableCellClicked(index)}
+                          style={styles.tableRow}
+                        >
+                          <TableCell>{row.content}</TableCell>
+                          <TableCell>{row.github_repo_name}</TableCell>
+                          <TableCell>{row.members}</TableCell>
+                          <TableCell>{row.project_size}</TableCell>
+                          <TableCell>{row.created_at}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -209,3 +210,12 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(ProjectsPage);
+
+const styles = {
+  tableRow: {
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#1F1F1F"
+    }
+  }
+};
