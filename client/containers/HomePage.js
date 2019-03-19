@@ -11,6 +11,7 @@ import Card from "../components/Card";
 
 import DashboardLayout from "./DashboardLayout";
 
+import { fetchData } from "../actions/actions";
 import {
   getNewUsers,
   getTotalMilestones,
@@ -19,7 +20,7 @@ import {
   getInactiveUsers,
   getMilestonesFeatureUtilizationRate,
   getTasksFeatureUtilizationRate
-} from "../actions/actions";
+} from "../actions/api";
 
 class HomePage extends Component {
   componentWillMount() {
@@ -41,13 +42,17 @@ class HomePage extends Component {
       .format("YYYY/MM/DD");
     let endDate = moment().format("YYYY/MM/DD");
 
-    this.props.getNewUsers(startDate, endDate);
-    this.props.getTotalMilestones(startDate, endDate);
-    this.props.getRetentionRate(startDate, endDate);
-    this.props.getActiveUsers(startDate, endDate);
-    this.props.getInactiveUsers(startDate, endDate);
-    this.props.getMilestonesFeatureUtilizationRate(startDate, endDate);
-    this.props.getTasksFeatureUtilizationRate(startDate, endDate);
+    let fetches = [
+      getNewUsers(startDate, endDate),
+      getTotalMilestones(startDate, endDate),
+      getRetentionRate(startDate, endDate),
+      getActiveUsers(startDate, endDate),
+      getInactiveUsers(startDate, endDate),
+      getTasksFeatureUtilizationRate(startDate, endDate),
+      getMilestonesFeatureUtilizationRate(startDate, endDate)
+    ];
+
+    this.props.fetchData(fetches);
   }
   render() {
     let users = this.props.users;
@@ -128,18 +133,15 @@ class HomePage extends Component {
 }
 
 const mapStateToProps = state => {
-  let { users, milestones, tasks, queryOptions } = state;
+  let {
+    dashboardData: { users, milestones, tasks },
+    queryOptions
+  } = state;
   return { users, milestones, tasks, queryOptions };
 };
 
 const mapDispatchToProps = {
-  getNewUsers,
-  getTotalMilestones,
-  getRetentionRate,
-  getActiveUsers,
-  getInactiveUsers,
-  getMilestonesFeatureUtilizationRate,
-  getTasksFeatureUtilizationRate
+  fetchData
 };
 
 export default connect(

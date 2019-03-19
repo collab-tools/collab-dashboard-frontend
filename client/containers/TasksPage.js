@@ -8,13 +8,14 @@ import MetricsRow from "../components/MetricsRow";
 
 import DashboardLayout from "./DashboardLayout";
 
+import { fetchData } from "../actions/actions";
 import {
   getTotalTasks,
   getPendingTasks,
   getCompletedTasks,
   getTasksCompletionData,
   getTasksFeatureUtilizationRate
-} from "../actions/actions";
+} from "../actions/api";
 
 class TasksPage extends Component {
   componentWillMount() {
@@ -36,11 +37,14 @@ class TasksPage extends Component {
       .format("YYYY/MM/DD");
     let endDate = moment().format("YYYY/MM/DD");
 
-    this.props.getTotalTasks(startDate, endDate);
-    this.props.getPendingTasks(startDate, endDate);
-    this.props.getCompletedTasks(startDate, endDate);
-    this.props.getTasksCompletionData(startDate, endDate);
-    this.props.getTasksFeatureUtilizationRate(startDate, endDate);
+    let fetches = [
+      getTotalTasks(startDate, endDate),
+      getPendingTasks(startDate, endDate),
+      getCompletedTasks(startDate, endDate),
+      getTasksCompletionData(startDate, endDate),
+      getTasksFeatureUtilizationRate(startDate, endDate)
+    ];
+    this.props.fetchData(fetches);
   }
 
   render() {
@@ -137,15 +141,14 @@ class TasksPage extends Component {
 }
 
 const mapStateToProps = state => {
-  let { tasks, queryOptions } = state;
+  let {
+    dashboardData: { tasks },
+    queryOptions
+  } = state;
   return { tasks, queryOptions };
 };
 const mapDispatchToProps = {
-  getTotalTasks,
-  getPendingTasks,
-  getCompletedTasks,
-  getTasksCompletionData,
-  getTasksFeatureUtilizationRate
+  fetchData
 };
 
 export default connect(

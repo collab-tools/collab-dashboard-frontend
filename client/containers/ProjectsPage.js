@@ -13,6 +13,7 @@ import {
 } from "material-ui/Table";
 
 import {
+  fetchData,
   getTotalProjects,
   getNewProjects,
   getActiveProjects,
@@ -50,10 +51,14 @@ class ProjectsPage extends Component {
       .format("YYYY/MM/DD");
     let endDate = moment().format("YYYY/MM/DD");
 
-    this.props.getTotalProjects(startDate, endDate);
-    this.props.getNewProjects(startDate, endDate);
-    this.props.getLatestProjects(maxEntries);
-    this.props.getActiveProjects(startDate, endDate);
+    let fetches = [
+      getTotalProjects(startDate, endDate),
+      getNewProjects(startDate, endDate),
+      getLatestProjects(maxEntries),
+      getActiveProjects(startDate, endDate)
+    ];
+
+    this.props.fetchData(fetches);
   }
   projectsTableCellClicked = (row, column, event) => {
     let projects = this.props.projects;
@@ -189,16 +194,15 @@ class ProjectsPage extends Component {
 }
 
 const mapStateToProps = state => {
-  let { projects, queryOptions } = state;
+  let {
+    dashboardData: { projects },
+    queryOptions
+  } = state;
   return { projects, queryOptions };
 };
 
 const mapDispatchToProps = {
-  getTotalProjects,
-  getNewProjects,
-  getActiveProjects,
-  getLatestProjects,
-  getMilestonesByProjectId
+  fetchData
 };
 
 export default connect(

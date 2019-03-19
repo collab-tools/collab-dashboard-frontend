@@ -36,3 +36,5 @@ export const GET_TOTAL_MESSAGES = "GET_TOTAL_MESSAGES";
 
 export const SET_MAX_ENTRIES = "SET_MAX_ENTRIES";
 export const SET_RECENCY_DAYS = "SET_RECENCY_DAYS";
+
+export const SET_LOADING = "SET_LOADING";

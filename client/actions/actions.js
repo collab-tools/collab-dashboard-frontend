@@ -31,7 +31,8 @@ import {
   GET_TASKS_COMPLETION_DATA,
   GET_TASKS_FEATURE_UTILIZATION_RATE,
   SET_MAX_ENTRIES,
-  SET_RECENCY_DAYS
+  SET_RECENCY_DAYS,
+  SET_LOADING
 } from "../constants/actionTypes";
 
 import {
@@ -64,6 +65,13 @@ export function setRecencyDays(recencyDays) {
   return {
     type: SET_RECENCY_DAYS,
     recencyDays
+  };
+}
+
+export function setLoading(isLoading) {
+  return {
+    type: SET_LOADING,
+    isLoading
   };
 }
 /*  ASYNC FUNCTIONS  */
@@ -196,627 +204,14 @@ export function getStaffDetails(id) {
   };
 }
 
-export function getTotalProjects(startDate, endDate) {
-  let url = ROOT_API + "/projects/count";
+export function fetchData(fetches) {
   return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getTotalProjects ', response.data);
-        dispatch(_getTotalProjects(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
+    dispatch(setLoading(true));
 
-export function getNewProjects(startDate, endDate) {
-  let url = ROOT_API + "/projects/num-created-between-dates";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getNewProjects ', response.data);
-        dispatch(_getNewProjects(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getLatestProjects(maxEntries) {
-  let url = ROOT_API + "/projects/latest";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          maxProjects: maxEntries
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getLatestProjects ', response.data);
-        dispatch(_getLatestProjects(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getActiveProjects(startDate, endDate) {
-  let url = ROOT_API + "/projects/active-rate-between-dates";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getActiveProjects ', response.data);
-        dispatch(_getActiveProjects(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getMilestonesByProjectId(projectId) {
-  let url = ROOT_API + "/projects/milestones";
-  // console.log('getMilestonesByProjectId', projectId);
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          projectId: projectId
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getMilestonesByProjectId ', response.data);
-        dispatch(_getMilestonesByProjectId(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getTotalUsers(startDate, endDate) {
-  let url = ROOT_API + "/users/count";
-  // console.log(jwtToken);
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        dispatch(_getTotalUsers(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getNewUsers(startDate, endDate) {
-  let url = ROOT_API + "/users/num-created-between-dates";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getNewUsers ', response.data);
-        // console.log('startDate ' + startDate + ' endDate ' + endDate);
-        dispatch(_getNewUsers(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getLatestUsers(maxEntries) {
-  let url = ROOT_API + "/users/latest";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          maxUsers: maxEntries
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getLatestUsers ', response.data);
-        dispatch(_getLatestUsers(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getActiveUsers(startDate, endDate) {
-  let url = ROOT_API + "/users/num-updated-between-dates";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getActiveUsers ', response.data);
-        dispatch(_getActiveUsers(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getInactiveUsers(startDate, endDate) {
-  let url = ROOT_API + "/users/num-not-updated-between-dates";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getInactiveUsers ', response.data);
-        dispatch(_getInactiveUsers(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getRetentionRate(startDate, endDate) {
-  let url = ROOT_API + "/users/retention-rate";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getRetentionRate ', response.data);
-        // console.log('startDate ' + startDate + ' endDate ' + endDate);
-        dispatch(_getRetentionRate(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getProjectsByUserId(userId) {
-  let url = ROOT_API + "/users/projects";
-  console.log("getProjectsByUserId", userId);
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          userId: userId
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getProjectsByUserId ', response.data);
-        dispatch(_getProjectsByUserId(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getTotalMilestones(startDate, endDate) {
-  let url = ROOT_API + "/milestones/count";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getTotalMilestones ', response.data);
-        dispatch(_getTotalMilestones(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getCompletedMilestones(startDate, endDate) {
-  let url = ROOT_API + "/milestones/completed-count";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getCompletedMilestones ', response.data);
-        dispatch(_getCompletedMilestones(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getAverageMilestonesPerProject(startDate, endDate) {
-  let url = ROOT_API + "/milestones/average-milestones-per-project";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getAverageMilestonesPerProject ', response.data);
-        dispatch(_getAverageMilestonesPerProject(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getAverageTasksPerMilestone(startDate, endDate) {
-  let url = ROOT_API + "/milestones/average-tasks-per-milestone";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getAverageTasksPerMilestone ', response.data);
-        dispatch(_getAverageTasksPerMilestone(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getMilestonesCompletionData(startDate, endDate) {
-  let url = ROOT_API + "/milestones/time-taken-data";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getMilestonesCompletionData ', response.data);
-        dispatch(_getMilestonesCompletionData(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getMilestonesDeadlinesMissedRate(startDate, endDate) {
-  let url = ROOT_API + "/milestones/ratio-deadlines-missed";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getMilestonesDeadlinesMissedRate ', response.data);
-        dispatch(_getMilestonesDeadlinesMissedRate(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getMilestonesFeatureUtilizationRate(startDate, endDate) {
-  let url = ROOT_API + "/milestones/feature-utilization";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getMilestonesFeatureUtilizationRate ', response.data);
-        dispatch(_getMilestonesFeatureUtilizationRate(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getTotalTasks(startDate, endDate) {
-  let url = ROOT_API + "/tasks/count";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getTotalTasks ', response.data);
-        dispatch(_getTotalTasks(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getPendingTasks(startDate, endDate) {
-  let url = ROOT_API + "/tasks/count-pending";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getPendingTasks ', response.data);
-        dispatch(_getPendingTasks(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getCompletedTasks(startDate, endDate) {
-  let url = ROOT_API + "/tasks/count-completed";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getCompletedTasks ', response.data);
-        dispatch(_getCompletedTasks(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getTasksCompletionData(startDate, endDate) {
-  let url = ROOT_API + "/tasks/complete-time-data";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getTasksCompletionData ', response.data);
-        dispatch(_getTasksCompletionData(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
-
-export function getTasksFeatureUtilizationRate(startDate, endDate) {
-  let url = ROOT_API + "/tasks/feature-utilization";
-  return dispatch => {
-    return axios
-      .post(
-        url,
-        {
-          startDate: startDate,
-          endDate: endDate
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(response => {
-        // console.log('getTasksFeatureUtilizationRate ', response.data);
-        dispatch(_getTasksFeatureUtilizationRate(response.data));
-      })
-      .catch(error => {
-        throw error;
-      });
+    Promise.all(fetches).then(actions => {
+      actions.forEach(dispatch);
+      setTimeout(() => dispatch(setLoading(false)), 1000);
+    });
   };
 }
 
@@ -847,7 +242,7 @@ function _getStaffDetails(res) {
   };
 }
 
-function _getTotalProjects(res) {
+export function _getTotalProjects(res) {
   let totalProjects = res.count;
   return {
     type: GET_TOTAL_PROJECTS,
@@ -855,7 +250,7 @@ function _getTotalProjects(res) {
   };
 }
 
-function _getNewProjects(res) {
+export function _getNewProjects(res) {
   let newProjects = res.count;
   return {
     type: GET_NEW_PROJECTS,
@@ -863,7 +258,7 @@ function _getNewProjects(res) {
   };
 }
 
-function _getLatestProjects(res) {
+export function _getLatestProjects(res) {
   let latestProjects = res;
   return {
     type: GET_LATEST_PROJECTS,
@@ -871,7 +266,7 @@ function _getLatestProjects(res) {
   };
 }
 
-function _getActiveProjects(res) {
+export function _getActiveProjects(res) {
   let activeProjects = res.rate;
   return {
     type: GET_ACTIVE_PROJECTS,
@@ -879,7 +274,7 @@ function _getActiveProjects(res) {
   };
 }
 
-function _getMilestonesByProjectId(res) {
+export function _getMilestonesByProjectId(res) {
   let milestonesByProjectId = res;
   return {
     type: GET_MILESTONES_BY_PROJECT_ID,
@@ -887,7 +282,7 @@ function _getMilestonesByProjectId(res) {
   };
 }
 
-function _getTotalUsers(res) {
+export function _getTotalUsers(res) {
   let totalUsers = res.count;
   return {
     type: GET_TOTAL_USERS,
@@ -895,7 +290,7 @@ function _getTotalUsers(res) {
   };
 }
 
-function _getNewUsers(res) {
+export function _getNewUsers(res) {
   let newUsers = res.count;
   return {
     type: GET_NEW_USERS,
@@ -903,7 +298,7 @@ function _getNewUsers(res) {
   };
 }
 
-function _getLatestUsers(res) {
+export function _getLatestUsers(res) {
   let latestUsers = res;
   return {
     type: GET_LATEST_USERS,
@@ -919,7 +314,7 @@ function _getActiveUsers(res) {
   };
 }
 
-function _getInactiveUsers(res) {
+export function _getInactiveUsers(res) {
   let inactiveUsers = res.count;
   return {
     type: GET_INACTIVE_USERS,
@@ -927,7 +322,7 @@ function _getInactiveUsers(res) {
   };
 }
 
-function _getRetentionRate(res) {
+export function _getRetentionRate(res) {
   let retentionRate = res.rate;
   return {
     type: GET_RETENTION_RATE,
@@ -935,7 +330,7 @@ function _getRetentionRate(res) {
   };
 }
 
-function _getProjectsByUserId(res) {
+export function _getProjectsByUserId(res) {
   let projectsByUserId = res;
   return {
     type: GET_PROJECTS_BY_USER_ID,
@@ -943,7 +338,7 @@ function _getProjectsByUserId(res) {
   };
 }
 
-function _getTotalMilestones(res) {
+export function _getTotalMilestones(res) {
   let totalMilestones = res.count;
   return {
     type: GET_TOTAL_MILESTONES,
@@ -951,7 +346,7 @@ function _getTotalMilestones(res) {
   };
 }
 
-function _getCompletedMilestones(res) {
+export function _getCompletedMilestones(res) {
   let completedMilestones = res.count;
   return {
     type: GET_COMPLETED_MILESTONES,
@@ -959,7 +354,7 @@ function _getCompletedMilestones(res) {
   };
 }
 
-function _getAverageMilestonesPerProject(res) {
+export function _getAverageMilestonesPerProject(res) {
   let averageMilestonesPerProject = res.result;
   return {
     type: GET_AVERAGE_MILESTONES_PER_PROJECT,
@@ -967,7 +362,7 @@ function _getAverageMilestonesPerProject(res) {
   };
 }
 
-function _getAverageTasksPerMilestone(res) {
+export function _getAverageTasksPerMilestone(res) {
   let averageTasksPerMilestone = res.result;
   return {
     type: GET_AVERAGE_TASKS_PER_MILESTONE,
@@ -975,7 +370,7 @@ function _getAverageTasksPerMilestone(res) {
   };
 }
 
-function _getMilestonesCompletionData(res) {
+export function _getMilestonesCompletionData(res) {
   let milestonesCompletionData = res.data;
   return {
     type: GET_MILESTONES_COMPLETION_DATA,
@@ -983,7 +378,7 @@ function _getMilestonesCompletionData(res) {
   };
 }
 
-function _getMilestonesDeadlinesMissedRate(res) {
+export function _getMilestonesDeadlinesMissedRate(res) {
   let deadlinesMissedRate = res.result;
   return {
     type: GET_MILESTONES_DEADLINES_MISSED_RATE,
@@ -991,7 +386,7 @@ function _getMilestonesDeadlinesMissedRate(res) {
   };
 }
 
-function _getMilestonesFeatureUtilizationRate(res) {
+export function _getMilestonesFeatureUtilizationRate(res) {
   let featureUtilizationRate = res.result;
   return {
     type: GET_MILESTONES_FEATURE_UTILIZATION_RATE,
@@ -999,7 +394,7 @@ function _getMilestonesFeatureUtilizationRate(res) {
   };
 }
 
-function _getTotalTasks(res) {
+export function _getTotalTasks(res) {
   let totalTasks = res.count;
   return {
     type: GET_TOTAL_TASKS,
@@ -1007,7 +402,7 @@ function _getTotalTasks(res) {
   };
 }
 
-function _getPendingTasks(res) {
+export function _getPendingTasks(res) {
   let pendingTasks = res.count;
   return {
     type: GET_PENDING_TASKS,
@@ -1015,7 +410,7 @@ function _getPendingTasks(res) {
   };
 }
 
-function _getCompletedTasks(res) {
+export function _getCompletedTasks(res) {
   let completedTasks = res.count;
   return {
     type: GET_COMPLETED_TASKS,
@@ -1023,7 +418,7 @@ function _getCompletedTasks(res) {
   };
 }
 
-function _getTasksCompletionData(res) {
+export function _getTasksCompletionData(res) {
   let tasksCompletionData = res.data;
   return {
     type: GET_TASKS_COMPLETION_DATA,
@@ -1031,7 +426,7 @@ function _getTasksCompletionData(res) {
   };
 }
 
-function _getTasksFeatureUtilizationRate(res) {
+export function _getTasksFeatureUtilizationRate(res) {
   let featureUtilizationRate = res.result;
   return {
     type: GET_TASKS_FEATURE_UTILIZATION_RATE,

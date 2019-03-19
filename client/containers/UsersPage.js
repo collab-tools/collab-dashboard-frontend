@@ -12,6 +12,7 @@ import {
 } from "material-ui/Table";
 
 import {
+  fetchData,
   getTotalUsers,
   getNewUsers,
   getActiveUsers,
@@ -50,10 +51,13 @@ class UsersPage extends Component {
       .format("YYYY/MM/DD");
     let endDate = moment().format("YYYY/MM/DD");
 
-    this.props.getTotalUsers(startDate, endDate);
-    this.props.getNewUsers(startDate, endDate);
-    this.props.getActiveUsers(startDate, endDate);
-    this.props.getLatestUsers(maxEntries);
+    let fetches = [
+      getTotalUsers(startDate, endDate),
+      getNewUsers(startDate, endDate),
+      getActiveUsers(startDate, endDate),
+      getLatestUsers(maxEntries)
+    ];
+    this.props.fetchData(fetches);
   }
 
   usersTableCellClicked = (row, column, event) => {
@@ -206,16 +210,15 @@ class UsersPage extends Component {
 }
 
 const mapStateToProps = state => {
-  let { users, queryOptions } = state;
+  let {
+    dashboardData: { users },
+    queryOptions
+  } = state;
   return { users, queryOptions };
 };
 
 const mapDispatchToProps = {
-  getTotalUsers,
-  getNewUsers,
-  getActiveUsers,
-  getLatestUsers,
-  getProjectsByUserId
+  fetchData
 };
 
 export default connect(

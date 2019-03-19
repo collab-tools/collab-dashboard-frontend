@@ -5,10 +5,10 @@ import {
   GET_AVERAGE_TASKS_PER_MILESTONE,
   GET_MILESTONES_COMPLETION_DATA,
   GET_MILESTONES_DEADLINES_MISSED_RATE,
-  GET_MILESTONES_FEATURE_UTILIZATION_RATE,
-} from '../constants/actionTypes';
+  GET_MILESTONES_FEATURE_UTILIZATION_RATE
+} from "../../constants/actionTypes";
 
-import stats from 'stats-lite';
+import stats from "stats-lite";
 
 const initialState = {
   totalMilestones: -1,
@@ -28,27 +28,26 @@ const initialState = {
   averageMilestonesPerProject: -1,
   averageTasksPerMilestone: -1,
   deadlinesMissedRate: -1,
-  featureUtilizationRate: -1,
-}
-
+  featureUtilizationRate: -1
+};
 
 export default function milestones(state = initialState, action) {
   switch (action.type) {
     case GET_TOTAL_MILESTONES:
       return Object.assign({}, state, {
-        totalMilestones: action.totalMilestones,
+        totalMilestones: action.totalMilestones
       });
     case GET_COMPLETED_MILESTONES:
       return Object.assign({}, state, {
-        completedMilestones: action.completedMilestones,
+        completedMilestones: action.completedMilestones
       });
     case GET_AVERAGE_MILESTONES_PER_PROJECT:
       return Object.assign({}, state, {
-        averageMilestonesPerProject: action.averageMilestonesPerProject,
+        averageMilestonesPerProject: action.averageMilestonesPerProject
       });
     case GET_AVERAGE_TASKS_PER_MILESTONE:
       return Object.assign({}, state, {
-        averageTasksPerMilestone: action.averageTasksPerMilestone,
+        averageTasksPerMilestone: action.averageTasksPerMilestone
       });
     case GET_MILESTONES_COMPLETION_DATA: {
       let _milestonesCompletionData = action.milestonesCompletionData;
@@ -67,23 +66,27 @@ export default function milestones(state = initialState, action) {
 
       for (var i = 0; i < _milestonesCompletionData.length; i++) {
         for (var key in _milestonesCompletionData[i]) {
-          if (_milestonesCompletionData[i].hasOwnProperty(key) && _milestonesCompletionData[i][key] == null) {
-            _milestonesCompletionData[i][key] = 'N.A';
+          if (
+            _milestonesCompletionData[i].hasOwnProperty(key) &&
+            _milestonesCompletionData[i][key] == null
+          ) {
+            _milestonesCompletionData[i][key] = "N.A";
           }
-          if (key == 'time_taken') {
+          if (key == "time_taken") {
             _milestoneCompletionTimesInSeconds.push(_milestonesCompletionData[i][key]);
-            _milestoneCompletionTimesInHours.push(((_milestonesCompletionData[i][key]) / 60) / 60);
-            _milestoneCompletionTimesInDays.push((((_milestonesCompletionData[i][key]) / 60) / 60) / 24);
+            _milestoneCompletionTimesInHours.push(_milestonesCompletionData[i][key] / 60 / 60);
+            _milestoneCompletionTimesInDays.push(_milestonesCompletionData[i][key] / 60 / 60 / 24);
             _totalCompletionTimeInSeconds += parseInt(_milestonesCompletionData[i][key]);
             // console.log('_totalCompletionTimeInSeconds', _totalCompletionTimeInSeconds);
           }
         }
       }
       if (_totalCompletionTimeInSeconds != 0) {
-        _totalCompletionTimeInHours = (_totalCompletionTimeInSeconds / 60) / 60;
+        _totalCompletionTimeInHours = _totalCompletionTimeInSeconds / 60 / 60;
         _totalCompletionTimeInDays = _totalCompletionTimeInHours / 24;
-        _averageCompletionTimeInSeconds = _totalCompletionTimeInSeconds / _milestonesCompletionData.length;
-        _averageCompletionTimeInHours = (_averageCompletionTimeInSeconds / 60) / 60;
+        _averageCompletionTimeInSeconds =
+          _totalCompletionTimeInSeconds / _milestonesCompletionData.length;
+        _averageCompletionTimeInHours = _averageCompletionTimeInSeconds / 60 / 60;
         _averageCompletionTimeInDays = _averageCompletionTimeInHours / 24;
         _standardDeviationCompletionTimeInSeconds = stats.stdev(_milestoneCompletionTimesInSeconds);
         _standardDeviationCompletionTimeInHours = stats.stdev(_milestoneCompletionTimesInHours);
@@ -113,16 +116,16 @@ export default function milestones(state = initialState, action) {
         totalCompletionTimeInDays: _totalCompletionTimeInDays,
         standardDeviationCompletionTimeInSeconds: _standardDeviationCompletionTimeInSeconds,
         standardDeviationCompletionTimeInHours: _standardDeviationCompletionTimeInHours,
-        standardDeviationCompletionTimeInDays: _standardDeviationCompletionTimeInDays,
+        standardDeviationCompletionTimeInDays: _standardDeviationCompletionTimeInDays
       });
     }
     case GET_MILESTONES_DEADLINES_MISSED_RATE:
       return Object.assign({}, state, {
-        deadlinesMissedRate: action.deadlinesMissedRate,
+        deadlinesMissedRate: action.deadlinesMissedRate
       });
     case GET_MILESTONES_FEATURE_UTILIZATION_RATE:
       return Object.assign({}, state, {
-        featureUtilizationRate: action.featureUtilizationRate,
+        featureUtilizationRate: action.featureUtilizationRate
       });
     default:
       return state;

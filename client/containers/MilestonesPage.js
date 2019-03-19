@@ -9,6 +9,7 @@ import MetricsRow from "../components/MetricsRow";
 import DashboardLayout from "./DashboardLayout";
 
 import {
+  fetchData,
   getTotalMilestones,
   getCompletedMilestones,
   getMilestonesDeadlinesMissedRate,
@@ -38,13 +39,16 @@ class MilestonesPage extends Component {
       .format("YYYY/MM/DD");
     let endDate = moment().format("YYYY/MM/DD");
 
-    this.props.getTotalMilestones(startDate, endDate);
-    this.props.getCompletedMilestones(startDate, endDate);
-    this.props.getAverageMilestonesPerProject(startDate, endDate);
-    this.props.getAverageTasksPerMilestone(startDate, endDate);
-    this.props.getMilestonesCompletionData(startDate, endDate);
-    this.props.getMilestonesDeadlinesMissedRate(startDate, endDate);
-    this.props.getMilestonesFeatureUtilizationRate(startDate, endDate);
+    let fetches = [
+      getTotalMilestones(startDate, endDate),
+      getCompletedMilestones(startDate, endDate),
+      getAverageMilestonesPerProject(startDate, endDate),
+      getAverageTasksPerMilestone(startDate, endDate),
+      getMilestonesCompletionData(startDate, endDate),
+      getMilestonesDeadlinesMissedRate(startDate, endDate),
+      getMilestonesFeatureUtilizationRate(startDate, endDate)
+    ];
+    this.props.fetchData(fetches);
   }
   render() {
     let milestones = this.props.milestones;
@@ -156,17 +160,14 @@ class MilestonesPage extends Component {
 }
 
 const mapStateToProps = state => {
-  let { milestones, queryOptions } = state;
+  let {
+    dashboardData: { milestones },
+    queryOptions
+  } = state;
   return { milestones, queryOptions };
 };
 const mapDispatchToProps = {
-  getTotalMilestones,
-  getCompletedMilestones,
-  getMilestonesDeadlinesMissedRate,
-  getAverageMilestonesPerProject,
-  getAverageTasksPerMilestone,
-  getMilestonesFeatureUtilizationRate,
-  getMilestonesCompletionData
+  fetchData
 };
 
 export default connect(

@@ -1,20 +1,16 @@
 import { combineReducers } from "redux";
 import auth from "./auth";
-import projects from "./projects";
-import users from "./users";
-import milestones from "./milestones";
-import tasks from "./tasks";
+import dashboardData from "./dashboardData";
 import staffs from "./staffs";
 import queryOptions from "./queryOptions";
+import loading from "./loading";
 
 const rootReducer = combineReducers({
   auth,
-  projects,
-  users,
-  milestones,
-  tasks,
+  dashboardData,
   staffs,
-  queryOptions
+  queryOptions,
+  loading
 });
 
 export default rootReducer;

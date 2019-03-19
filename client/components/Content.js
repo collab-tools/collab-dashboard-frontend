@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 const styles = {
   contentContainer: {
-    height: '100%',
-    width: '100%',
-  },
+    height: "100%",
+    width: "100%",
+    textAlign: "center"
+  }
 };
 
 class Content extends Component {
