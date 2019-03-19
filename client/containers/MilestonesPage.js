@@ -8,8 +8,8 @@ import MetricsRow from "../components/MetricsRow";
 
 import DashboardLayout from "./DashboardLayout";
 
+import { fetchData } from "../actions/actions";
 import {
-  fetchData,
   getTotalMilestones,
   getCompletedMilestones,
   getMilestonesDeadlinesMissedRate,
@@ -17,7 +17,7 @@ import {
   getAverageTasksPerMilestone,
   getMilestonesFeatureUtilizationRate,
   getMilestonesCompletionData
-} from "../actions/actions";
+} from "../actions/api";
 
 class MilestonesPage extends Component {
   componentWillMount() {

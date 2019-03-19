@@ -11,14 +11,14 @@ import {
   TableRowColumn
 } from "material-ui/Table";
 
+import { fetchData } from "../actions/actions";
 import {
-  fetchData,
   getTotalUsers,
   getNewUsers,
   getActiveUsers,
   getLatestUsers,
   getProjectsByUserId
-} from "../actions/actions";
+} from "../actions/api";
 
 import Content from "../components/Content";
 import Section from "../components/Section";
@@ -64,7 +64,7 @@ class UsersPage extends Component {
     let users = this.props.users;
     let latestUsers = users.latestUsers;
     let userId = latestUsers[row].user_id;
-    this.props.getProjectsByUserId(userId);
+    this.props.fetchData([getProjectsByUserId(userId)]);
     this.setState({
       shouldRenderProjectsByUserId: true,
       rowNumber: row
