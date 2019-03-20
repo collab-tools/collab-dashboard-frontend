@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 const styles = {
   section: {
-    margin: 32,
-  },
+    marginBottom: "32px"
+  }
 };
 
 class Section extends Component {
@@ -12,11 +12,7 @@ class Section extends Component {
   }
 
   render() {
-    return (
-      <div style={styles.section}>
-        {this.props.children}
-      </div>
-    );
+    return <div style={styles.section}>{this.props.children}</div>;
   }
 }
 

@@ -23,6 +23,8 @@ import GithubPage from "../containers/GithubPage";
 import GoogleDrivePage from "../containers/GoogleDrivePage";
 import MilestonesPage from "../containers/MilestonesPage";
 import TasksPage from "../containers/TasksPage";
+import UserDetailPage from "../containers/UserDetailPage";
+import ProjectDetailPage from "../containers/ProjectDetailPage";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -102,12 +104,14 @@ class Dashboard extends Component {
                 />
 
                 <Route path="/dashboard/" exact component={HomePage} />
-                <Route path="/dashboard/projects" component={ProjectsPage} />
-                <Route path="/dashboard/users" component={UsersPage} />
+                <Route path="/dashboard/projects" exact component={ProjectsPage} />
+                <Route path="/dashboard/users" exact component={UsersPage} />
                 <Route path="/dashboard/github" component={GithubPage} />
                 <Route path="/dashboard/drive" component={GoogleDrivePage} />
                 <Route path="/dashboard/milestones" component={MilestonesPage} />
                 <Route path="/dashboard/tasks" component={TasksPage} />
+                <Route path="/dashboard/users/:id" component={UserDetailPage} />
+                <Route path="/dashboard/projects/:id" component={ProjectDetailPage} />
                 <Redirect to="/dashboard/" />
               </Switch>
             </div>

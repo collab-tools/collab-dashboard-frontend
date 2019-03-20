@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from "react";
 import { connect } from "react-redux";
 import ReactHighcharts from "react-highcharts";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -57,15 +58,16 @@ class ProjectsPage extends Component {
 
     this.props.fetchData(fetches);
   }
-  projectsTableCellClicked = row => {
-    let projects = this.props.projects;
-    let latestProjects = projects.latestProjects;
-    let projectId = latestProjects[row].project_id;
-    this.props.fetchData([getMilestonesByProjectId(projectId)]);
-    this.setState({
-      shouldRenderMilestonesByProjectId: true,
-      rowNumber: row
-    });
+  projectsTableCellClicked = (row, id) => {
+    this.props.history.push(`${this.props.match.url}/${id}`);
+    // let projects = this.props.projects;
+    // let latestProjects = projects.latestProjects;
+    // let projectId = latestProjects[row].project_id;
+    // this.props.fetchData([getMilestonesByProjectId(projectId)]);
+    // this.setState({
+    //   shouldRenderMilestonesByProjectId: true,
+    //   rowNumber: row
+    // });
   };
 
   _renderMilestonesByProjectId() {
@@ -171,7 +173,7 @@ class ProjectsPage extends Component {
                       {latestProjects.map((row, index) => (
                         <TableRow
                           key={index}
-                          onClick={() => this.projectsTableCellClicked(index)}
+                          onClick={() => this.projectsTableCellClicked(index, row.project_id)}
                           style={styles.tableRow}
                           hover={true}
                         >

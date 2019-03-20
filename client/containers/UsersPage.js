@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from "react";
 import { connect } from "react-redux";
 import ReactHighcharts from "react-highcharts";
 import moment from "moment";
+import { Link } from "react-router-dom";
+
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableHead from "@material-ui/core/TableHead";
@@ -57,15 +59,16 @@ class UsersPage extends Component {
     this.props.fetchData(fetches);
   }
 
-  usersTableCellClicked = (row, column, event) => {
-    let users = this.props.users;
-    let latestUsers = users.latestUsers;
-    let userId = latestUsers[row].user_id;
-    this.props.fetchData([getProjectsByUserId(userId)]);
-    this.setState({
-      shouldRenderProjectsByUserId: true,
-      rowNumber: row
-    });
+  usersTableCellClicked = (row, id) => {
+    this.props.history.push(`${this.props.match.url}/${id}`);
+    // let users = this.props.users;
+    // let latestUsers = users.latestUsers;
+    // let userId = latestUsers[row].user_id;
+    // this.props.fetchData([getProjectsByUserId(userId)]);
+    // this.setState({
+    //   shouldRenderProjectsByUserId: true,
+    //   rowNumber: row
+    // });
   };
 
   _renderProjectsByUserId() {
@@ -187,7 +190,7 @@ class UsersPage extends Component {
                       {latestUsers.map((row, index) => (
                         <TableRow
                           key={index}
-                          onClick={() => this.usersTableCellClicked(index)}
+                          onClick={() => this.usersTableCellClicked(index, row.user_id)}
                           style={styles.tableRow}
                           hover={true}
                         >
