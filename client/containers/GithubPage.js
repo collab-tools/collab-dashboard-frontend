@@ -126,7 +126,7 @@ class GithubPage extends Component {
             <Subheading>Releases</Subheading>
             <Card>
               <Table>
-                <TableHead displaySelectAll={false} adjustForCheckbox={false}>
+                <TableHead>
                   <TableRow>
                     <TableCell>Project</TableCell>
                     <TableCell>Repository</TableCell>
@@ -135,9 +135,9 @@ class GithubPage extends Component {
                     <TableCell>Date</TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody displayRowCheckbox={false}>
+                <TableBody>
                   {latestRepositories.map((row, index) => (
-                    <TableRow key={index}>
+                    <TableRow key={index} hover={true}>
                       <TableCell>{row.project_name}</TableCell>
                       <TableCell>{row.repository_name}</TableCell>
                       <TableCell>{row.release_tag}</TableCell>

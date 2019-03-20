@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
@@ -54,31 +53,26 @@ class _404 extends Component {
 
   render() {
     return (
-      <MuiThemeProvider>
-        <div id="_404-page-container" style={styles.pageContainer}>
-          <div style={styles._404}>
-            <h1 style={styles.headingContainer}>
-              <span style={styles.headingText}> NUSCollab </span>
-              <span style={styles.subheadingText}>Dashboard</span>
-            </h1>
-            <Paper zDepth={1} style={styles.contentContainer}>
-              <div style={styles._404Container}>
-                <h1 id="_404-page-not-found-text" style={styles._404Text}>
-                  404
-                </h1>
-              </div>
-              <Link to="/">
-                <Button
-                  variant="contained"
-                  id="_404-home-button"
-                  label="Go back home"
-                  secondary={true}
-                />
-              </Link>
-            </Paper>
-          </div>
+      <div id="_404-page-container" style={styles.pageContainer}>
+        <div style={styles._404}>
+          <h1 style={styles.headingContainer}>
+            <span style={styles.headingText}> NUSCollab </span>
+            <span style={styles.subheadingText}>Dashboard</span>
+          </h1>
+          <Paper style={styles.contentContainer}>
+            <div style={styles._404Container}>
+              <h1 id="_404-page-not-found-text" style={styles._404Text}>
+                404
+              </h1>
+            </div>
+            <Link to="/">
+              <Button variant="contained" id="_404-home-button" color="secondary">
+                Go back home
+              </Button>
+            </Link>
+          </Paper>
         </div>
-      </MuiThemeProvider>
+      </div>
     );
   }
 }

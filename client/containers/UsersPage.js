@@ -173,7 +173,7 @@ class UsersPage extends Component {
               <Section>
                 <Subheading>Users</Subheading>
                 <Card>
-                  <Table onCellClick={this.usersTableCellClicked}>
+                  <Table>
                     <TableHead>
                       <TableRow>
                         <TableCell>Name</TableCell>
@@ -185,7 +185,12 @@ class UsersPage extends Component {
                     </TableHead>
                     <TableBody>
                       {latestUsers.map((row, index) => (
-                        <TableRow key={index} onClick={() => this.usersTableCellClicked(index)}>
+                        <TableRow
+                          key={index}
+                          onClick={() => this.usersTableCellClicked(index)}
+                          style={styles.tableRow}
+                          hover={true}
+                        >
                           <TableCell>{row.display_name}</TableCell>
                           <TableCell>{row.email}</TableCell>
                           <TableCell>{row.github_login}</TableCell>
@@ -222,3 +227,12 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(UsersPage);
+
+const styles = {
+  tableHead: {
+    color: "black"
+  },
+  tableRow: {
+    cursor: "pointer"
+  }
+};

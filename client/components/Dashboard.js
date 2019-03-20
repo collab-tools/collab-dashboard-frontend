@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from "react";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import Sidebar from "react-sidebar";
 import assign from "object-assign";
 
@@ -40,83 +39,81 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <MuiThemeProvider>
-        <div style={styles.pageContainer}>
-          <AppBar id="appbar" position="absolute" style={styles.titleBar}>
-            <Toolbar>
-              <Typography variant="h6" color="inherit">
-                NUSCollab Dashboard
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          <Sidebar
-            shadow
-            transitions={false}
-            docked
-            open
-            styles={{
-              sidebar: assign(
-                {},
-                styles.navigationBar,
-                !this.state.navigationBarOpen && {
-                  display: "none"
-                }
-              ),
-              content: {
-                overflowX: "hidden"
+      <div style={styles.pageContainer}>
+        <AppBar id="appbar" position="absolute" color="primary" elevation={1}>
+          <Toolbar>
+            <Typography variant="h6" style={styles.title}>
+              NUSCollab Dashboard
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Sidebar
+          shadow
+          transitions={false}
+          docked
+          open
+          styles={{
+            sidebar: assign(
+              {},
+              styles.navigationBar,
+              !this.state.navigationBarOpen && {
+                display: "none"
               }
-            }}
-            sidebar={<NavigationMenu />}
-          >
-            <div style={styles.dashboardContainer}>
-              <Paper
-                style={assign(
-                  {},
-                  styles.navigationBarContainer,
-                  !this.state.navigationBarOpen && {
-                    left: 0
-                  }
-                )}
-                onClick={this.toggleNavigationBar}
+            ),
+            content: {
+              overflowX: "hidden"
+            }
+          }}
+          sidebar={<NavigationMenu />}
+        >
+          <div style={styles.dashboardContainer}>
+            <Paper
+              style={assign(
+                {},
+                styles.navigationBarContainer,
+                !this.state.navigationBarOpen && {
+                  left: 0
+                }
+              )}
+              onClick={this.toggleNavigationBar}
+            >
+              <i
+                id="toggleNavigationIcon"
+                style={styles.toggleNavigationBarIcon}
+                className="material-icons"
               >
-                <i
-                  id="toggleNavigationIcon"
-                  style={styles.toggleNavigationBarIcon}
-                  className="material-icons"
-                >
-                  {this.state.navigationBarOpen ? "keyboard_arrow_left" : "keyboard_arrow_right"}
-                </i>
-              </Paper>
-              <div style={styles.dashboardLayoutContainer}>
-                <Switch>
-                  <Route
-                    exact
-                    path="/dashboard/staffs"
-                    component={() => (this.props.isAdmin ? <HomePage /> : <StaffsPage />)}
-                  />
-                  <Route
-                    path="/dashboard/staffs/createoredit"
-                    component={() => (this.props.isAdmin ? <HomePage /> : <StaffsFormPage />)}
-                  />
-                  <Route
-                    path="/dashboard/staffs/:id"
-                    component={() => (this.props.isAdmin ? <HomePage /> : <StaffDetailsPage />)}
-                  />
+                {this.state.navigationBarOpen ? "keyboard_arrow_left" : "keyboard_arrow_right"}
+              </i>
+            </Paper>
+            <div style={styles.dashboardLayoutContainer}>
+              <Switch>
+                <Route
+                  exact
+                  path="/dashboard/staffs"
+                  component={() => (this.props.isAdmin ? <HomePage /> : <StaffsPage />)}
+                />
+                <Route
+                  path="/dashboard/staffs/createoredit"
+                  component={() => (this.props.isAdmin ? <HomePage /> : <StaffsFormPage />)}
+                />
+                <Route
+                  path="/dashboard/staffs/:id"
+                  component={() => (this.props.isAdmin ? <HomePage /> : <StaffDetailsPage />)}
+                />
 
-                  <Route path="/dashboard/" exact component={HomePage} />
-                  <Route path="/dashboard/projects" component={ProjectsPage} />
-                  <Route path="/dashboard/users" component={UsersPage} />
-                  <Route path="/dashboard/github" component={GithubPage} />
-                  <Route path="/dashboard/drive" component={GoogleDrivePage} />
-                  <Route path="/dashboard/milestones" component={MilestonesPage} />
-                  <Route path="/dashboard/tasks" component={TasksPage} />
-                  <Redirect to="/dashboard/" />
-                </Switch>
-              </div>
+                <Route path="/dashboard/" exact component={HomePage} />
+                <Route path="/dashboard/projects" component={ProjectsPage} />
+                <Route path="/dashboard/users" component={UsersPage} />
+                <Route path="/dashboard/github" component={GithubPage} />
+                <Route path="/dashboard/drive" component={GoogleDrivePage} />
+                <Route path="/dashboard/milestones" component={MilestonesPage} />
+                <Route path="/dashboard/tasks" component={TasksPage} />
+                <Redirect to="/dashboard/" />
+              </Switch>
             </div>
-          </Sidebar>
-        </div>
-      </MuiThemeProvider>
+          </div>
+        </Sidebar>
+      </div>
     );
   }
 }
@@ -128,12 +125,8 @@ const styles = {
     backgroundColor: "#EEEEEE",
     height: "100%"
   },
-  titleBar: {
-    position: "absolute",
-    left: 0,
-    minWidth: 600,
-    overflowX: "auto",
-    backgroundColor: "#00B8D4"
+  title: {
+    color: "white"
   },
   navigationBarContainer: {
     position: "absolute",

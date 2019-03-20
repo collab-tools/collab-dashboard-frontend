@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -86,60 +85,58 @@ class Login extends Component {
   render() {
     let auth = this.props.auth;
     return (
-      <MuiThemeProvider>
-        <div style={styles.pageContainer}>
-          <div style={styles.loginContainer}>
-            <h1 style={styles.headingContainer}>
-              <span style={styles.headingText}> NUSCollab </span>
-              <span style={styles.subheadingText}>Dashboard</span>
-            </h1>
-            <Paper zDepth={1} style={styles.contentContainer}>
-              <Redirect to="/dashboard/" />
-              <div style={styles.textfieldContainer}>
-                <div>
-                  <TextField
-                    id="usernameInput"
-                    placeholder="Enter username"
-                    floatingLabelText="Username"
-                    onChange={e => this.handleUsernameChange(e.target.value)}
-                    errorText={this.state.errorText}
-                  />
-                  <br />
-                  <TextField
-                    id="passwordInput"
-                    placeholder="Enter password"
-                    floatingLabelText="Password"
-                    onChange={e => this.handlePasswordChange(e.target.value)}
-                    type="password"
-                    errorText={this.state.errorText}
-                  />
-                  <br />
-                </div>
+      <div style={styles.pageContainer}>
+        <div style={styles.loginContainer}>
+          <h1 style={styles.headingContainer}>
+            <span style={styles.headingText}> NUSCollab </span>
+            <span style={styles.subheadingText}>Dashboard</span>
+          </h1>
+          <Paper style={styles.contentContainer}>
+            <Redirect to="/dashboard/" />
+            <div style={styles.textfieldContainer}>
+              <div>
+                <TextField
+                  id="usernameInput"
+                  placeholder="Enter username"
+                  floatingLabelText="Username"
+                  onChange={e => this.handleUsernameChange(e.target.value)}
+                  errorText={this.state.errorText}
+                />
+                <br />
+                <TextField
+                  id="passwordInput"
+                  placeholder="Enter password"
+                  floatingLabelText="Password"
+                  onChange={e => this.handlePasswordChange(e.target.value)}
+                  type="password"
+                  errorText={this.state.errorText}
+                />
+                <br />
               </div>
-              {this.state.username == "" && this.state.password == "" ? (
-                <Button variant="contained" id="loginButton" label="Sign in" disabled={true} />
-              ) : (
-                <div>
-                  <Link to="/dashboard">
-                    <Button
-                      variant="contained"
-                      id="loginButton"
-                      onClick={e => this.onSubmit(e)}
-                      label="Sign in"
-                      secondary={true}
-                    />
-                  </Link>
-                </div>
-              )}
-              {/* {
+            </div>
+            {this.state.username == "" && this.state.password == "" ? (
+              <Button variant="contained" id="loginButton" label="Sign in" disabled={true} />
+            ) : (
+              <div>
+                <Link to="/dashboard">
+                  <Button
+                    variant="contained"
+                    id="loginButton"
+                    onClick={e => this.onSubmit(e)}
+                    label="Sign in"
+                    secondary={true}
+                  />
+                </Link>
+              </div>
+            )}
+            {/* {
                 auth && auth.token !== null ?
                   <Redirect to="/dashboard" />
                 : null
               } */}
-            </Paper>
-          </div>
+          </Paper>
         </div>
-      </MuiThemeProvider>
+      </div>
     );
   }
 }

@@ -173,6 +173,7 @@ class ProjectsPage extends Component {
                           key={index}
                           onClick={() => this.projectsTableCellClicked(index)}
                           style={styles.tableRow}
+                          hover={true}
                         >
                           <TableCell>{row.content}</TableCell>
                           <TableCell>{row.github_repo_name}</TableCell>
@@ -213,9 +214,6 @@ export default connect(
 
 const styles = {
   tableRow: {
-    cursor: "pointer",
-    "&:hover": {
-      backgroundColor: "#1F1F1F"
-    }
+    cursor: "pointer"
   }
 };
