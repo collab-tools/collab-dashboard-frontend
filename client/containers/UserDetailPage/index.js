@@ -9,6 +9,10 @@ import Content from "../../components/Content";
 import Section from "../../components/Section";
 
 import DashboardLayout from "../DashboardLayout";
+import OverviewTab from "./UserOverviewTab";
+import MilestonesAndTasksTab from "./UserMilestonesAndTasksTab";
+import GithubTab from "./UserGithubTab";
+import FilesTab from "./UserFilesTab";
 
 import { fetchData } from "../../actions/actions";
 
@@ -22,13 +26,13 @@ class UserDetailPage extends Component {
   renderTab = currTab => {
     switch (currTab) {
       case 0:
-        return "OverviewTab";
+        return <OverviewTab />;
       case 1:
-        return "MilestonesAndTasksTab";
+        return <MilestonesAndTasksTab />;
       case 2:
-        return "GithubTab";
+        return <GithubTab />;
       case 3:
-        return "FilesTab";
+        return <FilesTab />;
       default:
         return null;
     }
