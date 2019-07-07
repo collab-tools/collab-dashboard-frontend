@@ -99,8 +99,7 @@ class OverviewTab extends Component {
       {
         name: "Le Vu Khanh Toan",
         email: "ktoan2904@gmail.com",
-        image:
-          "https://4vector.com/i/free-vector-boy-face-cartoon-clip-art-108644_108644_Boy_Face_Cartoon_clip_art_hight.png",
+        image: "https://www.cchst.net/wp-content/uploads/2017/06/student-generic.jpg",
         metrics: [
           { label: "Tasks completed", data: "5/8" },
           { label: "Messages sent", data: "23" },
@@ -112,7 +111,7 @@ class OverviewTab extends Component {
         name: "Captain America",
         email: "captain@america.com",
         image:
-          "https://upload.wikimedia.org/wikipedia/en/thumb/8/83/Captain_America_%28Steve_Rogers%29_All_New_All_Different_Marvel_version.jpg/170px-Captain_America_%28Steve_Rogers%29_All_New_All_Different_Marvel_version.jpg",
+          "https://fanfest.com/wp-content/uploads/2018/10/captain-america-figure_0-632x450.png",
         metrics: [
           { label: "Tasks completed", data: "10/10" },
           { label: "Messages sent", data: "34" },

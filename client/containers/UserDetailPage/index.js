@@ -10,7 +10,7 @@ import Section from "../../components/Section";
 
 import DashboardLayout from "../DashboardLayout";
 import OverviewTab from "./UserOverviewTab";
-import MilestonesAndTasksTab from "./UserMilestonesAndTasksTab";
+import TasksTab from "./UserTasksTab";
 import GithubTab from "./UserGithubTab";
 import FilesTab from "./UserFilesTab";
 
@@ -28,7 +28,7 @@ class UserDetailPage extends Component {
       case 0:
         return <OverviewTab />;
       case 1:
-        return <MilestonesAndTasksTab />;
+        return <TasksTab />;
       case 2:
         return <GithubTab />;
       case 3:
@@ -51,7 +51,7 @@ class UserDetailPage extends Component {
                 indicatorColor="primary"
               >
                 <Tab value={0} label="Overview" />
-                <Tab value={1} label="Milestones and Tasks" />
+                <Tab value={1} label="Tasks" />
                 <Tab value={2} label="Github" />
                 <Tab value={3} label="Files" />
               </Tabs>

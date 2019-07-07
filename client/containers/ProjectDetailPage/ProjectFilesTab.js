@@ -100,7 +100,7 @@ class FilesTab extends Component {
               style={{ textDecoration: "none" }}
               target="_blank"
             >
-              <div style={styles.linkTitle}>Google Drive Link</div>
+              <div style={styles.linkTitle}>Folder Link</div>
               <div style={styles.linkUrl}>
                 https://drive.google.com/open?id=1SnwEVsjeuhtpXtbtDRHRK02nAegH5pnF
               </div>

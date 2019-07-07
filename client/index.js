@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { HashRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
@@ -19,7 +19,7 @@ const theme = createMuiTheme({
     primary: { main: "#00B8D4" },
     secondary: { main: "#ff70c8" },
     text: {
-      primary: "#000000"      
+      primary: "#000000"
     }
   }
 });
