@@ -37,36 +37,9 @@ const styles = {
 class MilestonesAndTasksTab extends Component {
   render() {
     //TODO: get real data
-    const milestones = [
-      {
-        name: "Milestone 1",
-        deadline: "1 Apr 2019",
-        tasksCompleted: "1/2",
-        tasks: [
-          { name: "Task 1", assignee: "Captain America", completeDay: "20 Apr 2019" },
-          { name: "Task 2", assignee: "Iron Man", completeDay: "N/A" }
-        ]
-      },
-      {
-        name: "Milestone 2",
-        deadline: "14 Apr 2019",
-        tasksCompleted: "3/3",
-        tasks: [
-          { name: "Task 1", assignee: "Captain America", completeDay: "10 Apr 2019" },
-          { name: "Task 2", assignee: "Iron Man", completeDay: "11 Apr 2019" },
-          { name: "Task 3", assignee: "Iron Man", completeDay: "12 Apr 2019" }
-        ]
-      },
-      {
-        name: "Milestone 3",
-        deadline: "29 Apr 2019",
-        tasksCompleted: "0/2",
-        tasks: [
-          { name: "Task 1", assignee: "Captain America", completeDay: "N/A" },
-          { name: "Task 2", assignee: "Iron Man", completeDay: "N/A" }
-        ]
-      }
-    ];
+    const {
+      data: { milestones, contributions }
+    } = this.props;
     const graphConfig = {
       chart: {
         type: "bar"
@@ -75,7 +48,7 @@ class MilestonesAndTasksTab extends Component {
         text: "Task Completion by Members"
       },
       xAxis: {
-        categories: ["Le Vu Khanh Toan", "Captain America", "Iron Man"]
+        categories: contributions.map(item => item.member)
       },
       yAxis: {
         min: 0,
@@ -94,11 +67,11 @@ class MilestonesAndTasksTab extends Component {
       series: [
         {
           name: "Completed Tasks",
-          data: [5, 7, 3]
+          data: contributions.map(item => item.completed)
         },
         {
           name: "Incomplete Tasks",
-          data: [4, 0, 6]
+          data: contributions.map(item => item.incomplete)
         }
       ]
     };
@@ -111,8 +84,8 @@ class MilestonesAndTasksTab extends Component {
             <div style={styles.panelRowColumn}>Deadline</div>
             <div style={styles.panelRowColumn}>Tasks Completed</div>
           </Paper>
-          {milestones.map(milestone => (
-            <ExpansionPanel>
+          {milestones.map((milestone, index) => (
+            <ExpansionPanel key={index}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <div style={styles.panelRowFirstColumn}>{milestone.name}</div>
                 <div style={styles.panelRowColumn}>{milestone.deadline}</div>
@@ -124,8 +97,8 @@ class MilestonesAndTasksTab extends Component {
                   <div style={styles.panelRowColumn}>Assigned to</div>
                   <div style={styles.panelRowColumn}>Completed</div>
                 </div>
-                {milestone.tasks.map(task => (
-                  <div style={styles.panelRow}>
+                {milestone.tasks.map((task, index) => (
+                  <div key={index} style={styles.panelRow}>
                     <div style={styles.panelRowFirstColumn}>{task.name}</div>
                     <div style={styles.panelRowColumn}>{task.assignee}</div>
                     <div style={styles.panelRowColumn}>{task.completeDay}</div>

@@ -38,31 +38,15 @@ const styles = {
 
 class FilesTab extends Component {
   render() {
+    const { summary, changes, contributions } = this.props.data;
     const metricsData = [
       {
-        metric: "14",
+        metric: summary.filesNum,
         metricLabel: "Number of Files Uploaded"
       },
       {
-        metric: "323",
+        metric: summary.changesNum,
         metricLabel: "Number of Changes Made"
-      }
-    ];
-    const changes = [
-      {
-        project: "CS1010",
-        fileName: "Final Report.docx",
-        timestamp: "2019-03-20T18:10:49Z"
-      },
-      {
-        project: "CS1020",
-        fileName: "Documentation.docx",
-        timestamp: "2019-03-19T12:10:42Z"
-      },
-      {
-        project: "CS2010",
-        fileName: "Model Diagram.jpg",
-        timestamp: "2019-03-18T01:42:02Z"
       }
     ];
     const graphConfig = {
@@ -73,7 +57,7 @@ class FilesTab extends Component {
         text: "Number of Changes by Projects"
       },
       xAxis: {
-        categories: ["CS1010", "CS1020", "CS2010"]
+        categories: contributions.map(item => item.project)
       },
       yAxis: {
         min: 0,
@@ -87,7 +71,7 @@ class FilesTab extends Component {
       series: [
         {
           name: "Changes",
-          data: [34, 15, 54]
+          data: contributions.map(item => item.changes)
         }
       ]
     };

@@ -37,6 +37,7 @@ const styles = {
 };
 class GithubTab extends Component {
   render() {
+    const { link, summary, commits, contributions } = this.props.data;
     const metricsData = [
       {
         metric: "42",
@@ -51,23 +52,6 @@ class GithubTab extends Component {
         metricLabel: "Number of Lines Deleted"
       }
     ];
-    const commits = [
-      {
-        project: "CS1010",
-        message: "implement ProjectDetailPage feature",
-        timestamp: "2019-03-20T18:10:49Z"
-      },
-      {
-        project: "CS1020",
-        message: "fix routing bug",
-        timestamp: "2019-03-19T12:10:42Z"
-      },
-      {
-        project: "CS2010",
-        message: "update React",
-        timestamp: "2019-03-18T01:42:02Z"
-      }
-    ];
     const graphConfig_1 = {
       chart: {
         type: "bar"
@@ -76,7 +60,7 @@ class GithubTab extends Component {
         text: "Number of Commits by Projects"
       },
       xAxis: {
-        categories: ["CS1010", "CS1020", "CS2010"]
+        categories: contributions.commits.map(item => item.project)
       },
       yAxis: {
         min: 0,
@@ -90,7 +74,7 @@ class GithubTab extends Component {
       series: [
         {
           name: "Commits",
-          data: [10, 12, 20]
+          data: contributions.commits.map(item => item.commits)
         }
       ]
     };
@@ -102,7 +86,7 @@ class GithubTab extends Component {
         text: "Number of Lines of Codes Changed by Projects"
       },
       xAxis: {
-        categories: ["CS1010", "CS1020", "CS2010"]
+        categories: contributions.LOCs.map(item => item.project)
       },
       yAxis: {
         min: 0,
@@ -121,11 +105,11 @@ class GithubTab extends Component {
       series: [
         {
           name: "Deletions",
-          data: [124, 211, 521]
+          data: contributions.LOCs.map(item => item.deletions)
         },
         {
-          name: "Insertions",
-          data: [321, 421, 1145]
+          name: "Additions",
+          data: contributions.LOCs.map(item => item.additions)
         }
       ]
     };
@@ -133,13 +117,9 @@ class GithubTab extends Component {
       <React.Fragment>
         <Section>
           <Paper style={styles.linkContainer}>
-            <a
-              href="https://github.com/ktoan2904/testCollab"
-              style={{ textDecoration: "none" }}
-              target="_blank"
-            >
+            <a {...link && { href: link }} style={{ textDecoration: "none" }} target="_blank">
               <div style={styles.linkTitle}>Account</div>
-              <div style={styles.linkUrl}>https://github.com/ktoan2904</div>
+              <div style={styles.linkUrl}>{link || "N/A"}</div>
             </a>
           </Paper>
         </Section>

@@ -37,35 +37,21 @@ const styles = {
 };
 class GithubTab extends Component {
   render() {
+    const {
+      data: { link, summary, commits, contributions }
+    } = this.props;
     const metricsData = [
       {
-        metric: "42",
+        metric: summary.commitsNum,
         metricLabel: "Total Commits"
       },
       {
-        metric: "2593",
+        metric: summary.linesAdded,
         metricLabel: "Number of Lines Added"
       },
       {
-        metric: "1129",
+        metric: summary.linesDeleted,
         metricLabel: "Number of Lines Deleted"
-      }
-    ];
-    const commits = [
-      {
-        author: "Captain America",
-        message: "implement ProjectDetailPage feature",
-        timestamp: "2019-03-20T18:10:49Z"
-      },
-      {
-        author: "Le Vu Khanh Toan",
-        message: "fix routing bug",
-        timestamp: "2019-03-19T12:10:42Z"
-      },
-      {
-        author: "Iron Man",
-        message: "update React",
-        timestamp: "2019-03-18T01:42:02Z"
       }
     ];
     const graphConfig_1 = {
@@ -76,7 +62,7 @@ class GithubTab extends Component {
         text: "Number of Commits by Members"
       },
       xAxis: {
-        categories: ["Le Vu Khanh Toan", "Captain America", "Iron Man"]
+        categories: contributions.commits.map(item => item.member)
       },
       yAxis: {
         min: 0,
@@ -90,7 +76,7 @@ class GithubTab extends Component {
       series: [
         {
           name: "Commits",
-          data: [10, 12, 20]
+          data: contributions.commits.map(item => item.commits)
         }
       ]
     };
@@ -102,7 +88,7 @@ class GithubTab extends Component {
         text: "Number of Lines of Codes Changed by Members"
       },
       xAxis: {
-        categories: ["Le Vu Khanh Toan", "Captain America", "Iron Man"]
+        categories: contributions.LOCs.map(item => item.member)
       },
       yAxis: {
         min: 0,
@@ -121,11 +107,11 @@ class GithubTab extends Component {
       series: [
         {
           name: "Deletions",
-          data: [124, 211, 521]
+          data: contributions.LOCs.map(item => item.deletions)
         },
         {
-          name: "Insertions",
-          data: [321, 421, 1145]
+          name: "Additions",
+          data: contributions.LOCs.map(item => item.additions)
         }
       ]
     };
@@ -133,13 +119,10 @@ class GithubTab extends Component {
       <React.Fragment>
         <Section>
           <Paper style={styles.linkContainer}>
-            <a
-              href="https://github.com/ktoan2904/testCollab"
-              style={{ textDecoration: "none" }}
-              target="_blank"
-            >
+            {/* conditionally adds a href attribute if the link is non-empty*/}
+            <a {...link && { href: link }} style={{ textDecoration: "none" }} target="_blank">
               <div style={styles.linkTitle}>Repository</div>
-              <div style={styles.linkUrl}>https://github.com/ktoan2904/testCollab</div>
+              <div style={styles.linkUrl}>{link || "N/A"}</div>
             </a>
           </Paper>
         </Section>

@@ -67,67 +67,33 @@ const styles = {
 class OverviewTab extends Component {
   render() {
     //TODO: get real data
+    const { summary, projects, activities, links } = this.props.data;
     const metricsData_1 = [
       {
-        metric: "3",
+        metric: summary.projectsNum,
         metricLabel: "Total Projects"
       },
       {
-        metric: "15",
+        metric: summary.completedTasksNum,
         metricLabel: "Total Completed Tasks"
       },
       {
-        metric: "29",
+        metric: summary.incompleteTasksNum,
         metricLabel: "Total Pending Tasks"
       }
     ];
     const metricsData_2 = [
       {
-        metric: "235",
+        metric: summary.messagesNum,
         metricLabel: "Total Messages Sent"
       },
       {
-        metric: "7",
+        metric: summary.commitsNum,
         metricLabel: "Total Commits Pushed"
       },
       {
-        metric: "15",
+        metric: summary.fileChangesNum,
         metricLabel: "Number of File Changes Made"
-      }
-    ];
-    const projects = [
-      {
-        name: "CS1010",
-        dateCreated: "12 Oct 2018",
-
-        metrics: [
-          { label: "Tasks completed", data: "5/8" },
-          { label: "Messages sent", data: "23" },
-          { label: "Commits made", data: "11" },
-          { label: "Files changes made", data: "50" }
-        ]
-      },
-      {
-        name: "CS1020",
-        dateCreated: "05 Jan 2019",
-
-        metrics: [
-          { label: "Tasks completed", data: "10/10" },
-          { label: "Messages sent", data: "34" },
-          { label: "Commits made", data: "4" },
-          { label: "Files changes made", data: "23" }
-        ]
-      },
-      {
-        name: "CS2010",
-        dateCreated: "06 Jan 2019",
-
-        metrics: [
-          { label: "Tasks completed", data: "14/16" },
-          { label: "Messages sent", data: "120" },
-          { label: "Commits made", data: "23" },
-          { label: "Files changes made", data: "54" }
-        ]
       }
     ];
 
@@ -143,8 +109,8 @@ class OverviewTab extends Component {
         <Section>
           <Subheading>Projects</Subheading>
           <div style={styles.cardContainer}>
-            {projects.map(project => (
-              <Card style={styles.projectCard}>
+            {projects.map((project, index) => (
+              <Card key={index} style={styles.projectCard}>
                 <CardHeader title={project.name} subheader={`created on ${project.dateCreated}`} />
                 <Divider />
                 <CardContent>
@@ -164,71 +130,28 @@ class OverviewTab extends Component {
             <div style={styles.column}>
               <Subheading>Recent Activities</Subheading>
               <List style={styles.activityList}>
-                <ListItem style={styles.listItem}>
-                  <ListItemText
-                    primary="CS1010"
-                    secondary="Toan has marked task 'Task 12' as complete"
-                  />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText
-                    primary="CS1020"
-                    secondary="Toan pushed a commit 'fix bugs' to branch 'master'"
-                  />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Some Project" secondary="Toan did something" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Some Other Project" secondary="Toan did other thing" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Some Project" secondary="Toan did something" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Some Other Project" secondary="Toan did other thing" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Some Project" secondary="Toan did something" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Some Other Project" secondary="Toan did other thing" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Some Project" secondary="Toan did something" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Some Other Project" secondary="Toan did other thing" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Some Project" secondary="Toan did something" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Some Other Project" secondary="Toan did other thing" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Some Project" secondary="Toan did something" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Some Other Project" secondary="Toan did other thing" />
-                </ListItem>
+                {activities.map((activity, index) => (
+                  <ListItem key={index} style={styles.listItem}>
+                    <ListItemText primary={activity.project} secondary={activity.description} />
+                  </ListItem>
+                ))}
               </List>
             </div>
             <div style={styles.column}>
               <Subheading>Links</Subheading>
               <Paper style={styles.linkContainer}>
                 <a
-                  href="https://github.com/ktoan2904/testCollab"
+                  {...links.github && { href: links.github }}
                   style={{ textDecoration: "none" }}
                   target="_blank"
                 >
                   <div style={styles.linkTitle}>GitHub</div>
-                  <div style={styles.linkUrl}>https://github.com/ktoan2904</div>
+                  <div style={styles.linkUrl}>{links.github || "N/A"}</div>
                 </a>
               </Paper>
               <Paper style={styles.linkContainer}>
                 <div style={styles.linkTitle}>Email</div>
-                <div style={styles.linkUrl}>ktoan2904@gmail.com</div>
+                <div style={styles.linkUrl}>{links.email || "N/A"}</div>
               </Paper>
             </div>
           </div>

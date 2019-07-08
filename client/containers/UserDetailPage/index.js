@@ -24,15 +24,16 @@ class UserDetailPage extends Component {
     this.setState({ currTab: value });
   };
   renderTab = currTab => {
+    const data = this.props.userDetail;
     switch (currTab) {
       case 0:
-        return <OverviewTab />;
+        return <OverviewTab data={data.overview} />;
       case 1:
-        return <TasksTab />;
+        return <TasksTab data={data.tasks} />;
       case 2:
-        return <GithubTab />;
+        return <GithubTab data={data.github} />;
       case 3:
-        return <FilesTab />;
+        return <FilesTab data={data.files} />;
       default:
         return null;
     }
@@ -65,5 +66,10 @@ class UserDetailPage extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => {
+  const {
+    dashboardData: { userDetail }
+  } = state;
+  return { userDetail };
+};
 export default connect(mapStateToProps)(UserDetailPage);

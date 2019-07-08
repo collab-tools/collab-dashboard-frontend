@@ -64,72 +64,39 @@ const styles = {
     color: "grey"
   }
 };
-class OverviewTab extends Component {
+export default class OverviewTab extends Component {
   render() {
     //TODO: get real data
+    const {
+      data: { summary, members, activities, links }
+    } = this.props;
+
     const metricsData_1 = [
       {
-        metric: "2",
+        metric: summary.milestonesNum,
         metricLabel: "Total Milestones"
       },
       {
-        metric: "15",
+        metric: summary.completedTasksNum,
         metricLabel: "Total Completed Tasks"
       },
       {
-        metric: "29",
+        metric: summary.pendingTasksNum,
         metricLabel: "Total Pending Tasks"
       }
     ];
     const metricsData_2 = [
       {
-        metric: "235",
+        metric: summary.messagesNum,
         metricLabel: "Total Messages Sent"
       },
       {
-        metric: "7",
+        metric: summary.commitsNum,
         metricLabel: "Total Commits Pushed"
       },
       {
-        metric: "15",
+        metric: summary.fileChangesNum,
         metricLabel: "Number of File Changes Made"
-      }
-    ];
-    const members = [
-      {
-        name: "Le Vu Khanh Toan",
-        email: "ktoan2904@gmail.com",
-        image: "https://www.cchst.net/wp-content/uploads/2017/06/student-generic.jpg",
-        metrics: [
-          { label: "Tasks completed", data: "5/8" },
-          { label: "Messages sent", data: "23" },
-          { label: "Commits made", data: "11" },
-          { label: "Files changes made", data: "50" }
-        ]
-      },
-      {
-        name: "Captain America",
-        email: "captain@america.com",
-        image:
-          "https://fanfest.com/wp-content/uploads/2018/10/captain-america-figure_0-632x450.png",
-        metrics: [
-          { label: "Tasks completed", data: "10/10" },
-          { label: "Messages sent", data: "34" },
-          { label: "Commits made", data: "4" },
-          { label: "Files changes made", data: "23" }
-        ]
-      },
-      {
-        name: "Iron Man",
-        email: "iron@man.com",
-        image:
-          "https://upload.wikimedia.org/wikipedia/en/thumb/e/e0/Iron_Man_bleeding_edge.jpg/250px-Iron_Man_bleeding_edge.jpg",
-        metrics: [
-          { label: "Tasks completed", data: "14/16" },
-          { label: "Messages sent", data: "120" },
-          { label: "Commits made", data: "23" },
-          { label: "Files changes made", data: "54" }
-        ]
       }
     ];
 
@@ -142,11 +109,12 @@ class OverviewTab extends Component {
         <Section>
           <MetricsRow metricsData={metricsData_2} />
         </Section>
+
         <Section>
           <Subheading>Members</Subheading>
           <div style={styles.cardContainer}>
-            {members.map(member => (
-              <Card style={styles.memberCard}>
+            {members.map((member, index) => (
+              <Card key={index} style={styles.memberCard}>
                 <CardHeader
                   avatar={<CardMedia style={styles.avatar} image={member.image} />}
                   title={member.name}
@@ -165,83 +133,39 @@ class OverviewTab extends Component {
             ))}
           </div>
         </Section>
+
         <Section>
           <div style={styles.twoColumns}>
             <div style={styles.column}>
               <Subheading>Recent Activities</Subheading>
               <List style={styles.activityList}>
-                <ListItem style={styles.listItem}>
-                  <ListItemText
-                    primary="Captain America"
-                    secondary="has marked task 'Task 12' as complete"
-                  />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText
-                    primary="Iron Man"
-                    secondary="pushed a commit 'fix bugs' to branch 'master'"
-                  />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Someone" secondary="did something" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Someone Else" secondary="did other thing" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Someone" secondary="did something" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Someone Else" secondary="did other thing" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Someone" secondary="did something" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Someone Else" secondary="did other thing" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Someone" secondary="did something" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Someone Else" secondary="did other thing" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Someone" secondary="did something" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Someone Else" secondary="did other thing" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Someone" secondary="did something" />
-                </ListItem>
-                <ListItem style={styles.listItem}>
-                  <ListItemText primary="Someone Else" secondary="did other thing" />
-                </ListItem>
+                {activities.map((activity, index) => (
+                  <ListItem key={index} style={styles.listItem}>
+                    <ListItemText primary={activity.author} secondary={activity.description} />
+                  </ListItem>
+                ))}
               </List>
             </div>
             <div style={styles.column}>
               <Subheading>Links</Subheading>
               <Paper style={styles.linkContainer}>
                 <a
-                  href="https://github.com/ktoan2904/testCollab"
+                  {...links.github && { href: links.github }}
                   style={{ textDecoration: "none" }}
                   target="_blank"
                 >
                   <div style={styles.linkTitle}>GitHub</div>
-                  <div style={styles.linkUrl}>https://github.com/ktoan2904/testCollab</div>
+                  <div style={styles.linkUrl}>{links.github || "N/A"}</div>
                 </a>
               </Paper>
               <Paper style={styles.linkContainer}>
                 <a
-                  href="https://drive.google.com/open?id=1SnwEVsjeuhtpXtbtDRHRK02nAegH5pnF"
+                  {...links.drive && { href: links.drive }}
                   style={{ textDecoration: "none" }}
                   target="_blank"
                 >
                   <div style={styles.linkTitle}>Google Drive</div>
-                  <div style={styles.linkUrl}>
-                    https://drive.google.com/open?id=1SnwEVsjeuhtpXtbtDRHRK02nAegH5pnF
-                  </div>
+                  <div style={styles.linkUrl}>{links.drive || "N/A"}</div>
                 </a>
               </Paper>
             </div>
@@ -251,6 +175,3 @@ class OverviewTab extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({});
-export default connect(mapStateToProps)(OverviewTab);

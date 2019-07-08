@@ -36,31 +36,7 @@ const styles = {
 class MilestonesAndTasksTab extends Component {
   render() {
     //TODO: get real data
-    const projects = [
-      {
-        name: "CS1010",
-        tasks: [
-          { name: "Task 1", deadline: "20 Apr 2019", completed: true },
-          { name: "Task 2", deadline: "24 Apr 2019", completed: false }
-        ]
-      },
-      {
-        name: "CS1020",
-        tasks: [
-          { name: "Task 1", deadline: "20 Apr 2019", completed: true },
-          { name: "Task 2", deadline: "24 Apr 2019", completed: false },
-          { name: "Task 3", deadline: "28 Apr 2019", completed: false }
-        ]
-      },
-      {
-        name: "CS2010",
-        tasks: [
-          { name: "Task 1", deadline: "N/A", completed: false },
-          { name: "Task 2", deadline: "N/A", completed: false },
-          { name: "Task 3", deadline: "10 Apr 2019", completed: true }
-        ]
-      }
-    ];
+    const { projects, contributions } = this.props.data;
     const graphConfig = {
       chart: {
         type: "bar"
@@ -69,7 +45,7 @@ class MilestonesAndTasksTab extends Component {
         text: "Task Completion by Project"
       },
       xAxis: {
-        categories: ["CS1010", "CS1020", "CS2010"]
+        categories: contributions.map(item => item.project)
       },
       yAxis: {
         min: 0,
@@ -88,11 +64,11 @@ class MilestonesAndTasksTab extends Component {
       series: [
         {
           name: "Completed Tasks",
-          data: [5, 2, 1]
+          data: contributions.map(item => item.completed)
         },
         {
           name: "Incomplete Tasks",
-          data: [0, 3, 6]
+          data: contributions.map(item => item.incomplete)
         }
       ]
     };
@@ -100,8 +76,8 @@ class MilestonesAndTasksTab extends Component {
       <React.Fragment>
         <Section>
           <Subheading>Projects List</Subheading>
-          {projects.map(project => (
-            <ExpansionPanel>
+          {projects.map((project, index) => (
+            <ExpansionPanel key={index}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <div style={styles.panelRowFirstColumn}>{project.name}</div>
               </ExpansionPanelSummary>
@@ -111,8 +87,8 @@ class MilestonesAndTasksTab extends Component {
                   <div style={styles.panelRowColumn}>Deadline</div>
                   <div style={styles.panelRowColumn}>Completed</div>
                 </div>
-                {project.tasks.map(task => (
-                  <div style={styles.panelRow}>
+                {project.tasks.map((task, index) => (
+                  <div key={index} style={styles.panelRow}>
                     <div style={styles.panelRowFirstColumn}>{task.name}</div>
                     <div style={styles.panelRowColumn}>{task.deadline}</div>
                     <div style={styles.panelRowColumn}>{task.completed ? "Yes" : "No"}</div>

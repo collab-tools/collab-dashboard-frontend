@@ -24,15 +24,16 @@ class ProjectDetailPage extends Component {
     this.setState({ currTab: value });
   };
   renderTab = currTab => {
+    let data = this.props.projectDetail;
     switch (currTab) {
       case 0:
-        return <OverviewTab />;
+        return <OverviewTab data={data.overview} />;
       case 1:
-        return <MilestonesAndTasksTab />;
+        return <MilestonesAndTasksTab data={data.tasks} />;
       case 2:
-        return <GithubTab />;
+        return <GithubTab data={data.github} />;
       case 3:
-        return <FilesTab />;
+        return <FilesTab data={data.files} />;
       default:
         return null;
     }
@@ -65,5 +66,10 @@ class ProjectDetailPage extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => {
+  let {
+    dashboardData: { projectDetail }
+  } = state;
+  return { projectDetail };
+};
 export default connect(mapStateToProps)(ProjectDetailPage);

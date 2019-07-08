@@ -210,7 +210,7 @@ export function fetchData(fetches) {
 
     Promise.all(fetches).then(actions => {
       actions.forEach(dispatch);
-      setTimeout(() => dispatch(setLoading(false)), 1000);
+      setTimeout(() => dispatch(setLoading(false)), 0);
     });
   };
 }

@@ -38,31 +38,17 @@ const styles = {
 
 class FilesTab extends Component {
   render() {
+    const {
+      data: { link, summary, changes, contributions }
+    } = this.props;
     const metricsData = [
       {
-        metric: "14",
+        metric: summary.filesNum,
         metricLabel: "Number of Files Uploaded"
       },
       {
-        metric: "323",
+        metric: summary.changesNum,
         metricLabel: "Number of Changes Made"
-      }
-    ];
-    const changes = [
-      {
-        author: "Captain America",
-        fileName: "Final Report.docx",
-        timestamp: "2019-03-20T18:10:49Z"
-      },
-      {
-        author: "Le Vu Khanh Toan",
-        fileName: "Documentation.docx",
-        timestamp: "2019-03-19T12:10:42Z"
-      },
-      {
-        author: "Iron Man",
-        fileName: "Model Diagram.jpg",
-        timestamp: "2019-03-18T01:42:02Z"
       }
     ];
     const graphConfig = {
@@ -73,7 +59,7 @@ class FilesTab extends Component {
         text: "Number of Changes by Members"
       },
       xAxis: {
-        categories: ["Le Vu Khanh Toan", "Captain America", "Iron Man"]
+        categories: contributions.map(item => item.member)
       },
       yAxis: {
         min: 0,
@@ -87,7 +73,7 @@ class FilesTab extends Component {
       series: [
         {
           name: "Changes",
-          data: [34, 15, 54]
+          data: contributions.map(item => item.changes)
         }
       ]
     };
@@ -95,15 +81,10 @@ class FilesTab extends Component {
       <React.Fragment>
         <Section>
           <Paper style={styles.linkContainer}>
-            <a
-              href="https://drive.google.com/open?id=1SnwEVsjeuhtpXtbtDRHRK02nAegH5pnF"
-              style={{ textDecoration: "none" }}
-              target="_blank"
-            >
+            {/* conditionally adds a href attribute if the link is non-empty*/}
+            <a {...link && { href: link }} style={{ textDecoration: "none" }} target="_blank">
               <div style={styles.linkTitle}>Folder Link</div>
-              <div style={styles.linkUrl}>
-                https://drive.google.com/open?id=1SnwEVsjeuhtpXtbtDRHRK02nAegH5pnF
-              </div>
+              <div style={styles.linkUrl}>{link || "N/A"}</div>
             </a>
           </Paper>
         </Section>
