@@ -25,8 +25,11 @@ import {
   _getTasksCompletionData,
   _getTasksFeatureUtilizationRate
 } from "./actions";
+
+const globalRoutePrefix = ROOT_API + "/global";
+
 export function getTotalProjects(startDate, endDate) {
-  let url = ROOT_API + "/projects/count";
+  let url = globalRoutePrefix + "/projects/count";
   return axios
     .post(
       url,
@@ -49,7 +52,7 @@ export function getTotalProjects(startDate, endDate) {
     });
 }
 export function getNewProjects(startDate, endDate) {
-  let url = ROOT_API + "/projects/num-created-between-dates";
+  let url = globalRoutePrefix + "/projects/num-created-between-dates";
   return axios
     .post(
       url,
@@ -94,7 +97,7 @@ export function getLatestProjects(maxEntries) {
     });
 }
 export function getActiveProjects(startDate, endDate) {
-  let url = ROOT_API + "/projects/active-rate-between-dates";
+  let url = globalRoutePrefix + "/projects/active-rate-between-dates";
   return axios
     .post(
       url,
@@ -117,7 +120,7 @@ export function getActiveProjects(startDate, endDate) {
     });
 }
 export function getMilestonesByProjectId(projectId) {
-  let url = ROOT_API + "/projects/milestones";
+  let url = globalRoutePrefix + "/projects/milestones";
   // console.log('getMilestonesByProjectId', projectId);
   return axios
     .post(
@@ -140,7 +143,7 @@ export function getMilestonesByProjectId(projectId) {
     });
 }
 export function getTotalUsers(startDate, endDate) {
-  let url = ROOT_API + "/users/count";
+  let url = globalRoutePrefix + "/users/count";
   return axios
     .post(
       url,
@@ -162,7 +165,7 @@ export function getTotalUsers(startDate, endDate) {
     });
 }
 export function getNewUsers(startDate, endDate) {
-  let url = ROOT_API + "/users/num-created-between-dates";
+  let url = globalRoutePrefix + "/users/num-created-between-dates";
   return axios
     .post(
       url,
@@ -208,7 +211,7 @@ export function getLatestUsers(maxEntries) {
     });
 }
 export function getActiveUsers(startDate, endDate) {
-  let url = ROOT_API + "/users/num-updated-between-dates";
+  let url = globalRoutePrefix + "/users/num-updated-between-dates";
   return axios
     .post(
       url,
@@ -231,7 +234,7 @@ export function getActiveUsers(startDate, endDate) {
     });
 }
 export function getInactiveUsers(startDate, endDate) {
-  let url = ROOT_API + "/users/num-not-updated-between-dates";
+  let url = globalRoutePrefix + "/users/num-not-updated-between-dates";
   return axios
     .post(
       url,
@@ -254,7 +257,7 @@ export function getInactiveUsers(startDate, endDate) {
     });
 }
 export function getRetentionRate(startDate, endDate) {
-  let url = ROOT_API + "/users/retention-rate";
+  let url = globalRoutePrefix + "/users/retention-rate";
   return axios
     .post(
       url,
@@ -276,7 +279,7 @@ export function getRetentionRate(startDate, endDate) {
     });
 }
 export function getProjectsByUserId(userId) {
-  let url = ROOT_API + "/users/projects";
+  let url = globalRoutePrefix + "/users/projects";
   return axios
     .post(
       url,
@@ -298,7 +301,7 @@ export function getProjectsByUserId(userId) {
     });
 }
 export function getTotalMilestones(startDate, endDate) {
-  let url = ROOT_API + "/milestones/count";
+  let url = globalRoutePrefix + "/milestones/count";
   return axios
     .post(
       url,
@@ -321,7 +324,7 @@ export function getTotalMilestones(startDate, endDate) {
     });
 }
 export function getCompletedMilestones(startDate, endDate) {
-  let url = ROOT_API + "/milestones/completed-count";
+  let url = globalRoutePrefix + "/milestones/completed-count";
   return axios
     .post(
       url,
@@ -344,7 +347,7 @@ export function getCompletedMilestones(startDate, endDate) {
     });
 }
 export function getAverageMilestonesPerProject(startDate, endDate) {
-  let url = ROOT_API + "/milestones/average-milestones-per-project";
+  let url = globalRoutePrefix + "/milestones/average-milestones-per-project";
   return axios
     .post(
       url,
@@ -367,7 +370,7 @@ export function getAverageMilestonesPerProject(startDate, endDate) {
     });
 }
 export function getAverageTasksPerMilestone(startDate, endDate) {
-  let url = ROOT_API + "/milestones/average-tasks-per-milestone";
+  let url = globalRoutePrefix + "/milestones/average-tasks-per-milestone";
   return axios
     .post(
       url,
@@ -390,7 +393,7 @@ export function getAverageTasksPerMilestone(startDate, endDate) {
     });
 }
 export function getMilestonesCompletionData(startDate, endDate) {
-  let url = ROOT_API + "/milestones/time-taken-data";
+  let url = globalRoutePrefix + "/milestones/time-taken-data";
   return axios
     .post(
       url,
@@ -413,7 +416,7 @@ export function getMilestonesCompletionData(startDate, endDate) {
     });
 }
 export function getMilestonesDeadlinesMissedRate(startDate, endDate) {
-  let url = ROOT_API + "/milestones/ratio-deadlines-missed";
+  let url = globalRoutePrefix + "/milestones/ratio-deadlines-missed";
   return axios
     .post(
       url,
@@ -436,7 +439,7 @@ export function getMilestonesDeadlinesMissedRate(startDate, endDate) {
     });
 }
 export function getMilestonesFeatureUtilizationRate(startDate, endDate) {
-  let url = ROOT_API + "/milestones/feature-utilization";
+  let url = globalRoutePrefix + "/milestones/feature-utilization";
   return axios
     .post(
       url,
@@ -459,7 +462,7 @@ export function getMilestonesFeatureUtilizationRate(startDate, endDate) {
     });
 }
 export function getTotalTasks(startDate, endDate) {
-  let url = ROOT_API + "/tasks/count";
+  let url = globalRoutePrefix + "/tasks/count";
   return axios
     .post(
       url,
@@ -475,7 +478,7 @@ export function getTotalTasks(startDate, endDate) {
     });
 }
 export function getPendingTasks(startDate, endDate) {
-  let url = ROOT_API + "/tasks/count-pending";
+  let url = globalRoutePrefix + "/tasks/count-pending";
   return axios
     .post(
       url,
@@ -498,7 +501,7 @@ export function getPendingTasks(startDate, endDate) {
     });
 }
 export function getCompletedTasks(startDate, endDate) {
-  let url = ROOT_API + "/tasks/count-completed";
+  let url = globalRoutePrefix + "/tasks/count-completed";
   return axios
     .post(
       url,
@@ -521,7 +524,7 @@ export function getCompletedTasks(startDate, endDate) {
     });
 }
 export function getTasksCompletionData(startDate, endDate) {
-  let url = ROOT_API + "/tasks/complete-time-data";
+  let url = globalRoutePrefix + "/tasks/complete-time-data";
   return axios
     .post(
       url,
@@ -544,7 +547,7 @@ export function getTasksCompletionData(startDate, endDate) {
     });
 }
 export function getTasksFeatureUtilizationRate(startDate, endDate) {
-  let url = ROOT_API + "/tasks/feature-utilization";
+  let url = globalRoutePrefix + "/tasks/feature-utilization";
   return axios
     .post(
       url,
