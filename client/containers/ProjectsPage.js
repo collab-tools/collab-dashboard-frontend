@@ -15,9 +15,9 @@ import {
   getTotalProjects,
   getNewProjects,
   getActiveProjects,
-  getLatestProjects,
   getMilestonesByProjectId
-} from "../actions/api";
+} from "../actions/globalapi";
+import { getLatestProjects } from "../actions/projectapi";
 
 import Content from "../components/Content";
 import Section from "../components/Section";

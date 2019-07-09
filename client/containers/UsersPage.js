@@ -15,9 +15,10 @@ import {
   getTotalUsers,
   getNewUsers,
   getActiveUsers,
-  getLatestUsers,
   getProjectsByUserId
-} from "../actions/api";
+} from "../actions/globalapi";
+
+import { getLatestUsers } from "../actions/userapi";
 
 import Content from "../components/Content";
 import Section from "../components/Section";

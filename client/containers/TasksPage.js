@@ -15,7 +15,7 @@ import {
   getCompletedTasks,
   getTasksCompletionData,
   getTasksFeatureUtilizationRate
-} from "../actions/api";
+} from "../actions/globalapi";
 
 class TasksPage extends Component {
   componentWillMount() {

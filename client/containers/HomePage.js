@@ -20,7 +20,7 @@ import {
   getInactiveUsers,
   getMilestonesFeatureUtilizationRate,
   getTasksFeatureUtilizationRate
-} from "../actions/api";
+} from "../actions/globalapi";
 
 class HomePage extends Component {
   componentWillMount() {

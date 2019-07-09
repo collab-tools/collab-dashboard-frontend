@@ -17,7 +17,7 @@ import {
   getAverageTasksPerMilestone,
   getMilestonesFeatureUtilizationRate,
   getMilestonesCompletionData
-} from "../actions/api";
+} from "../actions/globalapi";
 
 class MilestonesPage extends Component {
   componentWillMount() {

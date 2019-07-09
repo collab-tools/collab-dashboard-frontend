@@ -1,4 +1,5 @@
 const initialState = {
+  name: "def",
   overview: {
     summary: {
       projectsNum: 3,

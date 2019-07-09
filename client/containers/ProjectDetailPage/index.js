@@ -20,7 +20,11 @@ class ProjectDetailPage extends Component {
   state = {
     currTab: 0
   };
-  handleChange = (e, value) => {
+  componentWillMount() {
+    this._fetchData();
+  }
+  _fetchData() {}
+  handleTabChange = (e, value) => {
     this.setState({ currTab: value });
   };
   renderTab = currTab => {
@@ -29,7 +33,7 @@ class ProjectDetailPage extends Component {
       case 0:
         return <OverviewTab data={data.overview} />;
       case 1:
-        return <MilestonesAndTasksTab data={data.tasks} />;
+        return <MilestonesAndTasksTab data={data.milestonesAndTasks} />;
       case 2:
         return <GithubTab data={data.github} />;
       case 3:
@@ -47,7 +51,7 @@ class ProjectDetailPage extends Component {
             <Paper elevation={0}>
               <Tabs
                 value={currTab}
-                onChange={this.handleChange}
+                onChange={this.handleTabChange}
                 variant="fullWidth"
                 indicatorColor="primary"
               >
@@ -72,4 +76,11 @@ const mapStateToProps = state => {
   } = state;
   return { projectDetail };
 };
-export default connect(mapStateToProps)(ProjectDetailPage);
+const mapDispatchToProps = {
+  fetchData
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProjectDetailPage);

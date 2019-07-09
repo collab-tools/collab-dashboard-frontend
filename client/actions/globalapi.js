@@ -3,12 +3,10 @@ import { ROOT_API } from "../constants/url";
 import {
   _getTotalProjects,
   _getNewProjects,
-  _getLatestProjects,
   _getActiveProjects,
   _getMilestonesByProjectId,
   _getTotalUsers,
   _getNewUsers,
-  _getLatestUsers,
   _getInactiveUsers,
   _getRetentionRate,
   _getProjectsByUserId,
@@ -74,28 +72,7 @@ export function getNewProjects(startDate, endDate) {
       throw error;
     });
 }
-export function getLatestProjects(maxEntries) {
-  let url = ROOT_API + "/projects/latest";
-  return axios
-    .post(
-      url,
-      {
-        maxProjects: maxEntries
-      },
-      {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }
-    )
-    .then(response => {
-      // console.log('getLatestProjects ', response.data);
-      return _getLatestProjects(response.data);
-    })
-    .catch(error => {
-      throw error;
-    });
-}
+
 export function getActiveProjects(startDate, endDate) {
   let url = globalRoutePrefix + "/projects/active-rate-between-dates";
   return axios
@@ -188,28 +165,7 @@ export function getNewUsers(startDate, endDate) {
       throw error;
     });
 }
-export function getLatestUsers(maxEntries) {
-  let url = ROOT_API + "/users/latest";
-  return axios
-    .post(
-      url,
-      {
-        maxUsers: maxEntries
-      },
-      {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }
-    )
-    .then(response => {
-      // console.log('getLatestUsers ', response.data);
-      return _getLatestUsers(response.data);
-    })
-    .catch(error => {
-      throw error;
-    });
-}
+
 export function getActiveUsers(startDate, endDate) {
   let url = globalRoutePrefix + "/users/num-updated-between-dates";
   return axios

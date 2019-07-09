@@ -1,4 +1,5 @@
 const initialState = {
+  name: "abc",
   overview: {
     summary: {
       milestonesNum: 2,
