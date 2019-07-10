@@ -15,15 +15,65 @@ import GithubTab from "./ProjectGithubTab";
 import FilesTab from "./ProjectFilesTab";
 
 import { fetchData } from "../../actions/actions";
+import {
+  getProjectName,
+  getProjectMilestonesCount,
+  getProjectCompletedTasksCount,
+  getProjectIncompleteTasksCount,
+  getMessagesCount,
+  getCommitsCount,
+  getFileChangesCount,
+  getMembersInfo,
+  getActivities,
+  getGithubRepo,
+  getDriveLink,
+  getMilestones,
+  getTasksContribution,
+  getGithubAdditionsCount,
+  getGithubDeletionsCount,
+  getGithubCommits,
+  getGithubCommitsContribution,
+  getGithubLOCsContribution,
+  getFilesCount,
+  getFileChanges,
+  getFilesContribution
+} from "../../actions/projectapi";
 
 class ProjectDetailPage extends Component {
   state = {
     currTab: 0
   };
-  componentWillMount() {
+  componentDidMount() {
     this._fetchData();
   }
-  _fetchData() {}
+  _fetchData() {
+    const projectId = this.props.match.params.id;
+    let fetches = [
+      getProjectName(projectId),
+      getProjectMilestonesCount(projectId),
+      getProjectCompletedTasksCount(projectId),
+      getProjectIncompleteTasksCount(projectId),
+      getMessagesCount(projectId),
+      getCommitsCount(projectId),
+      getFileChangesCount(projectId),
+      getMembersInfo(projectId),
+      getActivities(projectId),
+      getGithubRepo(projectId),
+      getDriveLink(projectId),
+      getMilestones(projectId),
+      getTasksContribution(projectId),
+      getGithubAdditionsCount(projectId),
+      getGithubDeletionsCount(projectId),
+      getGithubCommits(projectId),
+      getGithubCommitsContribution(projectId),
+      getGithubLOCsContribution(projectId),
+      getFilesCount(projectId),
+      getFileChanges(projectId),
+      getFilesContribution(projectId)
+    ];
+
+    this.props.fetchData(fetches);
+  }
   handleTabChange = (e, value) => {
     this.setState({ currTab: value });
   };
@@ -45,7 +95,7 @@ class ProjectDetailPage extends Component {
   render() {
     const { currTab } = this.state;
     return (
-      <DashboardLayout heading={`Project ${this.props.match.params.id}`} noOptions>
+      <DashboardLayout heading={`Project ${this.props.projectDetail.name}`} noOptions>
         <Content>
           <Section>
             <Paper elevation={0}>

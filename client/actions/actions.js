@@ -32,7 +32,28 @@ import {
   GET_TASKS_FEATURE_UTILIZATION_RATE,
   SET_MAX_ENTRIES,
   SET_RECENCY_DAYS,
-  SET_LOADING
+  SET_LOADING,
+  GET_PROJECT_NAME,
+  GET_PROJECT_MILESTONES_COUNT,
+  GET_PROJECT_COMPLETED_TASKS_COUNT,
+  GET_PROJECT_INCOMPLETE_TASKS_COUNT,
+  GET_PROJECT_MESSAGES_COUNT,
+  GET_PROJECT_COMMITS_COUNT,
+  GET_PROJECT_FILE_CHANGES_COUNT,
+  GET_MEMBERS_INFO,
+  GET_PROJECT_ACTIVITIES,
+  GET_PROJECT_GITHUB_REPO,
+  GET_PROJECT_DRIVE_LINK,
+  GET_PROJECT_MILESTONES,
+  GET_PROJECT_TASKS_CONTRIBUTION,
+  GET_PROJECT_GITHUB_ADDITIONS_COUNT,
+  GET_PROJECT_GITHUB_DELETIONS_COUNT,
+  GET_PROJECT_GITHUB_COMMITS,
+  GET_PROJECT_GITHUB_COMMITS_CONTRIBUTION,
+  GET_PROJECT_GITHUB_LOCS_CONTRIBUTION,
+  GET_PROJECT_FILES_COUNT,
+  GET_PROJECT_FILES_CHANGES,
+  GET_PROJECT_FILES_CONTRIBUTIONS
 } from "../constants/actionTypes";
 
 import {
@@ -45,6 +66,7 @@ import {
 } from "../constants/url";
 
 import { DEV_KEY } from "../constants/secret";
+import { func } from "prop-types";
 
 /*  SYNC FUNCTIONS  */
 
@@ -306,7 +328,7 @@ export function _getLatestUsers(res) {
   };
 }
 
-function _getActiveUsers(res) {
+export function _getActiveUsers(res) {
   let activeUsers = res.count;
   return {
     type: GET_ACTIVE_USERS,
@@ -431,5 +453,146 @@ export function _getTasksFeatureUtilizationRate(res) {
   return {
     type: GET_TASKS_FEATURE_UTILIZATION_RATE,
     featureUtilizationRate
+  };
+}
+
+/*Project Detail actions*/
+export function _getProjectName(res) {
+  let projectName = res.name;
+  return {
+    type: GET_PROJECT_NAME,
+    name: projectName
+  };
+}
+
+export function _getProjectMilestonesCount(res) {
+  let count = res.count;
+  return {
+    type: GET_PROJECT_MILESTONES_COUNT,
+    result: count
+  };
+}
+
+export function _getProjectCompletedTasksCount(res) {
+  let count = res.count;
+  return {
+    type: GET_PROJECT_COMPLETED_TASKS_COUNT,
+    result: count
+  };
+}
+
+export function _getProjectIncompleteTasksCount(res) {
+  let count = res.count;
+  return {
+    type: GET_PROJECT_INCOMPLETE_TASKS_COUNT,
+    result: count
+  };
+}
+
+export function _getProjectMessagesCount(res) {
+  let count = res.count;
+  return {
+    type: GET_PROJECT_MESSAGES_COUNT,
+    result: count
+  };
+}
+export function _getProjectCommitsCount(res) {
+  let count = res.count;
+  return {
+    type: GET_PROJECT_COMMITS_COUNT,
+    result: count
+  };
+}
+export function _getProjectFileChangesCount(res) {
+  let count = res.count;
+  return {
+    type: GET_PROJECT_FILE_CHANGES_COUNT,
+    result: count
+  };
+}
+export function _getMembersInfo(res) {
+  return {
+    type: GET_MEMBERS_INFO,
+    members: res
+  };
+}
+export function _getProjectActivities(res) {
+  return {
+    type: GET_PROJECT_ACTIVITIES,
+    activites: res
+  };
+}
+export function _getProjectGithubRepo(res) {
+  let link = res.repo ? `https://github.com/${res.owner}/${res.repo}` : null;
+  return {
+    type: GET_PROJECT_GITHUB_REPO,
+    link
+  };
+}
+export function _getProjectDriveLink(res) {
+  let link = res.link ? "https://drive.google.com/open?id=" + res.link : null;
+  return {
+    type: GET_PROJECT_DRIVE_LINK,
+    link
+  };
+}
+export function _getProjectMilestones(res) {
+  return {
+    type: GET_PROJECT_MILESTONES,
+    milestones: res
+  };
+}
+export function _getProjectTasksContribution(res) {
+  return {
+    type: GET_PROJECT_TASKS_CONTRIBUTION,
+    contributions: res
+  };
+}
+export function _getProjectGithubAdditionsCount(res) {
+  return {
+    type: GET_PROJECT_GITHUB_ADDITIONS_COUNT,
+    result: res.count
+  };
+}
+export function _getProjectGithubDeletionsCount(res) {
+  return {
+    type: GET_PROJECT_GITHUB_DELETIONS_COUNT,
+    result: res.count
+  };
+}
+export function _getProjectGithubCommits(res) {
+  return {
+    type: GET_PROJECT_GITHUB_COMMITS,
+    commits: res
+  };
+}
+export function _getProjectGithubCommitsContribution(res) {
+  return {
+    type: GET_PROJECT_GITHUB_COMMITS_CONTRIBUTION,
+    contributions: res
+  };
+}
+export function _getProjectGithubLOCsContribution(res) {
+  return {
+    type: GET_PROJECT_GITHUB_LOCS_CONTRIBUTION,
+    contributions: res
+  };
+}
+export function _getProjectFilesCount(res) {
+  return {
+    type: GET_PROJECT_FILES_COUNT,
+    count: res.count
+  };
+}
+export function _getProjectFileChanges(res) {
+  return {
+    type: GET_PROJECT_FILES_CHANGES,
+    changes: res
+  };
+}
+export function _getProjectFilesContribution(res) {
+  return {
+    type: GET_PROJECT_FILES_CONTRIBUTIONS,
+    contributions: res
   };
 }

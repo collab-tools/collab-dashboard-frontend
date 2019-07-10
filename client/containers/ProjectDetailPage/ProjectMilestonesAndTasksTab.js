@@ -48,7 +48,7 @@ class MilestonesAndTasksTab extends Component {
         text: "Task Completion by Members"
       },
       xAxis: {
-        categories: contributions.map(item => item.member)
+        categories: contributions.map(item => item.member || "Unassigned")
       },
       yAxis: {
         min: 0,
@@ -88,7 +88,7 @@ class MilestonesAndTasksTab extends Component {
             <ExpansionPanel key={index}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <div style={styles.panelRowFirstColumn}>{milestone.name}</div>
-                <div style={styles.panelRowColumn}>{milestone.deadline}</div>
+                <div style={styles.panelRowColumn}>{milestone.deadline || "N/A"}</div>
                 <div style={styles.panelRowColumn}>{milestone.tasksCompleted}</div>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails style={{ display: "block" }}>

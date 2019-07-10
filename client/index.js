@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import "@babel/polyfill";
 
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 

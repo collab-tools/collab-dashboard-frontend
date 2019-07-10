@@ -29,13 +29,21 @@ const styles = {
     color: "grey"
   },
   tableContainer: {
-    padding: "10px"
+    padding: "10px",
+    maxHeight: "300px",
+    overflowY: "scroll"
   },
   tableRow: {
     cursor: "pointer"
   }
 };
 class GithubTab extends Component {
+  onCommitSelect = sha => {
+    const {
+      data: { link }
+    } = this.props;
+    window.open(`${link}/commit/${sha}`, "_blank");
+  };
   render() {
     const {
       data: { link, summary, commits, contributions }
@@ -115,6 +123,7 @@ class GithubTab extends Component {
         }
       ]
     };
+
     return (
       <React.Fragment>
         <Section>
@@ -143,7 +152,12 @@ class GithubTab extends Component {
               </TableHead>
               <TableBody>
                 {commits.map((commit, index) => (
-                  <TableRow key={index} style={styles.tableRow} hover={true}>
+                  <TableRow
+                    key={index}
+                    style={styles.tableRow}
+                    hover={true}
+                    onClick={() => this.onCommitSelect(commit.SHA)}
+                  >
                     <TableCell>{commit.author}</TableCell>
                     <TableCell>{commit.message}</TableCell>
                     <TableCell>{commit.timestamp}</TableCell>
