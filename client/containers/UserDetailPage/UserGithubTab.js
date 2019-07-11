@@ -29,26 +29,31 @@ const styles = {
     color: "grey"
   },
   tableContainer: {
-    padding: "10px"
+    padding: "10px",
+    maxHeight: "300px",
+    overflowY: "scroll"
   },
   tableRow: {
     cursor: "pointer"
   }
 };
 class GithubTab extends Component {
+  onCommitSelect = (repo, sha) => {
+    window.open(`https://github.com/${repo}/commit/${sha}`, "_blank");
+  };
   render() {
     const { link, summary, commits, contributions } = this.props.data;
     const metricsData = [
       {
-        metric: "42",
+        metric: summary.commitsNum,
         metricLabel: "Total Commits"
       },
       {
-        metric: "2593",
+        metric: summary.linesAdded,
         metricLabel: "Number of Lines Added"
       },
       {
-        metric: "1129",
+        metric: summary.linesDeleted,
         metricLabel: "Number of Lines Deleted"
       }
     ];
@@ -139,11 +144,16 @@ class GithubTab extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {commits.map((commit, index) => (
-                  <TableRow key={index} style={styles.tableRow} hover={true}>
-                    <TableCell>{commit.project}</TableCell>
-                    <TableCell>{commit.message}</TableCell>
-                    <TableCell>{commit.timestamp}</TableCell>
+                {commits.map(({ project, message, timestamp, repo, SHA }, index) => (
+                  <TableRow
+                    key={index}
+                    style={styles.tableRow}
+                    hover={true}
+                    onClick={() => this.onCommitSelect(repo, SHA)}
+                  >
+                    <TableCell>{project}</TableCell>
+                    <TableCell>{message}</TableCell>
+                    <TableCell>{timestamp}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

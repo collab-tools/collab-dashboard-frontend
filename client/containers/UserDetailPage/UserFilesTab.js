@@ -105,7 +105,7 @@ class FilesTab extends Component {
           </Paper>
         </Section>
         <Section>
-          <Subheading>Member Contributions</Subheading>
+          <Subheading>Contributions per Project</Subheading>
           <Highcharts config={graphConfig} />
         </Section>
       </React.Fragment>

@@ -79,7 +79,7 @@ class MilestonesAndTasksTab extends Component {
           {projects.map((project, index) => (
             <ExpansionPanel key={index}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <div style={styles.panelRowFirstColumn}>{project.name}</div>
+                <div style={styles.panelRowFirstColumn}>{project.project}</div>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails style={{ display: "block" }}>
                 <div style={{ ...styles.panelRow, ...styles.panelHeader }}>
@@ -90,8 +90,8 @@ class MilestonesAndTasksTab extends Component {
                 {project.tasks.map((task, index) => (
                   <div key={index} style={styles.panelRow}>
                     <div style={styles.panelRowFirstColumn}>{task.name}</div>
-                    <div style={styles.panelRowColumn}>{task.deadline}</div>
-                    <div style={styles.panelRowColumn}>{task.completed ? "Yes" : "No"}</div>
+                    <div style={styles.panelRowColumn}>{task.deadline || "N/A"}</div>
+                    <div style={styles.panelRowColumn}>{task.completeDay || "N/A"}</div>
                   </div>
                 ))}
               </ExpansionPanelDetails>

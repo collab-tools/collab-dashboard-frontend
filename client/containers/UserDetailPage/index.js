@@ -15,12 +15,66 @@ import GithubTab from "./UserGithubTab";
 import FilesTab from "./UserFilesTab";
 
 import { fetchData } from "../../actions/actions";
+import {
+  getUserName,
+  getUserProjectsCount,
+  getUserCompletedTasksCount,
+  getUserIncompleteTasksCount,
+  getUserMessagesCount,
+  getUserCommitsCount,
+  getUserFilesChangesCount,
+  getProjectsInfo,
+  getUserActivities,
+  getUserGithubAccount,
+  getUserEmail,
+  getUserProjectsTasks,
+  getUserTasksContribution,
+  getUserGithubAdditions,
+  getUserGithubDeletions,
+  getUserCommits,
+  getUserCommitsContribution,
+  getUserLOCsContribution,
+  getUserFilesCount,
+  getUserFileChanges,
+  getUserFilesContribution
+} from "../../actions/userapi";
 
 class UserDetailPage extends Component {
   state = {
     currTab: 0
   };
-  handleChange = (e, value) => {
+  componentDidMount() {
+    this._fetchData();
+  }
+  _fetchData() {
+    const userId = this.props.match.params.id;
+    let fetches = [
+      getUserName(userId),
+      getUserProjectsCount(userId),
+      getUserCompletedTasksCount(userId),
+      getUserIncompleteTasksCount(userId),
+      getUserMessagesCount(userId),
+      getUserCommitsCount(userId),
+      getUserFilesChangesCount(userId),
+      getProjectsInfo(userId),
+      getUserActivities(userId),
+      getUserGithubAccount(userId),
+      getUserEmail(userId),
+      getUserProjectsTasks(userId),
+      getUserTasksContribution(userId),
+      getUserGithubAdditions(userId),
+      getUserGithubDeletions(userId),
+      getUserCommits(userId),
+      getUserCommitsContribution(userId),
+      getUserLOCsContribution(userId),
+      getUserFilesCount(userId),
+      getUserFileChanges(userId),
+      getUserFilesContribution(userId)
+    ];
+
+    this.props.fetchData(fetches);
+  }
+  handleTabChange = (e, value) => {
     this.setState({ currTab: value });
   };
   renderTab = currTab => {
@@ -41,13 +95,13 @@ class UserDetailPage extends Component {
   render() {
     const { currTab } = this.state;
     return (
-      <DashboardLayout heading={`User ${this.props.match.params.id}`} noOptions>
+      <DashboardLayout heading={`User ${this.props.userDetail.name}`} noOptions>
         <Content>
           <Section>
             <Paper elevation={0}>
               <Tabs
                 value={currTab}
-                onChange={this.handleChange}
+                onChange={this.handleTabChange}
                 variant="fullWidth"
                 indicatorColor="primary"
               >
@@ -72,4 +126,10 @@ const mapStateToProps = state => {
   } = state;
   return { userDetail };
 };
-export default connect(mapStateToProps)(UserDetailPage);
+const mapDispatchToProps = {
+  fetchData
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserDetailPage);

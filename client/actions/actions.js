@@ -53,7 +53,28 @@ import {
   GET_PROJECT_GITHUB_LOCS_CONTRIBUTION,
   GET_PROJECT_FILES_COUNT,
   GET_PROJECT_FILES_CHANGES,
-  GET_PROJECT_FILES_CONTRIBUTIONS
+  GET_PROJECT_FILES_CONTRIBUTIONS,
+  GET_USER_NAME,
+  GET_USER_PROJECTS_COUNT,
+  GET_USER_COMPLETED_TASKS_COUNT,
+  GET_USER_INCOMPLETE_TASKS_COUNT,
+  GET_USER_MESSAGES_COUNT,
+  GET_USER_COMMITS_COUNT,
+  GET_USER_FILE_CHANGES_COUNT,
+  GET_PROJECTS_INFO,
+  GET_USER_ACTIVITIES,
+  GET_USER_GITHUB_ACCOUNT,
+  GET_USER_EMAIL,
+  GET_USER_PROJECTS_TASKS,
+  GET_USER_TASKS_CONTRIBUTION,
+  GET_USER_GITHUB_ADDITIONS,
+  GET_USER_GITHUB_DELETIONS,
+  GET_USER_COMMITS,
+  GET_USER_COMMITS_CONTRIBUTION,
+  GET_USER_LOCS_CONTRIBUTION,
+  GET_USER_FILES_COUNT,
+  GET_USER_FILES_CHANGES,
+  GET_USER_FILES_CONTRIBUTION
 } from "../constants/actionTypes";
 
 import {
@@ -593,6 +614,135 @@ export function _getProjectFileChanges(res) {
 export function _getProjectFilesContribution(res) {
   return {
     type: GET_PROJECT_FILES_CONTRIBUTIONS,
+    contributions: res
+  };
+}
+
+/*User Detail actions*/
+export function _getUserName(res) {
+  return {
+    type: GET_USER_NAME,
+    name: res.name
+  };
+}
+export function _getUserProjectsCount(res) {
+  return {
+    type: GET_USER_PROJECTS_COUNT,
+    count: res.count
+  };
+}
+export function _getUserCompletedTasksCount(res) {
+  return {
+    type: GET_USER_COMPLETED_TASKS_COUNT,
+    count: res.count
+  };
+}
+export function _getUserIncompleteTasksCount(res) {
+  return {
+    type: GET_USER_INCOMPLETE_TASKS_COUNT,
+    count: res.count
+  };
+}
+export function _getUserMessagesCount(res) {
+  return {
+    type: GET_USER_MESSAGES_COUNT,
+    count: res.count
+  };
+}
+export function _getUserCommitsCount(res) {
+  return {
+    type: GET_USER_COMMITS_COUNT,
+    count: res.count
+  };
+}
+export function _getUserFileChangesCount(res) {
+  return {
+    type: GET_USER_FILE_CHANGES_COUNT,
+    count: res.count
+  };
+}
+export function _getProjectsInfo(res) {
+  return {
+    type: GET_PROJECTS_INFO,
+    projects: res
+  };
+}
+export function _getUserActivities(res) {
+  return {
+    type: GET_USER_ACTIVITIES,
+    activities: res
+  };
+}
+export function _getUserGithubAccount(res) {
+  let link = res.account ? `https://github.com/${res.account}` : null;
+  return {
+    type: GET_USER_GITHUB_ACCOUNT,
+    link
+  };
+}
+export function _getUserEmail(res) {
+  return {
+    type: GET_USER_EMAIL,
+    email: res.email
+  };
+}
+export function _getUserProjectsTasks(res) {
+  return {
+    type: GET_USER_PROJECTS_TASKS,
+    projects: res
+  };
+}
+export function _getUserTasksContribution(res) {
+  return {
+    type: GET_USER_TASKS_CONTRIBUTION,
+    contributions: res
+  };
+}
+export function _getUserGithubAdditions(res) {
+  return {
+    type: GET_USER_GITHUB_ADDITIONS,
+    count: res.count
+  };
+}
+export function _getUserGithubDeletions(res) {
+  return {
+    type: GET_USER_GITHUB_DELETIONS,
+    count: res.count
+  };
+}
+export function _getUserCommits(res) {
+  return {
+    type: GET_USER_COMMITS,
+    commits: res
+  };
+}
+export function _getUserCommitsContribution(res) {
+  return {
+    type: GET_USER_COMMITS_CONTRIBUTION,
+    contributions: res
+  };
+}
+export function _getUserLOCsContribution(res) {
+  return {
+    type: GET_USER_LOCS_CONTRIBUTION,
+    contributions: res
+  };
+}
+export function _getUserFilesCount(res) {
+  return {
+    type: GET_USER_FILES_COUNT,
+    count: res.count
+  };
+}
+export function _getUserFileChanges(res) {
+  return {
+    type: GET_USER_FILES_CHANGES,
+    changes: res
+  };
+}
+export function _getUserFilesContribution(res) {
+  return {
+    type: GET_USER_FILES_CONTRIBUTION,
     contributions: res
   };
 }
