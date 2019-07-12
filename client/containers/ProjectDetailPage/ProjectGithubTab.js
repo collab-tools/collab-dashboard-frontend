@@ -2,16 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Highcharts from "react-highcharts";
 
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
 import Paper from "@material-ui/core/Paper";
 
 import Section from "../../components/Section";
 import MetricsRow from "../../components/MetricsRow";
 import Subheading from "../../components/Subheading";
+import PaginationTable from "../../components/PaginationTable";
 
 const styles = {
   linkContainer: {
@@ -27,27 +23,21 @@ const styles = {
   linkUrl: {
     fontSize: "12px",
     color: "grey"
-  },
-  tableContainer: {
-    padding: "10px",
-    maxHeight: "300px",
-    overflowY: "scroll"
-  },
-  tableRow: {
-    cursor: "pointer"
   }
 };
+
 class GithubTab extends Component {
-  onCommitSelect = sha => {
+  onCommitSelect = commit => {
     const {
       data: { link }
     } = this.props;
-    window.open(`${link}/commit/${sha}`, "_blank");
+    window.open(`${link}/commit/${commit.SHA}`, "_blank");
   };
   render() {
     const {
       data: { link, summary, commits, contributions }
     } = this.props;
+
     const metricsData = [
       {
         metric: summary.commitsNum,
@@ -141,31 +131,12 @@ class GithubTab extends Component {
         </Section>
         <Section>
           <Subheading>Commits</Subheading>
-          <Paper elevation={0} style={styles.tableContainer}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Author</TableCell>
-                  <TableCell>Message</TableCell>
-                  <TableCell>Timestamp</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {commits.map((commit, index) => (
-                  <TableRow
-                    key={index}
-                    style={styles.tableRow}
-                    hover={true}
-                    onClick={() => this.onCommitSelect(commit.SHA)}
-                  >
-                    <TableCell>{commit.author}</TableCell>
-                    <TableCell>{commit.message}</TableCell>
-                    <TableCell>{commit.timestamp}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Paper>
+          <PaginationTable
+            rows={commits}
+            headers={["Author", "Message", "Timestamp"]}
+            rowItems={["author", "message", "timestamp"]}
+            onRowClicked={this.onCommitSelect}
+          />
         </Section>
         <Section>
           <Subheading>Member Contributions</Subheading>

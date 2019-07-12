@@ -1,37 +1,20 @@
 import React, { Component, PropTypes } from "react";
 import { connect } from "react-redux";
-import ReactHighcharts from "react-highcharts";
 import moment from "moment";
-import { Link } from "react-router-dom";
-
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
 
 import { fetchData } from "../actions/actions";
-import {
-  getTotalProjects,
-  getNewProjects,
-  getActiveProjects,
-  getMilestonesByProjectId
-} from "../actions/globalapi";
+import { getTotalProjects, getNewProjects, getActiveProjects } from "../actions/globalapi";
 import { getLatestProjects } from "../actions/projectapi";
 
 import Content from "../components/Content";
 import Section from "../components/Section";
 import MetricsRow from "../components/MetricsRow";
 import Subheading from "../components/Subheading";
-import Card from "../components/Card";
+import PaginationTable from "../components/PaginationTable";
 
 import DashboardLayout from "./DashboardLayout";
 
 class ProjectsPage extends Component {
-  state = {
-    shouldRenderMilestonesByProjectId: false,
-    rowNumber: 0
-  };
   componentWillMount() {
     this._fetchData();
   }
@@ -58,77 +41,13 @@ class ProjectsPage extends Component {
 
     this.props.fetchData(fetches);
   }
-  projectsTableCellClicked = (row, id) => {
-    this.props.history.push(`${this.props.match.url}/${id}`);
-    // let projects = this.props.projects;
-    // let latestProjects = projects.latestProjects;
-    // let projectId = latestProjects[row].project_id;
-    // this.props.fetchData([getMilestonesByProjectId(projectId)]);
-    // this.setState({
-    //   shouldRenderMilestonesByProjectId: true,
-    //   rowNumber: row
-    // });
+  projectsTableCellClicked = ({ project_id }) => {
+    this.props.history.push(`${this.props.match.url}/${project_id}`);
   };
-
-  _renderMilestonesByProjectId() {
-    let projects = this.props.projects;
-    let latestProjects = projects.latestProjects;
-    let projectName = latestProjects[this.state.rowNumber].content;
-    let milestoneNamesByProjectId = projects.milestoneNamesByProjectId;
-    let completedTasksInMilestonesByProjectId = projects.completedTasksInMilestonesByProjectId;
-    let incompleteTasksInMilestonesByProjectId = projects.incompleteTasksInMilestonesByProjectId;
-    let milestoneNamesByProjectIdGraphConfig = {
-      chart: {
-        type: "bar"
-      },
-      title: {
-        text: "Milestones"
-      },
-      xAxis: {
-        categories: milestoneNamesByProjectId
-      },
-      yAxis: {
-        min: 0,
-        title: {
-          text: "Completed Tasks"
-        }
-      },
-      legend: {
-        reversed: true
-      },
-      plotOptions: {
-        series: {
-          stacking: "normal"
-        }
-      },
-      series: [
-        {
-          name: "Completed Tasks",
-          data: completedTasksInMilestonesByProjectId
-        },
-        {
-          name: "Incomplete Tasks",
-          data: incompleteTasksInMilestonesByProjectId
-        }
-      ]
-    };
-
-    return (
-      <div>
-        <Section>
-          <Subheading>Milestone Statistics by {projectName}</Subheading>
-          <Card>
-            <ReactHighcharts config={milestoneNamesByProjectIdGraphConfig} />
-          </Card>
-        </Section>
-      </div>
-    );
-  }
 
   render() {
     let projects = this.props.projects;
     let latestProjects = projects.latestProjects;
-    let milestonesByProjectId = projects.milestonesByProjectId;
     let activeProjectsRate = (projects.activeProjects * 100).toFixed(1) + "%";
     let metricsData = [
       {
@@ -158,37 +77,19 @@ class ProjectsPage extends Component {
             <div>
               <Section>
                 <Subheading>Projects</Subheading>
-                <Card>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Repository</TableCell>
-                        <TableCell>Members</TableCell>
-                        <TableCell>Size</TableCell>
-                        <TableCell>Created Date</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {latestProjects.map((row, index) => (
-                        <TableRow
-                          key={index}
-                          onClick={() => this.projectsTableCellClicked(index, row.project_id)}
-                          style={styles.tableRow}
-                          hover={true}
-                        >
-                          <TableCell>{row.content}</TableCell>
-                          <TableCell>{row.github_repo_name}</TableCell>
-                          <TableCell>{row.members}</TableCell>
-                          <TableCell>{row.project_size}</TableCell>
-                          <TableCell>{row.created_at}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </Card>
+                <PaginationTable
+                  rows={latestProjects}
+                  headers={["Name", "Repository", "Members", "Size", "Created Date"]}
+                  rowItems={[
+                    "content",
+                    "github_repo_name",
+                    "members",
+                    "project_size",
+                    "created_at"
+                  ]}
+                  onRowClicked={this.projectsTableCellClicked}
+                />
               </Section>
-              {this.state.shouldRenderMilestonesByProjectId && this._renderMilestonesByProjectId()}
             </div>
           )}
         </Content>
