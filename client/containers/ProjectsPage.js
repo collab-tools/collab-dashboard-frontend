@@ -19,14 +19,14 @@ class ProjectsPage extends Component {
     this._fetchData();
   }
   componentDidUpdate(prevProps) {
-    const { recencyDays, maxEntries } = this.props.queryOptions;
-    const { recencyDays: prevRecencyDays, maxEntries: prevMaxEntries } = prevProps.queryOptions;
-    if (recencyDays !== prevRecencyDays || maxEntries !== prevMaxEntries) {
+    const { recencyDays } = this.props.queryOptions;
+    const { recencyDays: prevRecencyDays } = prevProps.queryOptions;
+    if (recencyDays !== prevRecencyDays) {
       this._fetchData();
     }
   }
   _fetchData() {
-    const { recencyDays, maxEntries } = this.props.queryOptions;
+    const { recencyDays } = this.props.queryOptions;
     let startDate = moment()
       .subtract(recencyDays, "d")
       .format("YYYY/MM/DD");
@@ -35,7 +35,7 @@ class ProjectsPage extends Component {
     let fetches = [
       getTotalProjects(startDate, endDate),
       getNewProjects(startDate, endDate),
-      getLatestProjects(maxEntries),
+      getLatestProjects(),
       getActiveProjects(startDate, endDate)
     ];
 
@@ -87,6 +87,7 @@ class ProjectsPage extends Component {
                     "project_size",
                     "created_at"
                   ]}
+                  searchableItems={["content", "github_repo_name", "members"]}
                   onRowClicked={this.projectsTableCellClicked}
                 />
               </Section>

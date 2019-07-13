@@ -135,6 +135,7 @@ class GithubTab extends Component {
             rows={commits}
             headers={["Author", "Message", "Timestamp"]}
             rowItems={["author", "message", "timestamp"]}
+            searchableItems={["author", "message"]}
             onRowClicked={this.onCommitSelect}
           />
         </Section>

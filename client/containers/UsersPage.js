@@ -21,14 +21,14 @@ class UsersPage extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { recencyDays, maxEntries } = this.props.queryOptions;
-    const { recencyDays: prevRecencyDays, maxEntries: prevMaxEntries } = prevProps.queryOptions;
-    if (recencyDays !== prevRecencyDays || maxEntries !== prevMaxEntries) {
+    const { recencyDays } = this.props.queryOptions;
+    const { recencyDays: prevRecencyDays } = prevProps.queryOptions;
+    if (recencyDays !== prevRecencyDays) {
       this._fetchData();
     }
   }
   _fetchData() {
-    const { recencyDays, maxEntries } = this.props.queryOptions;
+    const { recencyDays } = this.props.queryOptions;
     let startDate = moment()
       .subtract(recencyDays, "d")
       .format("YYYY/MM/DD");
@@ -38,7 +38,7 @@ class UsersPage extends Component {
       getTotalUsers(startDate, endDate),
       getNewUsers(startDate, endDate),
       getActiveUsers(startDate, endDate),
-      getLatestUsers(maxEntries)
+      getLatestUsers()
     ];
     this.props.fetchData(fetches);
   }
@@ -86,6 +86,7 @@ class UsersPage extends Component {
                     "user_projects",
                     "created_at"
                   ]}
+                  searchableItems={["display_name", "email", "github_login", "user_projects"]}
                   onRowClicked={this.usersTableCellClicked}
                 />
               </Section>

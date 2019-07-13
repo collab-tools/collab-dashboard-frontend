@@ -28,20 +28,14 @@ import {
 const projectRoutePrefix = ROOT_API + "/projects";
 const userRoutePrefix = ROOT_API + "/users";
 
-export function getLatestProjects(maxEntries) {
+export function getLatestProjects() {
   let url = projectRoutePrefix + "/";
   return axios
-    .post(
-      url,
-      {
-        maxProjects: maxEntries
-      },
-      {
-        headers: {
-          "Content-Type": "application/json"
-        }
+    .get(url, {
+      headers: {
+        "Content-Type": "application/json"
       }
-    )
+    })
     .then(response => {
       // console.log('getLatestProjects ', response.data);
       return _getLatestProjects(response.data);

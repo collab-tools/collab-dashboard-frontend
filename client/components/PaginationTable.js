@@ -8,12 +8,16 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination";
 import Paper from "@material-ui/core/Paper";
+import FormControl from "@material-ui/core/FormControl";
+import Input from "@material-ui/core/Input";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 import IconButton from "@material-ui/core/IconButton";
 import FirstPageIcon from "@material-ui/icons/FirstPage";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
+import Search from "@material-ui/icons/Search";
 
 const styles = {
   tableContainer: {
@@ -88,7 +92,8 @@ class TablePaginationActions extends Component {
 export default class PaginationTable extends Component {
   state = {
     page: 0,
-    rowsPerPage: 5
+    rowsPerPage: 5,
+    searchText: ""
   };
   handleChangePage = (event, page) => {
     this.setState({ page });
@@ -98,10 +103,20 @@ export default class PaginationTable extends Component {
     this.setState({ page: 0, rowsPerPage: event.target.value });
   };
 
+  handleChangeSearchText = event => {
+    this.setState({ page: 0, searchText: event.target.value });
+  };
+
   render() {
-    const { rows, headers, rowItems, onRowClicked = () => {} } = this.props;
-    const { rowsPerPage, page } = this.state;
+    const { rows, headers, rowItems, searchableItems, onRowClicked = () => {} } = this.props;
+    const { rowsPerPage, page, searchText } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+    const filteredRows = rows.filter(row => {
+      for (const item of searchableItems) {
+        if (row[item].toLowerCase().includes(searchText.toLowerCase())) return true;
+      }
+      return false;
+    });
     return (
       <Paper elevation={0} style={styles.tableContainer}>
         <Table>
@@ -113,18 +128,20 @@ export default class PaginationTable extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
-              <TableRow
-                key={index}
-                style={styles.tableRow}
-                hover={onRowClicked !== undefined}
-                onClick={() => onRowClicked(row)}
-              >
-                {rowItems.map((item, index) => (
-                  <TableCell key={index}>{row[item]}</TableCell>
-                ))}
-              </TableRow>
-            ))}
+            {filteredRows
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row, index) => (
+                <TableRow
+                  key={index}
+                  style={styles.tableRow}
+                  hover={onRowClicked !== undefined}
+                  onClick={() => onRowClicked(row)}
+                >
+                  {rowItems.map((item, index) => (
+                    <TableCell key={index}>{row[item]}</TableCell>
+                  ))}
+                </TableRow>
+              ))}
             {emptyRows > 0 && (
               <TableRow style={{ height: 48 * emptyRows }}>
                 <TableCell colSpan={6} />
@@ -133,10 +150,26 @@ export default class PaginationTable extends Component {
           </TableBody>
           <TableFooter>
             <TableRow>
+              <TableCell>
+                <FormControl>
+                  <Input
+                    id="searchbox"
+                    type="text"
+                    placeholder="Search"
+                    value={searchText}
+                    onChange={this.handleChangeSearchText}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <Search />
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+              </TableCell>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
-                colSpan={3}
-                count={rows.length}
+                colSpan={headers.length}
+                count={rows.length - 1}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{

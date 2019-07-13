@@ -89,6 +89,7 @@ class FilesTab extends Component {
             rows={changes}
             headers={["Author", "File Name", "Timestamp"]}
             rowItems={["author", "fileName", "timestamp"]}
+            searchableItems={["author", "fileName"]}
           />
         </Section>
         <Section>

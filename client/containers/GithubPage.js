@@ -23,14 +23,14 @@ class GithubPage extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { recencyDays, maxEntries } = this.props.queryOptions;
-    const { recencyDays: prevRecencyDays, maxEntries: prevMaxEntries } = prevProps.queryOptions;
-    if (recencyDays !== prevRecencyDays || maxEntries !== prevMaxEntries) {
+    const { recencyDays } = this.props.queryOptions;
+    const { recencyDays: prevRecencyDays } = prevProps.queryOptions;
+    if (recencyDays !== prevRecencyDays) {
       this._fetchData();
     }
   }
   _fetchData() {
-    const { recencyDays, maxEntries } = this.props.queryOptions;
+    const { recencyDays } = this.props.queryOptions;
     let startDate = moment()
       .subtract(recencyDays, "d")
       .format("YYYY/MM/DD");

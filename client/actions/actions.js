@@ -97,13 +97,6 @@ export function unauthenticateUser() {
   };
 }
 
-export function setMaxEntries(maxEntries) {
-  return {
-    type: SET_MAX_ENTRIES,
-    maxEntries
-  };
-}
-
 export function setRecencyDays(recencyDays) {
   return {
     type: SET_RECENCY_DAYS,
