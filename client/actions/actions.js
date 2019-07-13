@@ -538,9 +538,10 @@ export function _getMembersInfo(res) {
   };
 }
 export function _getProjectActivities(res) {
+  console.log(res);
   return {
     type: GET_PROJECT_ACTIVITIES,
-    activites: res
+    activities: res
   };
 }
 export function _getProjectGithubRepo(res) {

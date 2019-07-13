@@ -213,7 +213,13 @@ export default function projectDetail(state = initialState, action) {
       };
     }
     case GET_PROJECT_ACTIVITIES: {
-      return state;
+      return {
+        ...state,
+        overview: {
+          ...state.overview,
+          activities: action.activities
+        }
+      };
     }
     case GET_PROJECT_GITHUB_REPO: {
       return {

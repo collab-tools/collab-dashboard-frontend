@@ -203,8 +203,32 @@ export function getProjectsInfo(id) {
     });
 }
 export function getUserActivities(id) {
-  let url = "";
-  return _getUserActivities();
+  let url = `${userRoutePrefix}/${id}/activities`;
+  const dateFormat = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
+  };
+  return axios
+    .get(url, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(response => {
+      const temp = response.data;
+      const activities = temp.map(act => ({
+        ...act,
+        timestamp: new Date(act.timestamp).toLocaleDateString("en-GB", dateFormat)
+      }));
+      return _getUserActivities(activities);
+    })
+    .catch(error => {
+      throw error;
+    });
 }
 export function getUserGithubAccount(id) {
   let url = `${userRoutePrefix}/${id}/github/account`;

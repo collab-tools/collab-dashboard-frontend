@@ -286,7 +286,13 @@ export default function userDetail(state = initialState, action) {
       };
     }
     case GET_USER_ACTIVITIES: {
-      return state;
+      return {
+        ...state,
+        overview: {
+          ...state.overview,
+          activities: action.activities
+        }
+      };
     }
     case GET_USER_GITHUB_ACCOUNT: {
       return {

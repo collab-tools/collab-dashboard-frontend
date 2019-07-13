@@ -12,6 +12,8 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
+import AccessTime from "@material-ui/icons/AccessTime";
+
 import Section from "../../components/Section";
 import MetricsRow from "../../components/MetricsRow";
 import Subheading from "../../components/Subheading";
@@ -62,12 +64,14 @@ const styles = {
   linkUrl: {
     fontSize: "12px",
     color: "grey"
-  }
+  },
+  activityTime: { fontSize: "12px", marginTop: "5px" },
+  activityTimeIcon: { verticalAlign: "middle" }
 };
 class OverviewTab extends Component {
   render() {
     //TODO: get real data
-    const { summary, projects, activities, links } = this.props.data;
+    const { summary, projects, activities, links, name } = this.props.data;
     const metricsData_1 = [
       {
         metric: summary.projectsNum,
@@ -132,7 +136,18 @@ class OverviewTab extends Component {
               <List style={styles.activityList}>
                 {activities.map((activity, index) => (
                   <ListItem key={index} style={styles.listItem}>
-                    <ListItemText primary={activity.project} secondary={activity.description} />
+                    <ListItemText
+                      primary={activity.project}
+                      secondary={
+                        <React.Fragment>
+                          <div>{name + " " + activity.description} </div>
+                          <div style={styles.activityTime}>
+                            <AccessTime style={styles.activityTimeIcon} />
+                            {activity.timestamp}
+                          </div>
+                        </React.Fragment>
+                      }
+                    />
                   </ListItem>
                 ))}
               </List>

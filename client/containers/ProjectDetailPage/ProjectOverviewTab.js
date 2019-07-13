@@ -12,6 +12,8 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
+import AccessTime from "@material-ui/icons/AccessTime";
+
 import Section from "../../components/Section";
 import MetricsRow from "../../components/MetricsRow";
 import Subheading from "../../components/Subheading";
@@ -62,7 +64,9 @@ const styles = {
   linkUrl: {
     fontSize: "12px",
     color: "grey"
-  }
+  },
+  activityTime: { fontSize: "12px", marginTop: "5px" },
+  activityTimeIcon: { verticalAlign: "middle" }
 };
 export default class OverviewTab extends Component {
   render() {
@@ -141,7 +145,18 @@ export default class OverviewTab extends Component {
               <List style={styles.activityList}>
                 {activities.map((activity, index) => (
                   <ListItem key={index} style={styles.listItem}>
-                    <ListItemText primary={activity.author} secondary={activity.description} />
+                    <ListItemText
+                      primary={activity.name}
+                      secondary={
+                        <React.Fragment>
+                          <div>{activity.description} </div>
+                          <div style={styles.activityTime}>
+                            <AccessTime style={styles.activityTimeIcon} />
+                            {activity.timestamp}
+                          </div>
+                        </React.Fragment>
+                      }
+                    />
                   </ListItem>
                 ))}
               </List>

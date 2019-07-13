@@ -81,7 +81,7 @@ class UserDetailPage extends Component {
     const data = this.props.userDetail;
     switch (currTab) {
       case 0:
-        return <OverviewTab data={data.overview} />;
+        return <OverviewTab data={{ ...data.overview, name: data.name }} />;
       case 1:
         return <TasksTab data={data.tasks} />;
       case 2:
