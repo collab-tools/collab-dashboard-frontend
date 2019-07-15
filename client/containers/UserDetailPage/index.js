@@ -39,7 +39,7 @@ import {
   getUserFilesContribution
 } from "../../actions/userapi";
 
-class UserDetailPage extends Component {
+export class UserDetailPage extends Component {
   state = {
     currTab: 0
   };

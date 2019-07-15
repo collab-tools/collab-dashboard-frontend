@@ -68,7 +68,7 @@ const styles = {
   activityTime: { fontSize: "12px", marginTop: "5px" },
   activityTimeIcon: { verticalAlign: "middle" }
 };
-class OverviewTab extends Component {
+export default class OverviewTab extends Component {
   render() {
     //TODO: get real data
     const { summary, projects, activities, links, name } = this.props.data;
@@ -112,7 +112,7 @@ class OverviewTab extends Component {
         </Section>
         <Section>
           <Subheading>Projects</Subheading>
-          <div style={styles.cardContainer}>
+          <div style={styles.cardContainer} className="projects">
             {projects.map((project, index) => (
               <Card key={index} style={styles.projectCard}>
                 <CardHeader title={project.name} subheader={`created on ${project.dateCreated}`} />
@@ -120,8 +120,8 @@ class OverviewTab extends Component {
                 <CardContent>
                   {project.metrics.map((row, index) => (
                     <div key={index} style={styles.contentRow}>
-                      <div>{row.label}</div>
-                      <div>{row.data}</div>
+                      <div className="project-metrics-label">{row.label}</div>
+                      <div className="project-metrics-data">{row.data}</div>
                     </div>
                   ))}
                 </CardContent>
@@ -140,7 +140,7 @@ class OverviewTab extends Component {
                       primary={activity.project}
                       secondary={
                         <React.Fragment>
-                          <div>{name + " " + activity.description} </div>
+                          <div>{name + " " + activity.description}</div>
                           <div style={styles.activityTime}>
                             <AccessTime style={styles.activityTimeIcon} />
                             {activity.timestamp}
@@ -152,7 +152,7 @@ class OverviewTab extends Component {
                 ))}
               </List>
             </div>
-            <div style={styles.column}>
+            <div style={styles.column} className="links">
               <Subheading>Links</Subheading>
               <Paper style={styles.linkContainer}>
                 <a
@@ -175,6 +175,3 @@ class OverviewTab extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({});
-export default connect(mapStateToProps)(OverviewTab);

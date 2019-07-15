@@ -34,7 +34,7 @@ const styles = {
     textAlign: "center"
   }
 };
-class MilestonesAndTasksTab extends Component {
+export default class MilestonesAndTasksTab extends Component {
   render() {
     //TODO: get real data
     const {
@@ -87,9 +87,15 @@ class MilestonesAndTasksTab extends Component {
           {milestones.map((milestone, index) => (
             <ExpansionPanel key={index}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <div style={styles.panelRowFirstColumn}>{milestone.name}</div>
-                <div style={styles.panelRowColumn}>{milestone.deadline || "N/A"}</div>
-                <div style={styles.panelRowColumn}>{milestone.tasksCompleted}</div>
+                <div style={styles.panelRowFirstColumn} className="milestone-data">
+                  {milestone.name}
+                </div>
+                <div style={styles.panelRowColumn} className="milestone-data">
+                  {milestone.deadline || "N/A"}
+                </div>
+                <div style={styles.panelRowColumn} className="milestone-data">
+                  {milestone.tasksCompleted}
+                </div>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails style={{ display: "block" }}>
                 <div style={{ ...styles.panelRow, ...styles.panelHeader }}>
@@ -98,10 +104,10 @@ class MilestonesAndTasksTab extends Component {
                   <div style={styles.panelRowColumn}>Completed</div>
                 </div>
                 {milestone.tasks.map((task, index) => (
-                  <div key={index} style={styles.panelRow}>
+                  <div key={index} style={styles.panelRow} className="taskRow">
                     <div style={styles.panelRowFirstColumn}>{task.name}</div>
-                    <div style={styles.panelRowColumn}>{task.assignee}</div>
-                    <div style={styles.panelRowColumn}>{task.completeDay}</div>
+                    <div style={styles.panelRowColumn}>{task.assignee || "N/A"}</div>
+                    <div style={styles.panelRowColumn}>{task.completeDay || "N/A"}</div>
                   </div>
                 ))}
               </ExpansionPanelDetails>
@@ -116,6 +122,3 @@ class MilestonesAndTasksTab extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({});
-export default connect(mapStateToProps)(MilestonesAndTasksTab);

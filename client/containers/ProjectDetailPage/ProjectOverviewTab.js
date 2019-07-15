@@ -116,7 +116,7 @@ export default class OverviewTab extends Component {
 
         <Section>
           <Subheading>Members</Subheading>
-          <div style={styles.cardContainer}>
+          <div style={styles.cardContainer} className="members">
             {members.map((member, index) => (
               <Card key={index} style={styles.memberCard}>
                 <CardHeader
@@ -128,8 +128,8 @@ export default class OverviewTab extends Component {
                 <CardContent>
                   {member.metrics.map((row, index) => (
                     <div key={index} style={styles.contentRow}>
-                      <div>{row.label}</div>
-                      <div>{row.data}</div>
+                      <div className="user-metrics-label">{row.label}</div>
+                      <div className="user-metrics-data">{row.data}</div>
                     </div>
                   ))}
                 </CardContent>
@@ -149,7 +149,7 @@ export default class OverviewTab extends Component {
                       primary={activity.name}
                       secondary={
                         <React.Fragment>
-                          <div>{activity.description} </div>
+                          <div>{activity.description}</div>
                           <div style={styles.activityTime}>
                             <AccessTime style={styles.activityTimeIcon} />
                             {activity.timestamp}
@@ -161,7 +161,7 @@ export default class OverviewTab extends Component {
                 ))}
               </List>
             </div>
-            <div style={styles.column}>
+            <div style={styles.column} className="links">
               <Subheading>Links</Subheading>
               <Paper style={styles.linkContainer}>
                 <a

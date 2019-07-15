@@ -33,7 +33,7 @@ const styles = {
     textAlign: "center"
   }
 };
-class MilestonesAndTasksTab extends Component {
+export default class MilestonesAndTasksTab extends Component {
   render() {
     //TODO: get real data
     const { projects, contributions } = this.props.data;
@@ -88,7 +88,7 @@ class MilestonesAndTasksTab extends Component {
                   <div style={styles.panelRowColumn}>Completed</div>
                 </div>
                 {project.tasks.map((task, index) => (
-                  <div key={index} style={styles.panelRow}>
+                  <div key={index} style={styles.panelRow} className="taskRow">
                     <div style={styles.panelRowFirstColumn}>{task.name}</div>
                     <div style={styles.panelRowColumn}>{task.deadline || "N/A"}</div>
                     <div style={styles.panelRowColumn}>{task.completeDay || "N/A"}</div>
@@ -106,6 +106,3 @@ class MilestonesAndTasksTab extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({});
-export default connect(mapStateToProps)(MilestonesAndTasksTab);

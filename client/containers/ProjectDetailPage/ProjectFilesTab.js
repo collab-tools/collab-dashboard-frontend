@@ -26,7 +26,7 @@ const styles = {
   }
 };
 
-class FilesTab extends Component {
+export default class FilesTab extends Component {
   render() {
     const {
       data: { link, summary, changes, contributions }
@@ -100,6 +100,3 @@ class FilesTab extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({});
-export default connect(mapStateToProps)(FilesTab);

@@ -39,7 +39,7 @@ import {
   getFilesContribution
 } from "../../actions/projectapi";
 
-class ProjectDetailPage extends Component {
+export class ProjectDetailPage extends Component {
   state = {
     currTab: 0
   };

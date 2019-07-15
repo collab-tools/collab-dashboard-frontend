@@ -25,7 +25,7 @@ const styles = {
     color: "grey"
   }
 };
-class GithubTab extends Component {
+export default class GithubTab extends Component {
   onCommitSelect = ({ repo, SHA }) => {
     window.open(`https://github.com/${repo}/commit/${SHA}`, "_blank");
   };
@@ -141,6 +141,3 @@ class GithubTab extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({});
-export default connect(mapStateToProps)(GithubTab);

@@ -31,7 +31,7 @@ const styles = {
   }
 };
 
-class FilesTab extends Component {
+export default class FilesTab extends Component {
   render() {
     const { summary, changes, contributions } = this.props.data;
     const metricsData = [
@@ -93,6 +93,3 @@ class FilesTab extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({});
-export default connect(mapStateToProps)(FilesTab);

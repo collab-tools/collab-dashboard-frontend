@@ -26,7 +26,7 @@ const styles = {
   }
 };
 
-class GithubTab extends Component {
+export default class GithubTab extends Component {
   onCommitSelect = commit => {
     const {
       data: { link }
@@ -150,6 +150,3 @@ class GithubTab extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({});
-export default connect(mapStateToProps)(GithubTab);

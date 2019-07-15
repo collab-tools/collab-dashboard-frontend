@@ -4,6 +4,7 @@ import chai, { expect } from "chai";
 import chaiEnzyme from "chai-enzyme";
 import enzyme from "../enzyme";
 import sinon from "sinon";
+
 import PaginationTable from "../../client/components/PaginationTable";
 
 chai.use(chaiEnzyme());
