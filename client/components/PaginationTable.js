@@ -110,22 +110,27 @@ export default class PaginationTable extends Component {
   render() {
     const { rows, headers, rowItems, searchableItems, onRowClicked = () => {} } = this.props;
     const { rowsPerPage, page, searchText } = this.state;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-    const filteredRows = rows.filter(row => {
-      for (const item of searchableItems) {
-        if (row[item].toLowerCase().includes(searchText.toLowerCase())) return true;
-      }
-      return false;
-    });
+    const emptyRows =
+      rowsPerPage - (rows ? Math.min(rowsPerPage, rows.length - page * rowsPerPage) : 0);
+    const filteredRows = rows
+      ? rows.filter(row => {
+          for (const item of searchableItems) {
+            if (row[item].toLowerCase().includes(searchText.toLowerCase())) return true;
+          }
+          return false;
+        })
+      : [];
     return (
       <Paper elevation={0} style={styles.tableContainer}>
         <Table>
           <TableHead>
-            <TableRow>
-              {headers.map((header, index) => (
-                <TableCell key={index}>{header}</TableCell>
-              ))}
-            </TableRow>
+            {headers && (
+              <TableRow>
+                {headers.map((header, index) => (
+                  <TableCell key={index}>{header}</TableCell>
+                ))}
+              </TableRow>
+            )}
           </TableHead>
           <TableBody>
             {filteredRows
@@ -168,8 +173,8 @@ export default class PaginationTable extends Component {
               </TableCell>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
-                colSpan={headers.length}
-                count={rows.length - 1}
+                colSpan={headers ? headers.length - 1 : 1}
+                count={rows ? rows.length : 0}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{

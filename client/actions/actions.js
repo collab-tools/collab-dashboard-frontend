@@ -159,7 +159,7 @@ export function createStaff(name, username, password, isAdmin, callback) {
         }
       )
       .then(response => {
-        console.log("createStaff is returned", response.data);
+        // console.log("createStaff is returned", response.data);
         callback(response.data.staff.id);
       })
       .catch(error => {
@@ -188,7 +188,7 @@ export function updateStaff(name, username, password, isAdmin, callback) {
         }
       )
       .then(response => {
-        console.log("updateStaff is returned", response.data);
+        // console.log("updateStaff is returned", response.data);
         callback(response.data.staff.id);
       })
       .catch(error => {
@@ -204,7 +204,7 @@ export function getAllStaffs() {
       .get(url)
       .then(response => {
         // console.log('authenticateUser ', response.data);
-        console.log("getAllStaffs is returned", response.data);
+        // console.log("getAllStaffs is returned", response.data);
         dispatch(_getAllStaffs(response.data));
       })
       .catch(error => {
@@ -231,7 +231,7 @@ export function getStaffDetails(id) {
       )
       .then(response => {
         // console.log('authenticateUser ', response.data);
-        console.log("getStaffDetails is returned", response.data);
+        // console.log("getStaffDetails is returned", response.data);
         dispatch(_getStaffDetails(response.data));
       })
       .catch(error => {
@@ -270,7 +270,6 @@ function _getAllStaffs(res) {
 }
 
 function _getStaffDetails(res) {
-  console.log(res);
   let staffDetails = res;
   return {
     type: GET_STAFF_DETAILS,
@@ -531,7 +530,6 @@ export function _getMembersInfo(res) {
   };
 }
 export function _getProjectActivities(res) {
-  console.log(res);
   return {
     type: GET_PROJECT_ACTIVITIES,
     activities: res
