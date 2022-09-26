@@ -61,7 +61,7 @@
     "jsdom": "^10.1.0",
     "json-loader": "^0.5.4",
     "mocha": "^3.3.0",
-    "nightwatch": "^0.9.20",
+    "nightwatch": "^2.3.9",
     "node-sass": "^4.5.2",
     "postcss": "^5.2.17",
     "postcss-flexbox": "^1.0.2",
